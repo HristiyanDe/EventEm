@@ -1,6 +1,6 @@
-package com.softuni.entities;
+package com.softuni.eventem.entities;
 
-import com.softuni.entities.enums.EventStatusEnum;
+import com.softuni.eventem.entities.enums.EventStatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

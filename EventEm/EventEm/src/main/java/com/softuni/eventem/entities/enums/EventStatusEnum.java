@@ -1,4 +1,4 @@
-package com.softuni.entities.enums;
+package com.softuni.eventem.entities.enums;
 
 public enum EventStatusEnum {
   UPCOMING("Upcoming"),
