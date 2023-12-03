@@ -20,7 +20,7 @@ public class CategoryEntity {
   private Long id;
   @Column(name = "category_name")
   private String categoryName;
-  @ManyToMany(mappedBy = "eventCategories")
+  @ManyToMany(mappedBy = "categories")
   private List<EventEntity> events;
 
   public CategoryEntity() {
