@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/api/venues")
 public class VenueController {
 
-  private VenueService venueService;
+  private final VenueService venueService;
 
   public VenueController(VenueService venueService) {
     this.venueService = venueService;
