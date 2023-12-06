@@ -1,4 +1,4 @@
-package com.softuni.entities;
+package com.softuni.eventem.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,13 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+//todo: Make unique constraint in between city and address
 @Entity
 @Table(name = "venues", schema = "eventem")
 public class VenueEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-private Long id;
+  private Long id;
   @Column(name = "name")
   private String name;
   @Column(name = "city")

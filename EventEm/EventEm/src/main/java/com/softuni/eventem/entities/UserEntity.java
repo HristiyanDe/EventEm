@@ -1,4 +1,4 @@
-package com.softuni.entities;
+package com.softuni.eventem.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
