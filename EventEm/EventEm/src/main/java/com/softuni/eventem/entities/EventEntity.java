@@ -32,8 +32,8 @@ public class EventEntity {
   private EventStatusEntity eventStatus;
   @Column(name = "venue_id")
   private Long venueId;
-  @Column(name = "user_id")
-  private Long userId;
+  @Column(name = "organization_id")
+  private Long organizationId;
   @Column(name = "description")
   private String description;
 
@@ -104,12 +104,12 @@ public class EventEntity {
     this.venueId = venueId;
   }
 
-  public Long getUserId() {
-    return userId;
+  public Long getOrganizationId() {
+    return organizationId;
   }
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
+  public void setOrganizationId(Long userId) {
+    this.organizationId = userId;
   }
 
   public List<CategoryEntity> getCategories() {
@@ -129,7 +129,7 @@ public class EventEntity {
            ", endDate=" + endDate +
            ", eventStatus=" + eventStatus +
            ", venueId=" + venueId +
-           ", userId=" + userId +
+           ", userId=" + organizationId +
            ", description='" + description + '\'' +
            ", categories=" + categories +
            '}';
