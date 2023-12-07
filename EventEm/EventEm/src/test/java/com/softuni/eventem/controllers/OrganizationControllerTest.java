@@ -1,10 +1,13 @@
 package com.softuni.eventem.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softuni.eventem.entities.VenueEntity;
+import com.softuni.eventem.entities.OrganizationEntity;
+import com.softuni.eventem.entities.request.OrganizationRequest;
 import com.softuni.eventem.entities.request.VenueRequest;
+import com.softuni.eventem.exceptions.OrganizationAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
-import com.softuni.eventem.services.impl.VenueServiceImpl;
+import com.softuni.eventem.services.impl.OrganizationServiceImpl;
+import com.softuni.eventem.utils.OrganizationFactory;
 import com.softuni.eventem.utils.VenueFactory;
 import jakarta.servlet.ServletException;
 import org.hamcrest.Matchers;
@@ -20,8 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.softuni.eventem.utils.VenueConstants.DUPLICATE_MESSAGE;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.softuni.eventem.utils.OrganizationConstants.DUPLICATE_MESSAGE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,41 +32,42 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @RunWith(MockitoJUnitRunner.class)
-public class VenueControllerTest {
+public class OrganizationControllerTest {
   private MockMvc mockMvc;
-  private VenueRequest venueRequest;
-  private VenueEntity venueEntity;
+  private OrganizationRequest organizationRequest;
+  private OrganizationEntity organizationEntity;
   @Mock
-  private VenueServiceImpl venueService;
+  private OrganizationServiceImpl organizationService;
   @InjectMocks
-  private VenueController venueController;
+  private OrganizationController organizationController;
 
   @Before
   public void setup(){
-  venueRequest = VenueFactory.getVenueRequest();
-  venueEntity = VenueFactory.getVenueEntity();
-  mockMvc = MockMvcBuilders.standaloneSetup(venueController).build();
+    organizationRequest = OrganizationFactory.getOrganizationRequest();
+    organizationEntity = OrganizationFactory.getOrganizationEntity();
+    mockMvc = MockMvcBuilders.standaloneSetup(organizationController).build();
   }
+
   @Test
-public void testCreateVenue_success() throws Exception{
+  public void testCreateOrganization_success() throws Exception{
     ObjectMapper objectMapper =new ObjectMapper();
-    String json = objectMapper.writeValueAsString(venueRequest);
-    when(venueService.createVenue(any())).thenReturn(venueEntity);
-    mockMvc.perform(post("/api/venues")
+    String json = objectMapper.writeValueAsString(organizationRequest);
+    when(organizationService.createOrganization(any())).thenReturn(organizationEntity);
+    mockMvc.perform(post("/api/organizations")
                       .contentType(MediaType.APPLICATION_JSON)
                       .content(json))
-      .andExpect(status().isCreated())
-      .andExpect(header().string("Location", "/10"));
+           .andExpect(status().isCreated())
+           .andExpect(header().string("Location", "/10"));
 
   }
   @Test(expected = ServletException.class)
-  public void testCreateVenue_throws() throws Exception {
+  public void testCreateOrganization_throws() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    String json = objectMapper.writeValueAsString(venueRequest);
-    when(venueService.createVenue(any()))
-      .thenThrow(new VenueAlreadyExistsException(DUPLICATE_MESSAGE));
+    String json = objectMapper.writeValueAsString(organizationRequest);
+    when(organizationService.createOrganization(any()))
+      .thenThrow(new OrganizationAlreadyExistsException(DUPLICATE_MESSAGE));
 
-    mockMvc.perform(post("/api/venues")
+    mockMvc.perform(post("/api/organizations")
                       .contentType(MediaType.APPLICATION_JSON)
                       .content(json))
            .andExpect(status().isBadRequest())

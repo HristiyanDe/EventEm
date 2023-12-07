@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_ALREADY_EXISTS_ERROR;
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_CREATED_MESSAGE;
 
@@ -39,7 +39,7 @@ public class VenueServiceImpl implements VenueService {
         VENUE_CREATED_MESSAGE, venue));
       return venue;
     } catch (DataIntegrityViolationException e) {
-      logger.error(String.format(VENUE_ALREADY_EXISTS_ERROR,venueRequest));
+      logger.error(String.format(ENTITY_ALREADY_EXISTS_ERROR, venueRequest));
       throw new VenueAlreadyExistsException(VENUE_ALREADY_EXISTS_ERROR_MESSAGE);
     }
   }

@@ -1,5 +1,6 @@
 package com.softuni.eventem.handlers;
 
+import com.softuni.eventem.exceptions.OrganizationAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,15 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(VenueAlreadyExistsException.class)
   public ResponseEntity<Map<String, List<String>>> handleVenueAlreadyExistsException(VenueAlreadyExistsException exception)
+  {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(OrganizationAlreadyExistsException.class)
+  public ResponseEntity<Map<String, List<String>>> handleOrganizationAlreadyExistsException(OrganizationAlreadyExistsException exception)
   {
     log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
     String error = exception.getMessage();

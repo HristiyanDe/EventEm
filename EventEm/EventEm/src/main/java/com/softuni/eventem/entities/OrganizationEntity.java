@@ -75,4 +75,16 @@ public class OrganizationEntity {
   public void setEmail(String email) {
     this.email = email;
   }
+
+  @Override
+  public String toString() {
+    return "OrganizationEntity{" +
+           "id=" + id +
+           ", name='" + name + '\'' +
+           ", city='" + city + '\'' +
+           ", address='" + address + '\'' +
+           ", phone='" + phone + '\'' +
+           ", email='" + email + '\'' +
+           '}';
+  }
 }
