@@ -36,6 +36,10 @@ public class EventEntity {
   private Long organizationId;
   @Column(name = "description")
   private String description;
+  @Column(name = "current_attendees")
+  private Integer currentAttendees;
+  @Column(name = "max_attendees")
+  private Integer maxAttendees;
 
   @ManyToMany
   @JoinTable(
@@ -120,6 +124,22 @@ public class EventEntity {
     this.categories = categories;
   }
 
+  public Integer getCurrentAttendees() {
+    return currentAttendees;
+  }
+
+  public void setCurrentAttendees(Integer currentAttendees) {
+    this.currentAttendees = currentAttendees;
+  }
+
+  public Integer getMaxAttendees() {
+    return maxAttendees;
+  }
+
+  public void setMaxAttendees(Integer maxAttendees) {
+    this.maxAttendees = maxAttendees;
+  }
+
   @Override
   public String toString() {
     return "EventEntity{" +
@@ -129,8 +149,10 @@ public class EventEntity {
            ", endDate=" + endDate +
            ", eventStatus=" + eventStatus +
            ", venueId=" + venueId +
-           ", userId=" + organizationId +
+           ", organizationId=" + organizationId +
            ", description='" + description + '\'' +
+           ", currentAttendees=" + currentAttendees +
+           ", maxAttendees=" + maxAttendees +
            ", categories=" + categories +
            '}';
   }
