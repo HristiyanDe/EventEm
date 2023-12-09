@@ -2,6 +2,7 @@ package com.softuni.eventem.services.impl;
 
 import com.softuni.eventem.entities.CategoryEntity;
 import com.softuni.eventem.entities.request.CategoryRequest;
+import com.softuni.eventem.exceptions.CategoryAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
 import com.softuni.eventem.repositories.CategoryRepository;
 import com.softuni.eventem.services.CategoryService;
@@ -37,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
       return category;
     } catch (DataIntegrityViolationException e) {
       logger.error(String.format(ENTITY_ALREADY_EXISTS_ERROR, categoryRequest));
-      throw new VenueAlreadyExistsException(CATEGORY_ALREADY_EXISTS_ERROR_MESSAGE);
+      throw new CategoryAlreadyExistsException(CATEGORY_ALREADY_EXISTS_ERROR_MESSAGE);
     }
   }
 }
