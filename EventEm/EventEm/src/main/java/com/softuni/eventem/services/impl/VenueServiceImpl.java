@@ -3,6 +3,7 @@ package com.softuni.eventem.services.impl;
 import com.softuni.eventem.entities.VenueEntity;
 import com.softuni.eventem.entities.request.VenueRequest;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
+import com.softuni.eventem.exceptions.VenueNotFoundException;
 import com.softuni.eventem.repositories.VenueRepository;
 import com.softuni.eventem.services.VenueService;
 import org.modelmapper.ModelMapper;
@@ -42,5 +43,10 @@ public class VenueServiceImpl implements VenueService {
       logger.error(String.format(ENTITY_ALREADY_EXISTS_ERROR, venueRequest));
       throw new VenueAlreadyExistsException(VENUE_ALREADY_EXISTS_ERROR_MESSAGE);
     }
+  }
+
+  @Override
+  public VenueEntity getVenueById(Long id) {
+    return venueRepository.findById(id).orElseThrow(VenueNotFoundException::new);
   }
 }

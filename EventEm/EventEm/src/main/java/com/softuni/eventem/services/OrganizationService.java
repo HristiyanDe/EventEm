@@ -6,4 +6,5 @@ import com.softuni.eventem.entities.request.OrganizationRequest;
 public interface OrganizationService {
   OrganizationEntity createOrganization(OrganizationRequest organizationRequest);
 
+  OrganizationEntity getOrganizationById(Long organizationId);
 }
