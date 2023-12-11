@@ -14,6 +14,9 @@ public final class LoggerAndExceptionConstants {
   public static final String NO_MATCHING_CATEGORIES_FOUND_ERROR_MESSAGE = "Failed to find categories with provided names";
   public static final String VENUE_UNAVAILABLE_BETWEEN_DATES_ERROR_MESSAGE = "Venue %s is unavailable between dates %s and %s";
   public static final String ORGANIZATION_NOT_FOUND_ERROR_MESSAGE = "Organization with id %d not found";
+  public static final String TICKET_CREATED_MESSAGE = "Ticket %s created successfully";
+  public static final String TICKET_ALREADY_EXISTS_ERROR_MESSAGE = "Failed to create ticket as it is a duplicate";
+
 
 
 }

@@ -17,12 +17,12 @@ public class TicketEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
+  @Column(name = "name")
+  private String name;
   @Column(name = "event_id")
   private Long eventId;
   @Column(name = "price")
   private BigDecimal price;
-  @Column(name = "user_id")
-  private Long userId;
 
   public TicketEntity() {
   }
@@ -33,6 +33,14 @@ public class TicketEntity {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Long getEventId() {
@@ -51,21 +59,13 @@ public class TicketEntity {
     this.price = price;
   }
 
-  public Long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
-
   @Override
   public String toString() {
     return "TicketEntity{" +
            "id=" + id +
+           ", name='" + name + '\'' +
            ", eventId=" + eventId +
            ", price=" + price +
-           ", userId=" + userId +
            '}';
   }
 }
