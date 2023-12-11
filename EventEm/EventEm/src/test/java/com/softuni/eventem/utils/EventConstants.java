@@ -21,7 +21,6 @@ public final class EventConstants {
   public static final String EVENT_DESCRIPTION = "Test Event Description";
   public static final Integer EVENT_CURRENT_ATTENDEES = 0;
   public static final Integer EVENT_MAX_ATTENDEES = 100;
-  public static final List<CategoryEntity> EVENT_ENTITY_CATEGORIES = createEventCategories();
   public static final List<CategoryRequest> EVENT_REQUEST_CATEGORIES = createEventCategoriesRequest();
 
   public static List<CategoryEntity> createEventCategories() {

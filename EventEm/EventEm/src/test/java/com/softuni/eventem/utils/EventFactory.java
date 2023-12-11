@@ -1,6 +1,7 @@
 package com.softuni.eventem.utils;
 
 import com.softuni.eventem.entities.EventEntity;
+import com.softuni.eventem.entities.request.CategoryRequest;
 import com.softuni.eventem.entities.request.EventRequest;
 
 import static com.softuni.eventem.utils.EventConstants.EVENT_CURRENT_ATTENDEES;
@@ -41,6 +42,7 @@ public final class EventFactory {
     eventRequest.setOrganizationId(ORGANIZATION_ID);
     eventRequest.setDescription(EVENT_DESCRIPTION);
     eventRequest.setMaxAttendees(EVENT_MAX_ATTENDEES);
+    eventRequest.setCategories(null);
     return eventRequest;
   }
 

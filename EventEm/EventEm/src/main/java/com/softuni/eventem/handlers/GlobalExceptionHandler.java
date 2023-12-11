@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
   }
   @ExceptionHandler(VenueUnavailableBetweenDatesException.class)
   public ResponseEntity<Map<String, List<String>>> handleVenueUnavailableBetweenDatesException(
-    NoMatchingCategoriesWithNamesFoundException exception)
+    VenueUnavailableBetweenDatesException exception)
   {
     log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
     String error = exception.getMessage();

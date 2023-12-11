@@ -50,12 +50,5 @@ public class CategoryEntity {
     this.events = events;
   }
 
-  @Override
-  public String toString() {
-    return "CategoryEntity{" +
-           "id=" + id +
-           ", categoryName='" + categoryName + '\'' +
-           ", events=" + events +
-           '}';
-  }
+
 }
