@@ -46,6 +46,17 @@ public class TicketControllerTest {
     ticketEntity = TicketFactory.getTicketEntity();
     mockMvc = MockMvcBuilders.standaloneSetup(ticketController).build();
   }
+  @Test
+  public void testCreateTicket_success() throws Exception {
+    ObjectMapper objectMapper =new ObjectMapper();
+    String json = objectMapper.writeValueAsString(ticketRequest);
+    when(ticketService.createTicket(any())).thenReturn(ticketEntity);
+    mockMvc.perform(post("/api/tickets")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(json))
+           .andExpect(status().isCreated())
+           .andExpect(header().string("Location", "/10"));
+  }
   @Test(expected = ServletException.class)
   public void testCreateTicket_ThrowsTicketAlreadyExists() throws Exception {
     ObjectMapper objectMapper =new ObjectMapper();
