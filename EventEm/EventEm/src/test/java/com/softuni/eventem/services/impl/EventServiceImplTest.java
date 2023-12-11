@@ -18,7 +18,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.EVENT_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_UNAVAILABLE_BETWEEN_DATES_ERROR_MESSAGE;
 import static com.softuni.eventem.utils.EventConstants.EVENT_ORGANIZATION_ENTITY;
-import static com.softuni.eventem.utils.EventConstants.EVENT_REQUEST_CATEGORIES;
 import static com.softuni.eventem.utils.EventConstants.EVENT_VENUE_ENTITY;
 import static com.softuni.eventem.utils.EventConstants.createEventCategories;
 import static com.softuni.eventem.utils.EventConstants.createEventCategoriesRequest;
