@@ -33,4 +33,13 @@ private BigDecimal price;
   public void setPrice(BigDecimal price) {
     this.price = price;
   }
+
+  @Override
+  public String toString() {
+    return "TicketRequest{" +
+           "name='" + name + '\'' +
+           ", eventId=" + eventId +
+           ", price=" + price +
+           '}';
+  }
 }
