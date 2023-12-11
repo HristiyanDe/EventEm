@@ -1,9 +1,12 @@
 package com.softuni.eventem.handlers;
 
 import com.softuni.eventem.exceptions.CategoryAlreadyExistsException;
-import com.softuni.eventem.exceptions.NoMatchingCategoriesFoundException;
+import com.softuni.eventem.exceptions.EventAlreadyExistsException;
+import com.softuni.eventem.exceptions.NoMatchingCategoriesWithNamesFoundException;
 import com.softuni.eventem.exceptions.OrganizationAlreadyExistsException;
+import com.softuni.eventem.exceptions.OrganizationEntityNotFoundException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
+import com.softuni.eventem.exceptions.VenueEntityNotFoundException;
 import com.softuni.eventem.exceptions.VenueUnavailableBetweenDatesException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,9 +63,9 @@ public class GlobalExceptionHandler {
     Map<String, List<String>> errors = formatErrorsResponse(error);
     return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
   }
-  @ExceptionHandler(NoMatchingCategoriesFoundException.class)
+  @ExceptionHandler(NoMatchingCategoriesWithNamesFoundException.class)
   public ResponseEntity<Map<String, List<String>>> handleNoMatchingCategoriesFoundException(
-    NoMatchingCategoriesFoundException exception)
+    NoMatchingCategoriesWithNamesFoundException exception)
   {
     log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
     String error = exception.getMessage();
@@ -71,7 +74,33 @@ public class GlobalExceptionHandler {
   }
   @ExceptionHandler(VenueUnavailableBetweenDatesException.class)
   public ResponseEntity<Map<String, List<String>>> handleVenueUnavailableBetweenDatesException(
-    NoMatchingCategoriesFoundException exception)
+    NoMatchingCategoriesWithNamesFoundException exception)
+  {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(OrganizationEntityNotFoundException.class)
+  public ResponseEntity<Map<String, List<String>>> handleOrganizationEntityNotFoundException(
+    OrganizationEntityNotFoundException exception)
+  {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(VenueEntityNotFoundException.class)
+  public ResponseEntity<Map<String, List<String>>> handleVenueEntityNotFoundException(
+    VenueEntityNotFoundException exception)
+  {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(EventAlreadyExistsException.class)
+  public ResponseEntity<Map<String, List<String>>> handleEventAlreadyExistsException(EventAlreadyExistsException exception)
   {
     log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
     String error = exception.getMessage();

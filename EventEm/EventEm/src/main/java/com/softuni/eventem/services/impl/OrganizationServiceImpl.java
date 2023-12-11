@@ -3,7 +3,7 @@ package com.softuni.eventem.services.impl;
 import com.softuni.eventem.entities.OrganizationEntity;
 import com.softuni.eventem.entities.request.OrganizationRequest;
 import com.softuni.eventem.exceptions.OrganizationAlreadyExistsException;
-import com.softuni.eventem.exceptions.OrganizationNotFoundException;
+import com.softuni.eventem.exceptions.OrganizationEntityNotFoundException;
 import com.softuni.eventem.repositories.OrganizationRepository;
 import com.softuni.eventem.services.OrganizationService;
 import org.modelmapper.ModelMapper;
@@ -48,6 +48,6 @@ public class OrganizationServiceImpl implements OrganizationService {
   @Override
   public OrganizationEntity getOrganizationById(Long organizationId) {
 
-    return organizationRepository.findById(organizationId).orElseThrow(() ->new OrganizationNotFoundException(String.format(ORGANIZATION_NOT_FOUND_ERROR_MESSAGE,organizationId)));
+    return organizationRepository.findById(organizationId).orElseThrow(() ->new OrganizationEntityNotFoundException(String.format(ORGANIZATION_NOT_FOUND_ERROR_MESSAGE, organizationId)));
   }
 }
