@@ -1,7 +1,10 @@
 package com.softuni.eventem.entities;
 
+import com.softuni.eventem.entities.enums.EventStatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -24,18 +28,24 @@ public class EventEntity {
   @Column(name = "name")
   private String name;
   @Column(name = "start_date")
-  private Timestamp startDate;
+  private LocalDate startDate;
   @Column(name = "end_date")
-  private Timestamp endDate;
+  private LocalDate endDate;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "event_status")
+  private EventStatusEnum eventStatus;
   @ManyToOne
-  @JoinColumn(name = "event_status")
-  private EventStatusEntity eventStatus;
-  @Column(name = "venue_id")
-  private Long venueId;
-  @Column(name = "organization_id")
-  private Long organizationId;
+  @JoinColumn(name = "venue_id")
+  private VenueEntity venue;
+  @ManyToOne
+  @JoinColumn(name = "organization_id")
+  private OrganizationEntity organization;
   @Column(name = "description")
   private String description;
+  @Column(name = "current_attendees")
+  private Integer currentAttendees;
+  @Column(name = "max_attendees")
+  private Integer maxAttendees;
 
   @ManyToMany
   @JoinTable(
@@ -64,27 +74,27 @@ public class EventEntity {
     this.name = name;
   }
 
-  public Timestamp getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(Timestamp startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 
-  public Timestamp getEndDate() {
+  public LocalDate getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(Timestamp endDate) {
+  public void setEndDate(LocalDate endDate) {
     this.endDate = endDate;
   }
 
-  public EventStatusEntity getEventStatus() {
+  public EventStatusEnum getEventStatus() {
     return eventStatus;
   }
 
-  public void setEventStatus(EventStatusEntity eventStatus) {
+  public void setEventStatus(EventStatusEnum eventStatus) {
     this.eventStatus = eventStatus;
   }
 
@@ -96,20 +106,20 @@ public class EventEntity {
     this.description = description;
   }
 
-  public Long getVenueId() {
-    return venueId;
+  public VenueEntity getVenue() {
+    return venue;
   }
 
-  public void setVenueId(Long venueId) {
-    this.venueId = venueId;
+  public void setVenue(VenueEntity venue) {
+    this.venue = venue;
   }
 
-  public Long getOrganizationId() {
-    return organizationId;
+  public OrganizationEntity getOrganization() {
+    return organization;
   }
 
-  public void setOrganizationId(Long userId) {
-    this.organizationId = userId;
+  public void setOrganization(OrganizationEntity organization) {
+    this.organization = organization;
   }
 
   public List<CategoryEntity> getCategories() {
@@ -120,6 +130,22 @@ public class EventEntity {
     this.categories = categories;
   }
 
+  public Integer getCurrentAttendees() {
+    return currentAttendees;
+  }
+
+  public void setCurrentAttendees(Integer currentAttendees) {
+    this.currentAttendees = currentAttendees;
+  }
+
+  public Integer getMaxAttendees() {
+    return maxAttendees;
+  }
+
+  public void setMaxAttendees(Integer maxAttendees) {
+    this.maxAttendees = maxAttendees;
+  }
+
   @Override
   public String toString() {
     return "EventEntity{" +
@@ -128,9 +154,11 @@ public class EventEntity {
            ", startDate=" + startDate +
            ", endDate=" + endDate +
            ", eventStatus=" + eventStatus +
-           ", venueId=" + venueId +
-           ", userId=" + organizationId +
+           ", venue=" + venue +
+           ", organization=" + organization +
            ", description='" + description + '\'' +
+           ", currentAttendees=" + currentAttendees +
+           ", maxAttendees=" + maxAttendees +
            ", categories=" + categories +
            '}';
   }

@@ -1,39 +1,20 @@
-package com.softuni.eventem.entities;
+package com.softuni.eventem.entities.request;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "organizations")
-public class OrganizationEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private Long id;
-  @Column(name = "name")
+public class OrganizationRequest {
+  @NotBlank(message = "Organization name must not be empty")
   private String name;
-  @Column(name = "city")
+  @NotBlank(message = "Organization city must not be empty")
   private String city;
-  @Column(name = "address")
+  @NotBlank(message = "Organization address must not be empty")
   private String address;
-  @Column(name = "phone")
+  @NotBlank(message = "Organization phone must not be empty")
   private String phone;
-  @Column(name = "email")
+  @NotBlank(message = "Organization email must not be empty")
   private String email;
 
-  public OrganizationEntity() {
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
+  public OrganizationRequest() {
   }
 
   public String getName() {
@@ -78,9 +59,8 @@ public class OrganizationEntity {
 
   @Override
   public String toString() {
-    return "OrganizationEntity{" +
-           "id=" + id +
-           ", name='" + name + '\'' +
+    return "OrganizationRequest{" +
+           "name='" + name + '\'' +
            ", city='" + city + '\'' +
            ", address='" + address + '\'' +
            ", phone='" + phone + '\'' +

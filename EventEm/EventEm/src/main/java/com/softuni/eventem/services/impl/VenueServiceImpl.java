@@ -3,6 +3,7 @@ package com.softuni.eventem.services.impl;
 import com.softuni.eventem.entities.VenueEntity;
 import com.softuni.eventem.entities.request.VenueRequest;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
+import com.softuni.eventem.exceptions.VenueEntityNotFoundException;
 import com.softuni.eventem.repositories.VenueRepository;
 import com.softuni.eventem.services.VenueService;
 import org.modelmapper.ModelMapper;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_ALREADY_EXISTS_ERROR;
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_CREATED_MESSAGE;
 
@@ -39,8 +40,13 @@ public class VenueServiceImpl implements VenueService {
         VENUE_CREATED_MESSAGE, venue));
       return venue;
     } catch (DataIntegrityViolationException e) {
-      logger.error(String.format(VENUE_ALREADY_EXISTS_ERROR,venueRequest));
+      logger.error(String.format(ENTITY_ALREADY_EXISTS_ERROR, venueRequest));
       throw new VenueAlreadyExistsException(VENUE_ALREADY_EXISTS_ERROR_MESSAGE);
     }
+  }
+
+  @Override
+  public VenueEntity getVenueById(Long id) {
+    return venueRepository.findById(id).orElseThrow(VenueEntityNotFoundException::new);
   }
 }
