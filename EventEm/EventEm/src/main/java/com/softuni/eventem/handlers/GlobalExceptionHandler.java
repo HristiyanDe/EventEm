@@ -5,6 +5,7 @@ import com.softuni.eventem.exceptions.EventAlreadyExistsException;
 import com.softuni.eventem.exceptions.NoMatchingCategoriesWithNamesFoundException;
 import com.softuni.eventem.exceptions.OrganizationAlreadyExistsException;
 import com.softuni.eventem.exceptions.OrganizationEntityNotFoundException;
+import com.softuni.eventem.exceptions.TicketAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueEntityNotFoundException;
 import com.softuni.eventem.exceptions.VenueUnavailableBetweenDatesException;
@@ -101,6 +102,14 @@ public class GlobalExceptionHandler {
   }
   @ExceptionHandler(EventAlreadyExistsException.class)
   public ResponseEntity<Map<String, List<String>>> handleEventAlreadyExistsException(EventAlreadyExistsException exception)
+  {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(TicketAlreadyExistsException.class)
+  public ResponseEntity<Map<String, List<String>>> handleTicketAlreadyExistsException(TicketAlreadyExistsException exception)
   {
     log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
     String error = exception.getMessage();
