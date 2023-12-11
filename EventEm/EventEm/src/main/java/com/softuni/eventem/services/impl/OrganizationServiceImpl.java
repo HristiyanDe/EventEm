@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ORGANIZATION_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ORGANIZATION_CREATED_MESSAGE;
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ORGANIZATION_NOT_FOUND_ERROR_MESSAGE;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -47,6 +48,6 @@ public class OrganizationServiceImpl implements OrganizationService {
   @Override
   public OrganizationEntity getOrganizationById(Long organizationId) {
 
-    return organizationRepository.findById(organizationId).orElseThrow(OrganizationNotFoundException::new);
+    return organizationRepository.findById(organizationId).orElseThrow(() ->new OrganizationNotFoundException(String.format(ORGANIZATION_NOT_FOUND_ERROR_MESSAGE,organizationId)));
   }
 }

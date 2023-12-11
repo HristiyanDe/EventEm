@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.NO_MATCHING_CATEGORIES_FOUND_ERROR_MESSAGE;
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_UNAVAILABLE_BETWEEN_DATES_ERROR_MESSAGE;
+
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -33,7 +36,8 @@ public class EventServiceImpl implements EventService {
   private final CategoryRepository categoryRepository;
 
   public EventServiceImpl(
-    ModelMapper modelMapper, VenueService venueService, OrganizationService organizationService, EventRepository eventRepository,
+    ModelMapper modelMapper, VenueService venueService, OrganizationService organizationService,
+    EventRepository eventRepository,
     CategoryRepository categoryRepository) {
     this.modelMapper = modelMapper;
     this.venueService = venueService;
@@ -53,13 +57,17 @@ public class EventServiceImpl implements EventService {
     eventEntity.setEventStatus(eventRequest.getEventStatus());
     eventEntity.setMaxAttendees(eventRequest.getMaxAttendees());
     List<CategoryEntity> categories = categoryRepository.findByCategoryNameIn(
-      eventRequest.getCategories().stream().map(CategoryRequest::getCategoryName).collect(
-        Collectors.toList())).orElseThrow(NoMatchingCategoriesFoundException::new);
+                                                          eventRequest.getCategories().stream().map(CategoryRequest::getCategoryName).collect(
+                                                            Collectors.toList()))
+                                                        .orElseThrow(
+                                                          () ->
+                                                            new NoMatchingCategoriesFoundException(
+                                                              NO_MATCHING_CATEGORIES_FOUND_ERROR_MESSAGE));
     eventEntity.setCategories(categories);
     VenueEntity venue = venueService.getVenueById(eventRequest.getVenueId());
     eventEntity.setVenue(venue);
     if (hasConflictingEventByVenueAndDateRange(eventEntity)) {
-      throw new VenueUnavailableBetweenDatesException();
+      throw new VenueUnavailableBetweenDatesException(String.format(VENUE_UNAVAILABLE_BETWEEN_DATES_ERROR_MESSAGE,eventEntity.getVenue().getName(),eventEntity.getStartDate(),eventEntity.getEndDate()));
     }
     OrganizationEntity organization = organizationService.getOrganizationById(eventRequest.getOrganizationId());
     eventEntity.setOrganization(organization);

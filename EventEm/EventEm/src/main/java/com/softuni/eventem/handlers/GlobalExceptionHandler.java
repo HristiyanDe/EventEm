@@ -1,8 +1,10 @@
 package com.softuni.eventem.handlers;
 
 import com.softuni.eventem.exceptions.CategoryAlreadyExistsException;
+import com.softuni.eventem.exceptions.NoMatchingCategoriesFoundException;
 import com.softuni.eventem.exceptions.OrganizationAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
+import com.softuni.eventem.exceptions.VenueUnavailableBetweenDatesException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -52,6 +54,24 @@ public class GlobalExceptionHandler {
   }
   @ExceptionHandler(CategoryAlreadyExistsException.class)
   public ResponseEntity<Map<String, List<String>>> handleCategoryAlreadyExistsException(CategoryAlreadyExistsException exception)
+  {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(NoMatchingCategoriesFoundException.class)
+  public ResponseEntity<Map<String, List<String>>> handleNoMatchingCategoriesFoundException(
+    NoMatchingCategoriesFoundException exception)
+  {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(VenueUnavailableBetweenDatesException.class)
+  public ResponseEntity<Map<String, List<String>>> handleVenueUnavailableBetweenDatesException(
+    NoMatchingCategoriesFoundException exception)
   {
     log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
     String error = exception.getMessage();
