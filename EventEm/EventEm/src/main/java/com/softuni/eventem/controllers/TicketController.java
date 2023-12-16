@@ -4,6 +4,7 @@ import com.softuni.eventem.entities.request.TicketRequest;
 import com.softuni.eventem.services.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class TicketController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> createTicket(@RequestBody @Valid TicketRequest ticketRequest)
   {
     return ResponseEntity.created(

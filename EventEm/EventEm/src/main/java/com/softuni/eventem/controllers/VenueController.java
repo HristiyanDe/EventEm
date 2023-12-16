@@ -4,6 +4,7 @@ import com.softuni.eventem.entities.request.VenueRequest;
 import com.softuni.eventem.services.VenueService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class VenueController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> createVenue(@RequestBody @Valid VenueRequest venueRequest) {
     return ResponseEntity.created(
                            UriComponentsBuilder

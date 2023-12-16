@@ -4,6 +4,7 @@ import com.softuni.eventem.entities.request.CategoryRequest;
 import com.softuni.eventem.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
   @PostMapping
+  @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> createCategory(@RequestBody @Valid CategoryRequest categoryRequest)
   {
     return ResponseEntity.created(
