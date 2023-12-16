@@ -57,6 +57,22 @@ private UserEntity user;
     this.password = password;
   }
 
+  public UserRoleEnum getRole() {
+    return role;
+  }
+
+  public void setRole(UserRoleEnum role) {
+    this.role = role;
+  }
+
+  public UserEntity getUser() {
+    return user;
+  }
+
+  public void setUser(UserEntity user) {
+    this.user = user;
+  }
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return List.of(new SimpleGrantedAuthority(role.name()));
