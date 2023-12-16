@@ -9,6 +9,7 @@ import com.softuni.eventem.exceptions.TicketAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueEntityNotFoundException;
 import com.softuni.eventem.exceptions.VenueUnavailableBetweenDatesException;
+import com.softuni.eventem.exceptions.WrongCredentialsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -115,6 +116,14 @@ public class GlobalExceptionHandler {
     String error = exception.getMessage();
     Map<String, List<String>> errors = formatErrorsResponse(error);
     return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(WrongCredentialsException.class)
+  public ResponseEntity<Map<String, List<String>>> handleWrongCredentialsException(
+    WrongCredentialsException exception) {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
   }
 
 }

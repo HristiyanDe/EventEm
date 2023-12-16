@@ -16,7 +16,12 @@ public final class LoggerAndExceptionConstants {
   public static final String ORGANIZATION_NOT_FOUND_ERROR_MESSAGE = "Organization with id %d not found";
   public static final String TICKET_CREATED_MESSAGE = "Ticket %s created successfully";
   public static final String TICKET_ALREADY_EXISTS_ERROR_MESSAGE = "Failed to create ticket as it is a duplicate";
+  public static final String INVALID_JWT_TOKEN_ERROR = "Invalid token!";
+  public static String AUTHENTICATE_USER_MESSAGE = "Authenticating user with username: %s.";
 
-
-
+  public static String AUTHENTICATE_SUCCESS_MESSAGE = "Authentication has been successful for username: %s.";
+  public static String REGISTERING_USER_MESSAGE = "Registering user with username: %s.";
+  public static String REGISTERING_USER_SUCCESS_MESSAGE = "Successfully registered user with username: %s.";
+  public static String DATA_INTEGRITY_VIOLATION_ERROR_MESSAGE = "Encountered DataIntegrityViolation when attempting to save to database: %s";
+  public static final String WRONG_CREDENTIALS_ERROR_MESSAGE = "Incorrect credentials";
 }

@@ -14,3 +14,6 @@ spring:
       hibernate:
         show_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
+jwt:
+  secret: todo
+  expiration: 6000
