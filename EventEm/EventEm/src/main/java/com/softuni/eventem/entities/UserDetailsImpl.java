@@ -11,9 +11,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+
 @Entity
 @Table(name = "user_details")
 public class UserDetailsImpl implements UserDetails {
@@ -56,36 +59,36 @@ private UserEntity user;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return List.of(new SimpleGrantedAuthority(role.name()));
   }
 
   @Override
   public String getPassword() {
-    return null;
+    return this.password;
   }
 
   @Override
   public String getUsername() {
-    return null;
+    return this.username;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
   }
 }
