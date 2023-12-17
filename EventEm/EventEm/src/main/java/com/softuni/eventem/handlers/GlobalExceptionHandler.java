@@ -6,6 +6,8 @@ import com.softuni.eventem.exceptions.NoMatchingCategoriesWithNamesFoundExceptio
 import com.softuni.eventem.exceptions.OrganizationAlreadyExistsException;
 import com.softuni.eventem.exceptions.OrganizationEntityNotFoundException;
 import com.softuni.eventem.exceptions.TicketAlreadyExistsException;
+import com.softuni.eventem.exceptions.UserUnauthorizedException;
+import com.softuni.eventem.exceptions.UserWithIdNotFoundException;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueEntityNotFoundException;
 import com.softuni.eventem.exceptions.VenueUnavailableBetweenDatesException;
@@ -124,6 +126,22 @@ public class GlobalExceptionHandler {
     String error = exception.getMessage();
     Map<String, List<String>> errors = formatErrorsResponse(error);
     return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
+  }
+  @ExceptionHandler(UserWithIdNotFoundException.class)
+  public ResponseEntity<Map<String, List<String>>> handleUserWithIdNotFoundException(
+    UserWithIdNotFoundException exception) {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(UserUnauthorizedException.class)
+  public ResponseEntity<Map<String, List<String>>> handleUserUnauthorizedException(
+    UserUnauthorizedException exception) {
+    log.error(CAUGHT_EXCEPTION_MESSAGE, exception);
+    String error = exception.getMessage();
+    Map<String, List<String>> errors = formatErrorsResponse(error);
+    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
   }
 
 }

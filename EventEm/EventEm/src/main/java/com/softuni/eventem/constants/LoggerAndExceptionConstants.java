@@ -25,4 +25,9 @@ public final class LoggerAndExceptionConstants {
   public static String DATA_INTEGRITY_VIOLATION_ERROR_MESSAGE = "Encountered DataIntegrityViolation when attempting to save to database: %s";
   public static final String WRONG_CREDENTIALS_ERROR_MESSAGE = "Incorrect credentials";
   public static final String USER_WITH_NAME_NOT_FOUND_ERROR_MESSAGE = "User not found with entered username";
+  public static final String USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE = "User with id %d not found";
+  public static final String UPDATING_USER_ROLES_MESSAGE = "Updating user %d's role to %s";
+  public static final String UPDATING_USER_USERNAME_MESSAGE = "Updating user %d's username to %s";
+  public static final String USER_LACKS_AUTHORITY_ERROR_MESSAGE = "Current user %d lacks authority for this action";
+  public static final String UPDATING_USER_PROFILE_MESSAGE = "Updating user %d's profile";
 }
