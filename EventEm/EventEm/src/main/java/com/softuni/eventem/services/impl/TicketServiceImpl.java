@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY_CREATED_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
@@ -44,5 +46,11 @@ public class TicketServiceImpl implements TicketService {
       logger.error(String.format(ENTITY_ALREADY_EXISTS_ERROR, ticketRequest));
       throw new TicketAlreadyExistsException(TICKET_ALREADY_EXISTS_ERROR_MESSAGE);
     }
+  }
+
+  @Override
+  public List<TicketEntity> getAllTicketEntitiesNamePriceAndIdByIds(List<Long> tickedIds) {
+    List<TicketEntity> ticketEntities = ticketRepository.findAllById(tickedIds);
+    return ticketEntities;
   }
 }
