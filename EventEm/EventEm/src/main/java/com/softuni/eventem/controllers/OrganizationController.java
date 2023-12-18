@@ -2,6 +2,8 @@ package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.request.OrganizationRequest;
 import com.softuni.eventem.services.OrganizationService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/organizations")
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Organization Controller", description = "The Organization API. Contains all the operations that can be performed on an organization")
 public class OrganizationController {
   private final OrganizationService organizationService;
 

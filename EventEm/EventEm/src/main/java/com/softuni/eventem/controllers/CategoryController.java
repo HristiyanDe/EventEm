@@ -2,6 +2,8 @@ package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.request.CategoryRequest;
 import com.softuni.eventem.services.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/categories")
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Category Controller", description = "The Category API. Contains all the operations that can be performed on a category")
 public class CategoryController {
   private final CategoryService categoryService;
 

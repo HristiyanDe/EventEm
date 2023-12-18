@@ -14,6 +14,8 @@ spring:
       hibernate:
         show_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
+stripe:
+  api_key: ${STRIPE_API_KEY}
 jwt:
   secret: ENC(tnu8PU8CsBdAiYXVhQO5UH+E1e+qaWp91slbEohwVnqAA2hogzFitLOXtgU09syDynZScEH96U6l1y+xenozMQ==)
   expiration: 6000

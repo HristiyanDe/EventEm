@@ -2,6 +2,8 @@ package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.request.TicketRequest;
 import com.softuni.eventem.services.TicketService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/tickets")
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Ticket Controller", description = "The Ticket API. Contains all the operations that can be performed on a ticket")
 public class TicketController {
   private final TicketService ticketService;
 
