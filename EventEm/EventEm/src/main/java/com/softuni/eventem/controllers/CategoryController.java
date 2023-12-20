@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Tag(name = "Category Controller", description = "The Category API. Contains all the operations that can be performed on a category")
 public class CategoryController {
   private final CategoryService categoryService;
-
   public CategoryController(CategoryService categoryService) {
     this.categoryService = categoryService;
   }
+  @CrossOrigin(origins = "http://localhost:3000")
   @PostMapping
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> createCategory(@RequestBody @Valid CategoryRequest categoryRequest)
