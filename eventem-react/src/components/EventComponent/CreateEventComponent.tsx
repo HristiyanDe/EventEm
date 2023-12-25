@@ -15,10 +15,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers';
+import MenuItem from '@mui/material/MenuItem';
 const CreateEventComponent: React.FC = () => {
     const { token, setToken } = useAuth();
 const [formData, setFormData] = useState<EventRequest>({
@@ -70,6 +71,14 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
       }));
     }
   };
+  const handleDateChange = (field: string, date: Date | null) => {
+    if (date) {
+        setFormData({
+            ...formData,
+            [field]: date.toISOString(),
+        });
+    }
+};
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -86,7 +95,7 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Create Event
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -113,34 +122,28 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
                   value = {formData.eventStatus}
                   onChange={handleSelect}
 
-                />
-                <option value={EventStatusEnum.NONE}>None</option>
-                <option value={EventStatusEnum.DELAYED}>Delayed</option>
-                <option value={EventStatusEnum.CANCELLED}>Cancelled</option>
-                <option value={EventStatusEnum.FINISHED}>Active</option>
+                >
+                <MenuItem value={EventStatusEnum.NONE}>None</MenuItem>
+                <MenuItem value={EventStatusEnum.DELAYED}>Delayed</MenuItem>
+                <MenuItem value={EventStatusEnum.CANCELLED}>Cancelled</MenuItem>
+                <MenuItem value={EventStatusEnum.FINISHED}>Active</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <DatePicker
-                  autoComplete="given-name"
                   name="startDate"
-                  required
-                  fullWidth
-                  id="create-event-start-date"
                   label="Start Date"
                   autoFocus
                   value = {formData.startDate}
-                  onChange={handleInputChange}
+                  onChange={(date) => handleDateChange('startDate', date ? new Date(date) : null)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <DatePicker
-                  required
-                  fullWidth
-                  id="end-date"
                   label="End Date"
                   name="create-event-end-date"
                   value = {formData.endDate}
-                  onChange={handleInputChange}
+                  onChange={(date) => handleDateChange('endDate', date ? new Date(date) : null)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -205,15 +208,8 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Create Event
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
