@@ -1,6 +1,7 @@
 package com.softuni.eventem.services.impl;
 
 import com.softuni.eventem.entities.CategoryEntity;
+import com.softuni.eventem.entities.dto.CategoryDTO;
 import com.softuni.eventem.entities.request.CategoryRequest;
 import com.softuni.eventem.exceptions.CategoryAlreadyExistsException;
 import com.softuni.eventem.exceptions.NoMatchingCategoriesWithNamesFoundException;
@@ -18,9 +19,11 @@ import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY_CREATED_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.NO_MATCHING_CATEGORIES_FOUND_ERROR_MESSAGE;
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.RETRIEVING_CATEGORIES_MESSAGE;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
+
   public static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
   private final CategoryRepository categoryRepository;
   private final ModelMapper modelMapper;
@@ -48,9 +51,16 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public List<CategoryEntity> getCategoriesWithNames(List<String> categoryNames) {
 
-  return categoryRepository.findByCategoryNameIn(categoryNames).orElseThrow(
+    return categoryRepository.findByCategoryNameIn(categoryNames).orElseThrow(
       () ->
         new NoMatchingCategoriesWithNamesFoundException(
           NO_MATCHING_CATEGORIES_FOUND_ERROR_MESSAGE));
+  }
+
+  @Override
+  public List<CategoryDTO> getCategories() {
+    logger.info(RETRIEVING_CATEGORIES_MESSAGE);
+    return categoryRepository.findCategoryNames().stream().map(c -> modelMapper.map(c, CategoryDTO.class))
+                             .toList();
   }
 }
