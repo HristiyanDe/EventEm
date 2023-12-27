@@ -3,6 +3,7 @@ package com.softuni.eventem.configs;
 import com.softuni.eventem.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,6 +42,7 @@ public class SecurityConfiguration {
         authorize -> authorize
           .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
           .requestMatchers("/api/auth/register", "/api/auth/authenticate").anonymous()
+          .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
           .anyRequest()
           .authenticated())
       .sessionManagement(httpSecuritySessionManagementConfigurer

@@ -30,4 +30,5 @@ public final class LoggerAndExceptionConstants {
   public static final String UPDATING_USER_USERNAME_MESSAGE = "Updating user %d's username to %s";
   public static final String USER_LACKS_AUTHORITY_ERROR_MESSAGE = "Current user %d lacks authority for this action";
   public static final String UPDATING_USER_PROFILE_MESSAGE = "Updating user %d's profile";
+  public static final String RETRIEVING_CATEGORIES_MESSAGE = "Retrieving unfiltered categories";
 }
