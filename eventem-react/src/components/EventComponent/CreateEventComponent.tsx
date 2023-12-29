@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { API_EVENTS_PATH } from '../../constants/apiConstants';
 import axios from 'axios';
 import { useAuth } from '../../auth/AuthContext';
@@ -20,6 +20,8 @@ import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers';
 import MenuItem from '@mui/material/MenuItem';
+import { CategoryRequest } from '../../models/CategoryRequest';
+import {categoryService} from '../../api/categoryService';
 const CreateEventComponent: React.FC = () => {
     const { token, setToken } = useAuth();
 const [formData, setFormData] = useState<EventRequest>({
@@ -35,7 +37,18 @@ categories: [{
     categoryName: '',
 }],
 //TODO: make the user able to add multiple categories to an event
+//TODO: Refactor handle functions to be more generic
 });
+const [categories, setCategories] = useState<CategoryRequest[]>([]);
+useEffect(() => {
+    const fetchCategories = async () => {
+        const categories = await categoryService.getCategories();
+        setCategories(categories);
+        console.log(categories);
+    };
+    fetchCategories();
+}, []);
+  
 const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -52,6 +65,9 @@ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 };
 const handleSelect = (event: SelectChangeEvent<EventStatusEnum>) => {
   setFormData({ ...formData, eventStatus: event.target.value as EventStatusEnum });
+};
+const handleMultipleSelect = (event: SelectChangeEvent<CategoryRequest[]>) => {
+  setFormData({ ...formData, categories: event.target.value as CategoryRequest[] });
 };
 const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -191,15 +207,23 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <Select
                   required
                   fullWidth
-                  id="create-event-max-attendees"
-                  label="Max Attendees"
-                  name="maxAttendees"
-                  value = {formData.maxAttendees}
-                  onChange={handleInputChange}
-                />
+                  multiple
+                  name="eventCategories"
+                  label="Event Categories"
+                  id="create-event-categories"
+                  value={formData.categories}
+                  onChange={handleMultipleSelect}
+
+                >
+                {categories.map((category) => (
+                    <MenuItem key = {category.categoryName} value={category.categoryName}>
+                        {category.categoryName}
+                    </MenuItem>
+                ))}
+                </Select>
               </Grid>
             </Grid>
             <Button
