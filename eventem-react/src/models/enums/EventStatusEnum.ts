@@ -1,9 +1,9 @@
 export enum EventStatusEnum {
-    UPCOMING = "Upcoming",
-    DELAYED = "Delayed",
-    CANCELLED = "Cancelled",
-    IN_PROGRESS = "In progress",
-    FINISHED = "Finished",
-    LOCKED = "Locked",
+    UPCOMING = "UPCOMING",
+    DELAYED = "DELAYED",
+    CANCELLED = "CANCELLED",
+    IN_PROGRESS = "IN_PROGRESS",
+    FINISHED = "FINISHED",
+    LOCKED = "LOCKED",
     NONE = "",
     }
