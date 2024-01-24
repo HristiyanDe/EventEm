@@ -1,6 +1,7 @@
 package com.softuni.eventem.services.impl;
 
 import com.softuni.eventem.entities.VenueEntity;
+import com.softuni.eventem.entities.dto.VenueDTO;
 import com.softuni.eventem.entities.request.VenueRequest;
 import com.softuni.eventem.exceptions.VenueAlreadyExistsException;
 import com.softuni.eventem.exceptions.VenueEntityNotFoundException;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_ALREADY_EXISTS_ERROR_MESSAGE;
@@ -48,5 +51,10 @@ public class VenueServiceImpl implements VenueService {
   @Override
   public VenueEntity getVenueById(Long id) {
     return venueRepository.findById(id).orElseThrow(VenueEntityNotFoundException::new);
+  }
+
+  @Override
+  public List<VenueDTO> getFilteredVenues(String venueName, String venueAddress, String venueCity) {
+    return venueRepository.findAllVenuesFiltered(venueName,venueAddress,venueCity).stream().map(v -> modelMapper.map(v, VenueDTO.class)).toList();
   }
 }
