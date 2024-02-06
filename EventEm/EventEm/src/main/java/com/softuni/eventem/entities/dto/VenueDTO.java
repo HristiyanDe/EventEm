@@ -1,6 +1,7 @@
 package com.softuni.eventem.entities.dto;
 
 public class VenueDTO {
+  private Long id;
   private String name;
   private String city;
   private String address;
@@ -30,6 +31,14 @@ public class VenueDTO {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   @Override

@@ -43,6 +43,8 @@ public class SecurityConfiguration {
           .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
           .requestMatchers("/api/auth/register", "/api/auth/authenticate").anonymous()
           .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+          .requestMatchers(HttpMethod.GET, "/api/venues/**").permitAll()
+          .requestMatchers(HttpMethod.GET, "/api/venues").permitAll()
           .anyRequest()
           .authenticated())
       .sessionManagement(httpSecuritySessionManagementConfigurer
