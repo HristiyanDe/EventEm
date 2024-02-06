@@ -5,7 +5,7 @@ import { defaultTheme } from "../RegisterComponent/RegisterComponent";
 import { List, MenuItem, Select, Box, Container, CssBaseline, Typography, Grid, TextField, Button, ListItem, ListItemText, ListItemButton } from "@mui/material";
 import { venueService } from "../../api/venueService";
 import { SelectChangeEvent } from "@mui/material";
-const SelectVenueComponent: React.FC = () => {
+const SelectVenueComponent: React.FC<{onVenueSelect: (venue: Venue | null)=> void}> = ({onVenueSelect}) => {
     const [formData, setFormData] = useState<Venue>({
         id: null,
         name: '',
@@ -13,18 +13,13 @@ const SelectVenueComponent: React.FC = () => {
         address: '',
 
     });
-
-    //Generate a handleVenueSelect function which sets selectedVenue to the value provided by the <Select> component;
-    // const handleVenueSelect = (event: React.MouseEvent<Venue>) => {
-    //     setSelectedVenue(event.target. as Venue);
-    //     console.log(event.target.value);
-    // }
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
         id: number,
       ) => {
         if(id !== null){
             setSelectedVenue(venues.find(venue => venue.id === id) || null);
+            console.log(selectedVenue);
            
         }
         
@@ -33,11 +28,7 @@ const SelectVenueComponent: React.FC = () => {
 
     const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
     const [venues, setVenues] = useState<Venue[]>([]);
-    // async function getVenuesSubmit(){
-    //     const response = await venueService.getVenuesFiltered(formData.name,formData.address,formData.city);
-    //     setVenues(response);
-    // }
-    const getVenuesSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const getVenuesSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         venueService.getVenuesFiltered(formData.name, formData.address, formData.city)
             .then(response => {
@@ -54,10 +45,9 @@ const SelectVenueComponent: React.FC = () => {
             [name]:value,
         });
     };
-    const handleVenueSubmit =(e: React.FormEvent<HTMLFormElement>)=> {
-        e.preventDefault();
-        // Perform any necessary actions with the selectedVenue
-        console.log(selectedVenue);
+    const handleVenueSubmit =(e: React.MouseEvent<HTMLButtonElement>)=> {
+        
+        onVenueSelect(selectedVenue);
       }
 
     return (
@@ -75,7 +65,7 @@ const SelectVenueComponent: React.FC = () => {
                     <Typography component="h1" variant="h5">
                         Filter Venues by name,city and address.
                     </Typography>
-                    <Box component="form" noValidate onSubmit={getVenuesSubmit} sx={{ mt: 3 }}>
+                    <Box component="div" sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
@@ -118,13 +108,13 @@ const SelectVenueComponent: React.FC = () => {
                             </Grid>
                         </Grid>
                         <Button
-                            type="submit"
+                        onClick={getVenuesSubmit}
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >Filter venues</Button>
                     </Box>
-                    <Box component="form" noValidate onSubmit={handleVenueSubmit}>
+                    <Box component="div"  >
                     <Grid container spacing={2}>
                         <List component="ul"
                         id="venue-select">
@@ -138,7 +128,8 @@ const SelectVenueComponent: React.FC = () => {
                         ))}
                         </List>
                     </Grid>
-                    <Button type="submit"
+                    <Button 
+                    onClick={handleVenueSubmit}
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}

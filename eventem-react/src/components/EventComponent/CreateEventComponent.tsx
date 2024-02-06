@@ -24,6 +24,7 @@ import { CategoryRequest } from '../../models/CategoryRequest';
 import {categoryService} from '../../api/categoryService';
 import {venueService} from '../../api/venueService';
 import SelectVenueComponent from '../VenueComponent/selectVenueComponent';
+import { Venue } from '../../models/dtos/VenueDTO';
 const CreateEventComponent: React.FC = () => {
     const { token, setToken } = useAuth();
 const [formData, setFormData] = useState<EventRequest>({
@@ -71,6 +72,12 @@ const handleSelect = (event: SelectChangeEvent<EventStatusEnum>) => {
 const handleMultipleSelect = (event: SelectChangeEvent<CategoryRequest[]>) => {
   setFormData({ ...formData, categories: event.target.value as CategoryRequest[] });
 };
+const handleVenueSelect = (venue: Venue | null) => {
+  if(venue && venue.id) {
+    setFormData({ ...formData, venueId: venue.id });
+    console.log(formData);
+  }
+}
 const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
   
@@ -164,17 +171,9 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
                   onChange={(date) => handleDateChange('endDate', date ? new Date(date) : null)}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                {/* <TextField
-                  required
-                  fullWidth
-                  id="create-eventvenue-id"
-                  label="Venue ID"
-                  name="venueId"
-                  value = {formData.venueId}
-                  onChange={handleInputChange}
-                /> */}
-                <SelectVenueComponent></SelectVenueComponent>
+              <Grid item xs={12} sm={12}>
+                <SelectVenueComponent onVenueSelect={handleVenueSelect}/>
+                <Typography>{formData.venueId}</Typography>
                </Grid>
                <Grid item xs={12} sm={6}>
                 <TextField
