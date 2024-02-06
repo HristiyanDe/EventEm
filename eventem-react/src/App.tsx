@@ -15,11 +15,10 @@ return (<div className="App">
   <LocalizationProvider dateAdapter={AdapterDayjs}>
 <AuthProvider>
   <RegisterComponent></RegisterComponent>
-  <SelectVenueComponent></SelectVenueComponent>
+  <CreateEventComponent></CreateEventComponent>
   <LoginComponent></LoginComponent>
   <CreateVenueComponent></CreateVenueComponent>
   <CreateOrganizationComponent></CreateOrganizationComponent>
-  {/* <CreateEventComponent></CreateEventComponent> */}
 </AuthProvider>
 </LocalizationProvider>
 </div>)}
