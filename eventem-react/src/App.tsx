@@ -9,15 +9,17 @@ import CreateOrganizationComponent from './components/OrganizationComponent/Crea
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CreateEventComponent from './components/EventComponent/CreateEventComponent';
+import SelectVenueComponent from './components/VenueComponent/selectVenueComponent';
 function App() {
 return (<div className="App">
   <LocalizationProvider dateAdapter={AdapterDayjs}>
 <AuthProvider>
   <RegisterComponent></RegisterComponent>
+  <SelectVenueComponent></SelectVenueComponent>
   <LoginComponent></LoginComponent>
   <CreateVenueComponent></CreateVenueComponent>
   <CreateOrganizationComponent></CreateOrganizationComponent>
-  <CreateEventComponent></CreateEventComponent>
+  {/* <CreateEventComponent></CreateEventComponent> */}
 </AuthProvider>
 </LocalizationProvider>
 </div>)}

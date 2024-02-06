@@ -22,6 +22,8 @@ import { DatePicker } from '@mui/x-date-pickers';
 import MenuItem from '@mui/material/MenuItem';
 import { CategoryRequest } from '../../models/CategoryRequest';
 import {categoryService} from '../../api/categoryService';
+import {venueService} from '../../api/venueService';
+import SelectVenueComponent from '../VenueComponent/selectVenueComponent';
 const CreateEventComponent: React.FC = () => {
     const { token, setToken } = useAuth();
 const [formData, setFormData] = useState<EventRequest>({
@@ -163,7 +165,7 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                {/* <TextField
                   required
                   fullWidth
                   id="create-eventvenue-id"
@@ -171,7 +173,8 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
                   name="venueId"
                   value = {formData.venueId}
                   onChange={handleInputChange}
-                />
+                /> */}
+                <SelectVenueComponent></SelectVenueComponent>
                </Grid>
                <Grid item xs={12} sm={6}>
                 <TextField
