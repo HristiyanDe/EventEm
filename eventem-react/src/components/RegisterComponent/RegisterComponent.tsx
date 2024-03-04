@@ -46,7 +46,7 @@ const RegisterComponent: React.FC = () => {
         email: '',
     },
   });
-      const {token, setToken} = useAuth();
+      const {token, setToken,userId,setUser} = useAuth();
       const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -57,6 +57,7 @@ const RegisterComponent: React.FC = () => {
             const response = await axios.post(API_REGISTER_PATH, formData);
             const jwtToken = response.data?.token;
             setToken(jwtToken);
+            setUser(response.data.userId);
             console.log(jwtToken);
           console.log(formData);
         } catch (error) {

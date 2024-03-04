@@ -5,15 +5,20 @@ type AuthProviderProps = {
 type AuthContextType = {
     token: string | null;
     setToken: (token: string | null) => void;
+    userId: number | null;
+    setUser: (userId: number | null) => void;
 };
 const AuthContext = createContext<AuthContextType>({
     token: null,
     setToken: () => {},
+    userId: null,
+    setUser: ()=> {},
 });
 const AuthProvider: React.FC<AuthProviderProps> = ({children}) =>{
     const [token, setToken] = useState<string | null>(null);
+    const [userId, setUser] = useState<number | null>(null);
     return (
-        <AuthContext.Provider value = {{token, setToken}}>
+        <AuthContext.Provider value = {{token, setToken,userId, setUser}}>
     {children}
     </AuthContext.Provider>
     );
