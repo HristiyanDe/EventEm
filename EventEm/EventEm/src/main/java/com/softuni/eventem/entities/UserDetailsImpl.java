@@ -8,6 +8,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +33,13 @@ private String password;
 private UserRoleEnum role;
 @OneToOne
 private UserEntity user;
+  @ManyToMany
+  @JoinTable(
+    name = "users_organizations",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "organization_id")
+  )
+  List<OrganizationEntity> organizations;
 
   public UserDetailsImpl( String username, String password, UserRoleEnum role, UserEntity user) {
     this.username = username;

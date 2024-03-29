@@ -5,7 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "organizations")
@@ -24,6 +27,8 @@ public class OrganizationEntity {
   private String phone;
   @Column(name = "email")
   private String email;
+  @ManyToMany(mappedBy = "organizations")
+  List<UserDetailsImpl> users;
 
   public OrganizationEntity() {
   }

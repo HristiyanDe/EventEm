@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 const LoginComponent: React.FC = () => {
-    const { token, setToken } = useAuth();
+    const { token, setToken, userId,setUser } = useAuth();
     const [formData, setFormData] = useState<LoginRequest>({
         username: '',
         password: '',
@@ -30,6 +30,7 @@ const LoginComponent: React.FC = () => {
             }
             const response = await axios.post(API_LOGIN_PATH, formData);
             setToken(response.data.token);
+            setUser(response.data.userId);
         }
         catch (error) {
             console.error(error);
