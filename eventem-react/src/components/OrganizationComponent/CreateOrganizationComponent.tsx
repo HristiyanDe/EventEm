@@ -16,6 +16,7 @@ import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 import { ThemeProvider } from '@mui/material/styles';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { OrganizationRequest } from '../../models/OrganizationRequest';
+import { organizationService } from '../../api/organizationService';
 const CreateOrganizationComponent: React.FC = () => {
     const [formData, setFormData] = useState<OrganizationRequest>({
     name: '',
@@ -29,12 +30,8 @@ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
         console.log(token);
-        const response = await axios.post(API_VENUES_PATH, formData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        console.log(response.data);
+        const location = organizationService.createOrganizationComponent(token, formData);
+        console.log(location);
     } catch (error) {
         console.error(error);
     }
@@ -110,7 +107,7 @@ return (
               margin="normal"
               required
               fullWidth
-              name="address"
+              name="email"
               label="Organization email"
               id="create-organization-email"
               autoComplete="organization email"

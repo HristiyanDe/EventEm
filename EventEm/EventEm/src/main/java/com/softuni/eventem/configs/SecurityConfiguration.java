@@ -45,6 +45,7 @@ public class SecurityConfiguration {
           .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
           .requestMatchers(HttpMethod.GET, "/api/venues/**").permitAll()
           .requestMatchers(HttpMethod.GET, "/api/venues").permitAll()
+          .requestMatchers(HttpMethod.GET, "/api/users/*").permitAll()
           .anyRequest()
           .authenticated())
       .sessionManagement(httpSecuritySessionManagementConfigurer
