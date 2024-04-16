@@ -11,7 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,15 +26,16 @@ import java.util.List;
 @Table(name = "user_details")
 public class UserDetailsImpl implements UserDetails {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+  private Long userId;
+  @MapsId
+  @OneToOne
+  @JoinColumn(name = "user_id")
+private UserEntity user;
 private String username;
 private String password;
 @Enumerated(EnumType.STRING)
 @Column(name = "user_role")
 private UserRoleEnum role;
-@OneToOne
-private UserEntity user;
   @ManyToMany
   @JoinTable(
     name = "users_organizations",
@@ -48,15 +51,24 @@ private UserEntity user;
     this.user = user;
   }
 
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
   public UserDetailsImpl() {
   }
 
-  public Long getId() {
-    return id;
+
+  public List<OrganizationEntity> getOrganizations() {
+    return organizations;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setOrganizations(List<OrganizationEntity> organizations) {
+    this.organizations = organizations;
   }
 
   public void setUsername(String username) {

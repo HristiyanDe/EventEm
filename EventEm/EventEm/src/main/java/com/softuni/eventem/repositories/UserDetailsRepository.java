@@ -1,6 +1,7 @@
 package com.softuni.eventem.repositories;
 
 import com.softuni.eventem.entities.UserDetailsImpl;
+import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserDetailsRepository extends JpaRepository<UserDetailsImpl, Long> {
+public interface UserDetailsRepository extends JpaRepository<UserDetailsImpl, UserEntity> {
 
   Optional<UserDetailsImpl> findByUsername(String username);
 

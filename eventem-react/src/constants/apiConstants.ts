@@ -6,3 +6,5 @@ export const API_VENUES_PATH = BASE_API_PATH + '/venues';
 export const API_ORGANIZATIONS_PATH = BASE_API_PATH + '/organizations';
 export const API_EVENTS_PATH = BASE_API_PATH + '/events';
 export const API_TICKETS_PATH = BASE_API_PATH + '/tickets';
+export const API_USERS_PATH = BASE_API_PATH + '/users';
+export const API_USER_ORGANIZATIONS_PATH = (userId: number) => `${API_USERS_PATH}/${userId}/organizations`;

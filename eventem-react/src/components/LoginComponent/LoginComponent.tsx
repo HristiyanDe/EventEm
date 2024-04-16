@@ -30,7 +30,7 @@ const LoginComponent: React.FC = () => {
             }
             const response = await axios.post(API_LOGIN_PATH, formData);
             setToken(response.data.token);
-            setUser(response.data.userId);
+            setUser(response.data.id);
         }
         catch (error) {
             console.error(error);

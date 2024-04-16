@@ -25,8 +25,11 @@ import {categoryService} from '../../api/categoryService';
 import {venueService} from '../../api/venueService';
 import SelectVenueComponent from '../VenueComponent/selectVenueComponent';
 import { Venue } from '../../models/dtos/VenueDTO';
+import { Organization } from '../../models/dtos/OrganizationDTO';
+import SelectOrganizationComponent from '../OrganizationComponent/selectOrganizationComponent';
 const CreateEventComponent: React.FC = () => {
-    const { token, setToken } = useAuth();
+    const { token, setToken, userId, setUser } = useAuth();
+    const [selectedOrganization, setSelectedOrganization] = useState<Organization | null>(null);
 const [formData, setFormData] = useState<EventRequest>({
 name: '',
 eventStatus: EventStatusEnum.NONE,
@@ -78,6 +81,13 @@ const handleVenueSelect = (venue: Venue | null) => {
     console.log(formData);
   }
 }
+const handleOrganizationSelect = (organization: Organization | null) => {
+  if(organization && organization.id) {
+    setFormData({ ...formData, organizationId: organization.id as number });
+    setSelectedOrganization(organization);
+    console.log(formData);
+  }
+}
 const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
   
@@ -104,7 +114,12 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         });
     }
 };
+if (!token || !userId) {
+  return null;
+}
+
   return (
+    
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -175,16 +190,9 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
                 <SelectVenueComponent onVenueSelect={handleVenueSelect}/>
                 <Typography>{formData.venueId}</Typography>
                </Grid>
-               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="create-event-organization-id"
-                  label="Organization ID"
-                  name="organizationId"
-                  value = {formData.organizationId}
-                  onChange={handleInputChange}
-                />
+               <Grid item xs={12} sm={12}>
+                <SelectOrganizationComponent onOrganizationSelect={handleOrganizationSelect}/>
+                <Typography>{selectedOrganization?.name}</Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField

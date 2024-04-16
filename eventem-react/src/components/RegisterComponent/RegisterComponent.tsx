@@ -31,7 +31,6 @@ export function Copyright(props: any) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 export const defaultTheme = createTheme();
 const RegisterComponent: React.FC = () => {
   const [formData, setFormData] = useState<RegisterRequest>({
