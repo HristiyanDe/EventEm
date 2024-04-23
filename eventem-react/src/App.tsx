@@ -10,6 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CreateEventComponent from './components/EventComponent/CreateEventComponent';
 import SelectVenueComponent from './components/VenueComponent/selectVenueComponent';
+import NavbarComponent from './components/navbar/navbar';
 function App() {
   const { token, setToken, userId, setUser } = useAuth();
   const [isLogged,setIsLogged] = useState(false);
@@ -24,16 +25,8 @@ function App() {
       console.log(isLogged);
     }
 }, [token, userId]);
-useEffect(() => {
-  if (isLogged) {
-    console.log("User is logged in");
-    // Perform any action that needs to happen when the user is logged in
-  } else {
-    console.log("User is not logged in");
-    // Perform any action that needs to happen when the user is not logged in
-  }
-}, [isLogged]);
 return (<div className="App">
+  <NavbarComponent></NavbarComponent>
   <LocalizationProvider dateAdapter={AdapterDayjs}>
 
   <RegisterComponent></RegisterComponent>
