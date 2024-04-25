@@ -27,6 +27,7 @@ import SelectVenueComponent from '../VenueComponent/selectVenueComponent';
 import { Venue } from '../../models/dtos/VenueDTO';
 import { Organization } from '../../models/dtos/OrganizationDTO';
 import SelectOrganizationComponent from '../OrganizationComponent/selectOrganizationComponent';
+import { Navigate } from 'react-router-dom';
 const CreateEventComponent: React.FC = () => {
     const { token, setToken, userId, setUser } = useAuth();
     const [selectedOrganization, setSelectedOrganization] = useState<Organization | null>(null);
@@ -115,7 +116,7 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
     }
 };
 if (!token || !userId) {
-  return null;
+  return <Navigate to= "/login"/>
 }
 
   return (
