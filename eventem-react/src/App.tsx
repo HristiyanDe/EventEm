@@ -10,38 +10,21 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CreateEventComponent from './components/EventComponent/CreateEventComponent';
 import SelectVenueComponent from './components/VenueComponent/selectVenueComponent';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
   const { token, setToken, userId, setUser } = useAuth();
-  const [isLogged,setIsLogged] = useState(false);
-  useEffect(() => {
-    console.log(token,userId);
-    if (token && userId) {
-      setIsLogged(true);
-      console.log(isLogged);
-    }
-    else {
-      setIsLogged(false);
-      console.log(isLogged);
-    }
-}, [token, userId]);
-useEffect(() => {
-  if (isLogged) {
-    console.log("User is logged in");
-    // Perform any action that needs to happen when the user is logged in
-  } else {
-    console.log("User is not logged in");
-    // Perform any action that needs to happen when the user is not logged in
-  }
-}, [isLogged]);
 return (<div className="App">
   <LocalizationProvider dateAdapter={AdapterDayjs}>
-
-  <RegisterComponent></RegisterComponent>
-  {isLogged ? <CreateEventComponent></CreateEventComponent>:null}
-  <LoginComponent></LoginComponent>
-  <CreateVenueComponent></CreateVenueComponent>
-  <CreateOrganizationComponent></CreateOrganizationComponent>
-
+  <BrowserRouter>
+  <Routes>
+    <Route path="/register" element={<RegisterComponent />} />
+    <Route path="/login" element={<LoginComponent />} />
+    <Route path="/create-event" element={<CreateEventComponent />} />
+    <Route path="/create-venue" element={<CreateVenueComponent />} />
+    <Route path="/create-organization" element={<CreateOrganizationComponent />} />
+  </Routes>
+</BrowserRouter>
+  {token && userId ? <CreateEventComponent></CreateEventComponent>:null}
 </LocalizationProvider>
 </div>)}
 
