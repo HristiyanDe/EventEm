@@ -10,10 +10,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CreateEventComponent from './components/EventComponent/CreateEventComponent';
 import SelectVenueComponent from './components/VenueComponent/selectVenueComponent';
+import NavbarComponent from './components/navbar/navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
   const { token, setToken, userId, setUser } = useAuth();
 return (<div className="App">
+  <NavbarComponent></NavbarComponent>
   <LocalizationProvider dateAdapter={AdapterDayjs}>
   <BrowserRouter>
   <Routes>
@@ -24,7 +26,6 @@ return (<div className="App">
     <Route path="/create-organization" element={<CreateOrganizationComponent />} />
   </Routes>
 </BrowserRouter>
-  {token && userId ? <CreateEventComponent></CreateEventComponent>:null}
 </LocalizationProvider>
 </div>)}
 
