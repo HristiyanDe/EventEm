@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { API_REGISTER_PATH } from '../../constants/apiConstants';
 import { useAuth } from '../../auth/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 export function Copyright(props: any) {
   return (
@@ -74,7 +75,9 @@ const RegisterComponent: React.FC = () => {
           },
       });
   };
-
+  if (token || userId) {
+    return <Navigate to= "/"/>
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>

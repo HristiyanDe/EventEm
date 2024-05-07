@@ -17,6 +17,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { OrganizationRequest } from '../../models/OrganizationRequest';
 import { organizationService } from '../../api/organizationService';
+import { Navigate } from 'react-router-dom';
 const CreateOrganizationComponent: React.FC = () => {
     const [formData, setFormData] = useState<OrganizationRequest>({
     name: '',
@@ -25,7 +26,7 @@ const CreateOrganizationComponent: React.FC = () => {
     phone: '',
     email: '',
     });
-    const { token } = useAuth();
+    const { token, userId } = useAuth();
 const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -43,6 +44,9 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         [name]:value,
     });
 };
+if (!token || !userId) {
+  return <Navigate to= "/login"/>
+}
 return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
