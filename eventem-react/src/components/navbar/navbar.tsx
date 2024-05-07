@@ -1,5 +1,5 @@
 import { AccountCircle } from "@mui/icons-material"
-import { AppBar, Container, Box, MenuItem, Typography, Menu, IconButton } from "@mui/material"
+import { AppBar, Container, Box, MenuItem, Typography, Menu, IconButton, Button } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from "../../auth/AuthContext";
 import React from "react";
@@ -23,16 +23,16 @@ return (
                     </IconButton>
                 <Menu open = {navbarMenuIsOpen} anchorEl={anchorElNavbar} onClose={() => setAnchorElNavbar(null)}>
                     <MenuItem>
-                    <Typography textAlign="center">Home</Typography>
+                    <Button href="/" fullWidth>Home</Button>
                     </MenuItem>
                     <MenuItem>
-                    <Typography textAlign="center">About</Typography>
+                    <Button href="/about-us" fullWidth>About Us</Button>
                     </MenuItem>
                     <MenuItem>
-                    <Typography textAlign="center">Events</Typography>
+                    <Button href="/events" fullWidth>Events</Button>
                     </MenuItem>
                     <MenuItem>
-                    <Typography textAlign="center">Partners</Typography>
+                    <Button href="/partners" fullWidth>Partners</Button>
                     </MenuItem>
                 </Menu>
                 </Box>
@@ -47,20 +47,20 @@ return (
                 <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float: "right"}}>
                      
                     <MenuItem>
-                    <Typography>Profile</Typography>
+                    <Button href="/profile" fullWidth>Profile</Button>
                     </MenuItem>
                     <MenuItem>
-                    <Typography>Logout</Typography>
+                    <Button href="/logout" fullWidth>Logout</Button>
                     </MenuItem>
                 </Menu>
                     {//:} 
 }
                     <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float:"right"}}>
                     <MenuItem>
-                    <Typography>Login</Typography>
+                    <Button href="/login" fullWidth>Login</Button>
                     </MenuItem>
                     <MenuItem>
-                    <Typography>Register</Typography>
+                    <Button href="/register" fullWidth>Register</Button>
                     </MenuItem>
                 </Menu>
                 {//}
