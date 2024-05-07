@@ -16,6 +16,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
+import { Navigate } from "react-router-dom";
 const LoginComponent: React.FC = () => {
     const { token, setToken, userId,setUser } = useAuth();
     const [formData, setFormData] = useState<LoginRequest>({
@@ -43,6 +44,10 @@ const LoginComponent: React.FC = () => {
             [name]:value,
         });
     };
+    if(token || userId)
+      {
+        return <Navigate to="/"/>
+      }
     return (
         <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">

@@ -3,11 +3,12 @@ import {API_CATEGORIES_PATH} from '../../constants/apiConstants';
 import axios from 'axios';
 import { CategoryRequest } from '../../models/CategoryRequest';
 import { useAuth } from '../../auth/AuthContext';
+import { Navigate } from 'react-router-dom';
 const CategoryForm: React.FC = () => {
 const [formData, setFormData] = useState<CategoryRequest>({
 categoryName: '',
 });
-const { token } = useAuth();
+const { token, userId } = useAuth();
 const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -29,6 +30,9 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         [name]:value,
     });
 };
+if (!token || !userId) {
+  return <Navigate to= "/login"/>
+}
 return (<form onSubmit={handleSubmit}>
     <input type="text" placeholder="Category Name" name="categoryName" value={formData.categoryName} onChange={handleInputChange}/>
     <button type="submit">Add Category</button>

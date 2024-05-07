@@ -15,13 +15,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
+import { Navigate } from 'react-router-dom';
 const CreateVenueComponent: React.FC = () => {
 const [formData, setFormData] = useState<VenueRequest>({
 name: '',
 city: '',
 address: '',
 });
-const { token } = useAuth();
+const { token, userId } = useAuth();
 const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -43,6 +44,9 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         [name]:value,
     });
 };
+if (!token || !userId) {
+  return <Navigate to= "/login"/>
+}
 return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
