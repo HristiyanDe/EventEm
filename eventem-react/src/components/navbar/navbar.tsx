@@ -3,6 +3,7 @@ import { AppBar, Container, Box, MenuItem, Typography, Menu, IconButton, Button 
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from "../../auth/AuthContext";
 import React from "react";
+import useMediaQuery from '@mui/material/useMediaQuery';
 const NavbarComponent: React.FC = () => {
     const {token,setToken, userId, setUser} = useAuth();
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -12,8 +13,9 @@ const NavbarComponent: React.FC = () => {
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     }
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
     
-return (
+return isSmallScreen ? (
     <AppBar position="sticky">
         <Container>
             <Box sx={{flexGrow: 1, zIndex: 999, display: {xs: 'flex', md:'flex'}, justifyContent: 'space-between'}}>
@@ -69,6 +71,7 @@ return (
             </Box>
         </Container>
     </AppBar>
-)
+) :
+(<Typography> Large screen </Typography>)
 };
 export default NavbarComponent;
