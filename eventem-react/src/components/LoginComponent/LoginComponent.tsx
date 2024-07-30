@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { Navigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 const LoginComponent: React.FC = () => {
     const { token, setToken, userId,setUser } = useAuth();
     const [formData, setFormData] = useState<LoginRequest>({
@@ -30,8 +31,13 @@ const LoginComponent: React.FC = () => {
                 return;
             }
             const response = await axios.post(API_LOGIN_PATH, formData);
+            if (response.status !== 200) {
+                throw new Error('Failed to login');
+            }
             setToken(response.data.token);
             setUser(response.data.id);
+            Cookies.set('token', response.data.token);
+            Cookies.set('userId', response.data.id);
         }
         catch (error) {
             console.error(error);

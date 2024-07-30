@@ -25,7 +25,7 @@ return isSmallScreen ? (
                 <MenuIcon />
                     </IconButton>
                 <Menu open = {navbarMenuIsOpen} anchorEl={anchorElNavbar} onClose={() => setAnchorElNavbar(null)}>
-                    <NavigationLinks></NavigationLinks>
+                    <NavigationLinks/>
                 </Menu>
                 </Box>
             <Box sx={{ marginLeft: 1}}>
@@ -37,12 +37,12 @@ return isSmallScreen ? (
                 {//{token && userId ?}
 }
                 <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float: "right"}}>
-                     <LoggedInLinks></LoggedInLinks>
+                     <LoggedInLinks/>
                 </Menu>
                     {//:} 
 }
                     <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float:"right"}}>
-                    <LoggedOutLinks></LoggedOutLinks>
+                    <LoggedOutLinks/>
                 </Menu>
                 {//}
 }
@@ -52,37 +52,30 @@ return isSmallScreen ? (
     </AppBar>
 ) :
 (
-<AppBar sx={{display: 'flex', position:'sticky'}}>
-    <Container>
-        <Box sx={{flexGrow: 0, zIndex: 999, display: {xs: 'none', md:'flex'}, justifyContent: 'space-between'}}>
+<AppBar sx={{marginLeft: 0, marginRight: 0, flexGrow: 1}}>
+    <Container disableGutters={true} maxWidth={false} sx={{marginLeft: 0, marginRight: 0, flexGrow: 1}}>
+        <Box sx={{ zIndex: 999, display: {xs: 'none', md:'flex'}, justifyContent: 'space-between', width: "100%", paddingRight: 0}}>
         <Box sx={{
     '& .MuiButton-root': {
         color: 'white',
     },
-    display: 'flex',
-    flexWrap: 'nowrap',
+    display: 'inline-flex',
     alignItems: 'left',
+    marginLeft: '0px',
+    justifyContent: 'flex-start',
 }}>
                 <NavigationLinks/>
             </Box>
-            <Box sx={{ marginLeft: 1}}>
-                <IconButton onClick={handleOpenUserMenu} sx={{position: "absolute", right:0}}>
-                    <AccountCircle>
-
-                    </AccountCircle>
-                </IconButton>
-                {//{token && userId ?}
-}
-                <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float: "right"}}>
-                     <LoggedInLinks></LoggedInLinks>
-                </Menu>
-                    {//:}
-}
-                    <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float:"right"}}>
-                    <LoggedOutLinks></LoggedOutLinks>
-                </Menu>
-                {//}
-}
+            <Box sx={{
+    '& .MuiButton-root': {
+        color: 'white',
+    },
+    display: 'flex',
+    alignItems: 'right',
+    marginLeft: '0px',
+    justifyContent: 'flex-end',
+}}>
+              {!token ? <LoggedOutLinks/> :  <LoggedInLinks/>}
             </Box>
         </Box>
     </Container>
@@ -90,18 +83,3 @@ return isSmallScreen ? (
 )
 };
 export default NavbarComponent;
-
-// function  NavigationLinks(){
-//     return (
-//             <><MenuItem>
-//             <Button href="/" fullWidth>Home</Button>
-//         </MenuItem><MenuItem>
-//                 <Button href="/about-us" fullWidth>About Us</Button>
-//             </MenuItem><MenuItem>
-//                 <Button href="/events" fullWidth>Events</Button>
-//             </MenuItem><MenuItem>
-//                 <Button href="/partners" fullWidth>Partners</Button>
-//             </MenuItem></>
-       
-//     )
-// }
