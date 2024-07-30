@@ -1,5 +1,4 @@
 import React, {createContext, useContext, useState, ReactNode} from "react";
-import { useEffect } from "react";
 import Cookies from "js-cookie";
 type AuthProviderProps = {
   children: ReactNode;
@@ -25,12 +24,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) =>{
     );
 };
 const useAuth = () => {
-    // const context = useContext(AuthContext);
-    // if (!context)
-    // {
-    //     throw new Error('useAuth must be used within an AuthProvider');
-    // }
-    // return context;
     const [token, setToken] = useState<string | null>(Cookies.get('token') || null);
     const [userId, setUser] = useState<number | null>(Cookies.get('userId') ? parseInt(Cookies.get('userId') || '') : null);
     
