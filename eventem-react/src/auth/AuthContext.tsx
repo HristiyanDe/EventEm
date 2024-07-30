@@ -1,4 +1,5 @@
 import React, {createContext, useContext, useState, ReactNode} from "react";
+import Cookies from "js-cookie";
 type AuthProviderProps = {
   children: ReactNode;
 };
@@ -15,8 +16,7 @@ const AuthContext = createContext<AuthContextType>({
     setUser: ()=> {},
 });
 const AuthProvider: React.FC<AuthProviderProps> = ({children}) =>{
-    const [token, setToken] = useState<string | null>(null);
-    const [userId, setUser] = useState<number | null>(null);
+    const {token, setToken, userId, setUser} = useAuth();
     return (
         <AuthContext.Provider value = {{token, setToken,userId, setUser}}>
     {children}
@@ -24,11 +24,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) =>{
     );
 };
 const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context)
-    {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
+    const [token, setToken] = useState<string | null>(Cookies.get('token') || null);
+    const [userId, setUser] = useState<number | null>(Cookies.get('userId') ? parseInt(Cookies.get('userId') || '') : null);
+    
+    return { token, setToken, userId, setUser };
 };
 export {AuthProvider,useAuth};

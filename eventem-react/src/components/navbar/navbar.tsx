@@ -3,6 +3,8 @@ import { AppBar, Container, Box, MenuItem, Typography, Menu, IconButton, Button 
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from "../../auth/AuthContext";
 import React from "react";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import  {NavigationLinks, LoggedOutLinks, LoggedInLinks} from "./navbarViewComponents";
 const NavbarComponent: React.FC = () => {
     const {token,setToken, userId, setUser} = useAuth();
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -12,8 +14,9 @@ const NavbarComponent: React.FC = () => {
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     }
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
     
-return (
+return isSmallScreen ? (
     <AppBar position="sticky">
         <Container>
             <Box sx={{flexGrow: 1, zIndex: 999, display: {xs: 'flex', md:'flex'}, justifyContent: 'space-between'}}>
@@ -22,18 +25,7 @@ return (
                 <MenuIcon />
                     </IconButton>
                 <Menu open = {navbarMenuIsOpen} anchorEl={anchorElNavbar} onClose={() => setAnchorElNavbar(null)}>
-                    <MenuItem>
-                    <Button href="/" fullWidth>Home</Button>
-                    </MenuItem>
-                    <MenuItem>
-                    <Button href="/about-us" fullWidth>About Us</Button>
-                    </MenuItem>
-                    <MenuItem>
-                    <Button href="/events" fullWidth>Events</Button>
-                    </MenuItem>
-                    <MenuItem>
-                    <Button href="/partners" fullWidth>Partners</Button>
-                    </MenuItem>
+                    <NavigationLinks/>
                 </Menu>
                 </Box>
             <Box sx={{ marginLeft: 1}}>
@@ -42,32 +34,45 @@ return (
 
                     </AccountCircle>
                 </IconButton>
-                {//{token && userId ?}
-}
+                
                 <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float: "right"}}>
-                     
-                    <MenuItem>
-                    <Button href="/profile" fullWidth>Profile</Button>
-                    </MenuItem>
-                    <MenuItem>
-                    <Button href="/logout" fullWidth>Logout</Button>
-                    </MenuItem>
+                { token ? <LoggedOutLinks/> :  <LoggedInLinks/>}
                 </Menu>
-                    {//:} 
-}
-                    <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float:"right"}}>
-                    <MenuItem>
-                    <Button href="/login" fullWidth>Login</Button>
-                    </MenuItem>
-                    <MenuItem>
-                    <Button href="/register" fullWidth>Register</Button>
-                    </MenuItem>
-                </Menu>
-                {//}
-}
+                    
+
             </Box>
             </Box>
         </Container>
+    </AppBar>
+) :
+(
+<AppBar sx={{marginLeft: 0, marginRight: 0, flexGrow: 1}}>
+    <Container disableGutters={true} maxWidth={false} sx={{marginLeft: 0, marginRight: 0, flexGrow: 1}}>
+        <Box sx={{ zIndex: 999, display: {xs: 'none', md:'flex'}, justifyContent: 'space-between', width: "100%", paddingRight: 0}}>
+        <Box sx={{
+    '& .MuiButton-root': {
+        color: 'white',
+    },
+    display: 'inline-flex',
+    alignItems: 'left',
+    marginLeft: '0px',
+    justifyContent: 'flex-start',
+}}>
+                <NavigationLinks/>
+            </Box>
+            <Box sx={{
+    '& .MuiButton-root': {
+        color: 'white',
+    },
+    display: 'flex',
+    alignItems: 'right',
+    marginLeft: '0px',
+    justifyContent: 'flex-end',
+}}>
+              {!token ? <LoggedOutLinks/> :  <LoggedInLinks/>}
+            </Box>
+        </Box>
+    </Container>
     </AppBar>
 )
 };
