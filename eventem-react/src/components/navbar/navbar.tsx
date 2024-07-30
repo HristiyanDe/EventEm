@@ -34,18 +34,12 @@ return isSmallScreen ? (
 
                     </AccountCircle>
                 </IconButton>
-                {//{token && userId ?}
-}
+                
                 <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float: "right"}}>
-                     <LoggedInLinks/>
+                { token ? <LoggedOutLinks/> :  <LoggedInLinks/>}
                 </Menu>
-                    {//:} 
-}
-                    <Menu open = {userMenuIsOpen} anchorEl={anchorElUser} onClose={() => setAnchorElUser(null)} sx={{float:"right"}}>
-                    <LoggedOutLinks/>
-                </Menu>
-                {//}
-}
+                    
+
             </Box>
             </Box>
         </Container>
