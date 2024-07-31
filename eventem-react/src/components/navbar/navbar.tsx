@@ -69,7 +69,7 @@ return isSmallScreen ? (
     marginLeft: '0px',
     justifyContent: 'flex-end',
 }}>
-              {!token ? <LoggedOutLinks/> :  <LoggedInLinks/>}
+              {!token || !user ? <LoggedOutLinks/> :  <LoggedInLinks/>}
             </Box>
         </Box>
     </Container>

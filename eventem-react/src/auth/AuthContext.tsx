@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState, ReactNode} from "react";
 import Cookies from "js-cookie";
 import { UserEntity } from '../models/entities/UserEntity';
+import { Navigate } from "react-router-dom";
 type AuthProviderProps = {
   children: ReactNode;
 };
@@ -29,8 +30,10 @@ const useAuth = () => {
     const [user, setUser] = useState<UserEntity | null>(() => {
         const userCookie = Cookies.get('user');
         try {
-        return userCookie ? JSON.parse(userCookie) as UserEntity : null;
+            
+        return userCookie ? JSON.parse(userCookie) : null;
         } catch (error) {
+            console.log(userCookie);
         console.error('Error parsing user cookie:', error);
         return null;
         }
@@ -38,4 +41,21 @@ const useAuth = () => {
     
     return { token, setToken, user, setUser };
 };
-export {AuthProvider,useAuth};
+const useLogout = () => {
+    const {token, setToken, user, setUser} = useAuth();
+    const logout = () =>{
+
+    console.log(user);
+    if(token && user)
+        {
+    Cookies.remove('token');
+    Cookies.remove('user');
+    setToken(null);
+    setUser(null);
+    return <Navigate to="/"/>
+        }
+        return <Navigate to="/login"/>
+}
+return logout;
+};
+export {AuthProvider,useAuth, useLogout};
