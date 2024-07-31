@@ -65,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       throw new WrongCredentialsException();
     }
     log.info(String.format(AUTHENTICATE_SUCCESS_MESSAGE, request.getUsername()));
-    return new AuthenticationResponse(jwtTokenUtil.generateToken(userDetails), userDetails.getUser().getId());
+    return new AuthenticationResponse(jwtTokenUtil.generateToken(userDetails), userDetails.getUser());
   }
 
   @Transactional
@@ -82,6 +82,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     userDetails.setUser(user);
     userDetailsRepository.save(userDetails);
     log.info(String.format(REGISTERING_USER_SUCCESS_MESSAGE, userDetails.getUsername()));
-    return new AuthenticationResponse(jwtTokenUtil.generateToken(userDetails), userDetails.getUser().getId());
+    return new AuthenticationResponse(jwtTokenUtil.generateToken(userDetails), userDetails.getUser());
   }
 }
