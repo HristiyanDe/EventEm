@@ -13,7 +13,7 @@ import SelectVenueComponent from './components/VenueComponent/selectVenueCompone
 import NavbarComponent from './components/navbar/navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
-  const { token, setToken, userId, setUser } = useAuth();
+  const { token, setToken, user, setUser } = useAuth();
 return (<div className="App">
   <NavbarComponent></NavbarComponent>
   <LocalizationProvider dateAdapter={AdapterDayjs}>

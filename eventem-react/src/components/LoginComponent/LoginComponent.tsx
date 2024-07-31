@@ -19,7 +19,7 @@ import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 const LoginComponent: React.FC = () => {
-    const { token, setToken, userId,setUser } = useAuth();
+    const { token, setToken, user,setUser } = useAuth();
     const [formData, setFormData] = useState<LoginRequest>({
         username: '',
         password: '',
@@ -37,7 +37,7 @@ const LoginComponent: React.FC = () => {
             setToken(response.data.token);
             setUser(response.data.id);
             Cookies.set('token', response.data.token);
-            Cookies.set('userId', response.data.id);
+            Cookies.set('user', response.data.user);
         }
         catch (error) {
             console.error(error);
@@ -50,7 +50,7 @@ const LoginComponent: React.FC = () => {
             [name]:value,
         });
     };
-    if(token || userId)
+    if(token || user)
       {
         return <Navigate to="/"/>
       }
@@ -122,4 +122,3 @@ const LoginComponent: React.FC = () => {
       );
             };
 export default LoginComponent;
-    //{onChange={handleInputChange}}
