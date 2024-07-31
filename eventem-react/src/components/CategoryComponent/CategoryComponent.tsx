@@ -8,7 +8,7 @@ const CategoryForm: React.FC = () => {
 const [formData, setFormData] = useState<CategoryRequest>({
 categoryName: '',
 });
-const { token, userId } = useAuth();
+const { token, user } = useAuth();
 const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -30,7 +30,7 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         [name]:value,
     });
 };
-if (!token || !userId) {
+if (!token || !user) {
   return <Navigate to= "/login"/>
 }
 return (<form onSubmit={handleSubmit}>

@@ -8,16 +8,16 @@ import { useAuth } from '../../auth/AuthContext';
 
 const SelectOrganizationComponent: React.FC<{onOrganizationSelect: (organization: Organization | null)=> void}> = ({onOrganizationSelect}) => {
 const [organizations, setOrganizations] = useState<Organization[]>([]);
-const { token, setToken, userId, setUser } = useAuth();
+const { token, setToken, user, setUser } = useAuth();
 useEffect(() => {
 
     async function fetchOrganizations() {
-                if (!userId || !token) {
-            console.log('no userId or token');
+                if (!user || !token) {
+            console.log('no user or token');
             return;
         }
-        console.log('userId: '+userId);
-        const organizations = await organizationService.getUserOrganizations(userId, token);
+        console.log('userId: '+user.userId);
+        const organizations = await organizationService.getUserOrganizations(user.userId, token);
         console.log('organizations: '+organizations);
         setOrganizations(organizations);
     }

@@ -1,15 +1,17 @@
 package com.softuni.eventem.entities.response;
 
+import com.softuni.eventem.entities.UserEntity;
+
 public class AuthenticationResponse {
   private String token;
-  private Long id;
+  private UserEntity user;
 
   public AuthenticationResponse() {
   }
 
-  public AuthenticationResponse(String token, Long id) {
+  public AuthenticationResponse(String token, UserEntity user) {
     this.token = token;
-    this.id = id;
+    this.user = user;
   }
 
   public String getToken() {
@@ -20,11 +22,11 @@ public class AuthenticationResponse {
     this.token = token;
   }
 
-  public Long getId() {
-    return id;
+  public UserEntity getUser() {
+    return user;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setUser(UserEntity user) {
+    this.user = user;
   }
 }

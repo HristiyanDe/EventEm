@@ -29,7 +29,7 @@ import { Organization } from '../../models/dtos/OrganizationDTO';
 import SelectOrganizationComponent from '../OrganizationComponent/selectOrganizationComponent';
 import { Navigate } from 'react-router-dom';
 const CreateEventComponent: React.FC = () => {
-    const { token, setToken, userId, setUser } = useAuth();
+    const { token, setToken, user, setUser } = useAuth();
     const [selectedOrganization, setSelectedOrganization] = useState<Organization | null>(null);
 const [formData, setFormData] = useState<EventRequest>({
 name: '',
@@ -115,7 +115,7 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         });
     }
 };
-if (!token || !userId) {
+if (!token || !user) {
   return <Navigate to= "/login"/>
 }
 

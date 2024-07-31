@@ -1,4 +1,5 @@
 import { Button, MenuItem } from "@mui/material";
+import { useLogout } from "../../auth/AuthContext"
     const NavigationLinks = function(){
         return (
                 <>
@@ -31,14 +32,15 @@ import { Button, MenuItem } from "@mui/material";
     }
     export {LoggedOutLinks};
     
-    const LoggedInLinks = function(){
+    const LoggedInLinks = () =>{
+        const logout = useLogout();
         return (
             <>
                 <MenuItem>
                     <Button href="/profile" fullWidth>Profile</Button>
                 </MenuItem>
                 <MenuItem>
-                    <Button href="/logout" fullWidth>Logout</Button>
+                    <Button onClick={logout} href="/logout" fullWidth>Logout</Button>
                 </MenuItem>
             </>
         )

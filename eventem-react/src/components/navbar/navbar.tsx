@@ -6,7 +6,7 @@ import React from "react";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import  {NavigationLinks, LoggedOutLinks, LoggedInLinks} from "./navbarViewComponents";
 const NavbarComponent: React.FC = () => {
-    const {token,setToken, userId, setUser} = useAuth();
+    const {token,setToken, user, setUser} = useAuth();
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const [anchorElNavbar, setAnchorElNavbar] = React.useState<null | HTMLElement>(null);
     const userMenuIsOpen = Boolean(anchorElUser);
@@ -69,7 +69,7 @@ return isSmallScreen ? (
     marginLeft: '0px',
     justifyContent: 'flex-end',
 }}>
-              {!token ? <LoggedOutLinks/> :  <LoggedInLinks/>}
+              {!token || !user ? <LoggedOutLinks/> :  <LoggedInLinks/>}
             </Box>
         </Box>
     </Container>
