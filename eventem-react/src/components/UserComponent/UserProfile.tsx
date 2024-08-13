@@ -67,15 +67,6 @@ const UserProfileComponent: React.FC = () => {
                   Edit profile
                 </Button>
                 </Box>
-                <Typography component="h1" variant="h5">
-                    {user?.firstName}
-                </Typography>
-                <Typography component="h1" variant="h5">
-                    {user?.email}
-                </Typography>
-                <Typography component="h1" variant="h5">
-                    {user?.address}
-                </Typography>
                 </Box>
                 
             </Container>
