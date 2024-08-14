@@ -15,15 +15,12 @@ const UserProfileComponent: React.FC = () => {
       setIsEditing(!isEditing);
   };
   const [formData, setFormData] = useState<UpdateUserRequest>({
-    username: null,
-    password: null,
     firstName: null,
     lastName: null,
     city: null,
     address: null,
     phone: null,
     email: null,
-
 });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -53,10 +50,10 @@ const UserProfileComponent: React.FC = () => {
                 </Box>
                 <Box component="form">
                     {/*<TextField sx={{paddingBottom: 2}} fullWidth id="firstName" label="First Name" variant="outlined" value={user?.username} />*/}
-                    <TextField disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="firstName" label="First Name" variant="outlined" value={user?.firstName} />
-                    <TextField disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="lastName" label="Last Name" variant="outlined" value={user?.lastName} />
-                    <TextField disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="email" label="Email" variant="outlined" value={user?.email} />
-                    <TextField disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="address" label="Address" variant="outlined" value={user?.address} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="firstName" label="First Name" variant="outlined" value={user?.firstName} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="lastName" label="Last Name" variant="outlined" value={user?.lastName} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="email" label="Email" variant="outlined" value={user?.email} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="address" label="Address" variant="outlined" value={user?.address} />
                     <Button
                     id="submit-profile-button"
                   type="submit"
@@ -67,6 +64,9 @@ const UserProfileComponent: React.FC = () => {
                   Edit profile
                 </Button>
                 </Box>
+                <Box sx={{marginTop: 3, marginBottom: 3, padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <Button id="security-details">Security</Button>
+                  </Box>
                 </Box>
                 
             </Container>
