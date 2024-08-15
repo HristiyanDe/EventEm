@@ -1,5 +1,6 @@
 package com.softuni.eventem.controllers;
 
+import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.dto.OrganizationDTO;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import com.softuni.eventem.entities.request.UserRequest;
@@ -42,10 +43,11 @@ public class UserController {
     userService.updateUserUsername(id,updateUserUsernameRequest);
     return ResponseEntity.noContent().build();
   }
+  @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping("/{id}")
-  public ResponseEntity<Void> updateUserProfile(@PathVariable @NotNull Long id, @RequestBody @Valid UserRequest userRequest)
+  public ResponseEntity<UserEntity> updateUserProfile(@PathVariable @NotNull Long id, @RequestBody @Valid UserRequest userRequest)
   {
-    userService.updateUserProfile(id, userRequest);
+    userService.updateUserProfile(id,userRequest);
     return ResponseEntity.noContent().build();
   }
   @CrossOrigin(origins = "http://localhost:3000")

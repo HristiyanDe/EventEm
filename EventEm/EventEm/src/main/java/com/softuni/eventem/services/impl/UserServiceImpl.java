@@ -81,6 +81,9 @@ public class UserServiceImpl implements UserService {
     {
       throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE,user.getUser().getId()));
     }
-    userRepository.updateUserProfile(id,userRequest);
+    if (userRepository.updateUserProfile(id,userRequest)!=1)
+    {
+      throw new RuntimeException("Failed to update user");
+    }
   }
 }

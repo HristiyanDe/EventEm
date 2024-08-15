@@ -1,17 +1,17 @@
 import axios from "axios";
 import { UserEntity } from "../models/entities/UserEntity";
 import { UpdateUserRequest } from "../models/UpdateUserRequest";
+import { API_USER_PATH_VAR } from "../constants/apiConstants";
 
 class UserService{
-async updateUserProfile(userData: UpdateUserRequest, token: string | null, id: number | null): Promise<UserEntity>
+async updateUserProfile(userData: UpdateUserRequest, token: string | null, id: number): Promise<UserEntity>
 {
-    const response = await axios.put('/api/users/'+ id, {
-        method: 'PUT',
+    console.log("User Id: "+id);
+    const response = await axios.put(API_USER_PATH_VAR(id), userData,{
         headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(userData)
     });
     return response.data;
 }
