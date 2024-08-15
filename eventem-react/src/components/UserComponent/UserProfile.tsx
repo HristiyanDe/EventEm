@@ -5,6 +5,7 @@ import  { ThemeProvider } from "@mui/material/styles";
 import { Container } from "@mui/system";
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { AccountCircle } from "@mui/icons-material";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useState } from "react";
 import { UpdateUserRequest } from "../../models/UpdateUserRequest";
@@ -93,7 +94,7 @@ useEffect(() => {
                 </Button>
                 </Box>
                 <Box sx={{marginTop: 3, marginBottom: 3, padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <Button id="security-details">Security</Button>
+                  <Button id="security-details" href="/profile/security" endIcon={<LockOutlinedIcon/>}>Security</Button>
                   </Box>
                 </Box>
                 
