@@ -16,8 +16,9 @@ async updateUserProfile(userData: UpdateUserRequest, token: string | null, id: n
     });
     return response.data;
 }
-async updateUserSecurity(userData: UpdateUserSecurityRequest, token: string | null, id: number): Promise<UserEntity>
+async updateUserSecurity(userData: UpdateUserSecurityRequest, token: string | null, id: number): Promise<string>
 {
+    console.log(id);
     const response = await axios.put(API_USER_PATH_VAR(id)+"/security", userData,{
         headers: {
             Authorization: `Bearer ${token}`,

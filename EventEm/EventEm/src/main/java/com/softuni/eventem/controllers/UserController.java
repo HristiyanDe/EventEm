@@ -2,6 +2,7 @@ package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.dto.OrganizationDTO;
+import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import com.softuni.eventem.entities.request.UserRequest;
 import com.softuni.eventem.services.OrganizationService;
@@ -37,10 +38,11 @@ public class UserController {
     this.userService = userService;
     this.organizationService = organizationService;
   }
-  @PatchMapping("/{id}")
-  public ResponseEntity<Void> updateUserUsername(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserUsernameRequest updateUserUsernameRequest)
+  @CrossOrigin(origins = "http://localhost:3000")
+  @PutMapping("/{id}/security")
+  public ResponseEntity<Void> updateUserSecurityDetails(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest)
   {
-    userService.updateUserUsername(id,updateUserUsernameRequest);
+    userService.updateUserSecurityDetails(id,updateUserSecurityInfoRequest);
     return ResponseEntity.noContent().build();
   }
   @CrossOrigin(origins = "http://localhost:3000")

@@ -4,10 +4,12 @@ import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.enums.UserRoleEnum;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
-import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
+import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UserRequest;
 import com.softuni.eventem.exceptions.UserUnauthorizedException;
 import com.softuni.eventem.exceptions.UserWithIdNotFoundException;
+import com.softuni.eventem.exceptions.WrongCredentialsException;
+import com.softuni.eventem.jwt.JwtTokenUtil;
 import com.softuni.eventem.repositories.UserDetailsRepository;
 import com.softuni.eventem.repositories.UserRepository;
 import com.softuni.eventem.services.UserService;
@@ -15,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,15 +34,19 @@ public class UserServiceImpl implements UserService {
 
   private static final Logger logger = LoggerFactory.getLogger(VenueServiceImpl.class);
   private final ModelMapper modelMapper;
+  private final JwtTokenUtil jwtTokenUtil;
   private final UserRepository userRepository;
   private final UserDetailsRepository userDetailsRepository;
+  private final PasswordEncoder passwordEncoder;
 
   public UserServiceImpl(
-    ModelMapper modelMapper, UserRepository userRepository,
-    UserDetailsRepository userDetailsRepository) {
+    ModelMapper modelMapper, JwtTokenUtil jwtTokenUtil, UserRepository userRepository,
+    UserDetailsRepository userDetailsRepository, PasswordEncoder passwordEncoder) {
     this.modelMapper = modelMapper;
+    this.jwtTokenUtil = jwtTokenUtil;
     this.userRepository = userRepository;
     this.userDetailsRepository = userDetailsRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Transactional
@@ -58,19 +65,27 @@ public class UserServiceImpl implements UserService {
       throw new UserWithIdNotFoundException(String.format(USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE, id));
     }
   }
-
+//TODO: Refactor into AuthService, save userDetails instead of request.
   @Transactional
   @Override
-  public void updateUserUsername(Long id, UpdateUserUsernameRequest updateUserUsernameRequest) {
+  public String updateUserSecurityDetails(Long id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest) {
   UserDetailsImpl user =(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-  logger.info(String.format(UPDATING_USER_USERNAME_MESSAGE,id,updateUserUsernameRequest.getUsername()));
+  logger.info(String.format(UPDATING_USER_USERNAME_MESSAGE,id,updateUserSecurityInfoRequest.getUsername()));
   if (user.getRole() != UserRoleEnum.ADMIN && !Objects.equals(user.getUser().getId(), id)){
     throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE,user.getUser().getId()));
   }
-  if (userDetailsRepository.updateUserUsername(id,updateUserUsernameRequest)!=1)
+  updateUserSecurityInfoRequest.setNewPassword(passwordEncoder.encode(updateUserSecurityInfoRequest.getPassword()));
+    System.out.println(updateUserSecurityInfoRequest.getNewPassword());
+  if (userDetailsRepository.updateUserDetails(id, updateUserSecurityInfoRequest) != 1)
   {
     throw new UserWithIdNotFoundException(String.format(USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE, id));
   }
+  if (!updateUserSecurityInfoRequest.getUsername().equals(user.getUsername())) {
+    return jwtTokenUtil.generateToken(
+      userDetailsRepository.findByUsername(updateUserSecurityInfoRequest.getUsername()).orElseThrow(
+        WrongCredentialsException::new));
+  }
+  return jwtTokenUtil.generateToken(userDetailsRepository.findByUserId(id).orElseThrow(WrongCredentialsException::new));
   }
   @Transactional
   @Override

@@ -9,7 +9,7 @@ import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { UpdateUserSecurityRequest } from "../../models/UpdateUserSecurityRequest";
 
 const UserProfileSecurityComponent: React.FC = () => {
-    const { token, user} = useAuth();
+    const { token, setToken, user, setUser} = useAuth();
     const [formData, setFormData] = useState<UpdateUserSecurityRequest>({
         username: '',
         password: '',
@@ -22,13 +22,15 @@ const UserProfileSecurityComponent: React.FC = () => {
             [name]:value,
         });
     };
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (token && user) {
+          console.log("Component log: ID: "+user.id)
           console.log("User Id: "+user.id);
           console.log("User: "+JSON.stringify(user));
-          const updatedUser = userService.updateUserSecurity( formData, token, user.id);
-          Cookies.set('user', JSON.stringify(updatedUser));
+          const newToken = await userService.updateUserSecurity( formData, token, user.id);
+          Cookies.set('token', JSON.stringify(newToken));
+          setToken(newToken);
         }
     }
     return (

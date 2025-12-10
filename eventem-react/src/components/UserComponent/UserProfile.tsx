@@ -12,6 +12,7 @@ import { UpdateUserRequest } from "../../models/UpdateUserRequest";
 import {userService} from "../../api/userService";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const UserProfileComponent: React.FC = () => {
     const { token, user} = useAuth();
     const [isEditing, setIsEditing] = useState(false);
@@ -26,6 +27,11 @@ const UserProfileComponent: React.FC = () => {
     phone: user?.phone || "",
     email: user?.email || "",
 });
+const navigate = useNavigate();
+
+const navigateToProfileSecurity = () => {
+  navigate("/profile/security");
+};
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   if (token && user) {
@@ -33,6 +39,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     console.log("User: "+JSON.stringify(user));
     const updatedUser = userService.updateUserProfile( formData, token, user.id);
     Cookies.set('user', JSON.stringify(updatedUser));
+    handleEditClick();
   }
 
   console.log(formData);
@@ -94,7 +101,7 @@ useEffect(() => {
                 </Button>
                 </Box>
                 <Box sx={{marginTop: 3, marginBottom: 3, padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <Button id="security-details" href="/profile/security" endIcon={<LockOutlinedIcon/>}>Security</Button>
+                  <Button id="security-details" onClick={navigateToProfileSecurity} endIcon={<LockOutlinedIcon/>}>Security</Button>
                   </Box>
                 </Box>
                 

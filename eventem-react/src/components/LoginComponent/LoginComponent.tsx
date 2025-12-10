@@ -39,7 +39,6 @@ const LoginComponent: React.FC = () => {
             setUser(response.data.user);
             Cookies.set('token', response.data.token);
             Cookies.set('user', JSON.stringify(response.data.user));
-          return <Navigate to="/"/>
         }
         catch (error) {
             console.error(error);
