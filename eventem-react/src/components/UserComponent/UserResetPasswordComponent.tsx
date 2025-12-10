@@ -1,6 +1,6 @@
 import { LoginRequest } from "../../models/LoginRequest";
 import axios from "axios";
-import { API_LOGIN_PATH } from "../../constants/apiConstants";
+import { API_LOGIN_PATH, API_RESET_PASSWORD_PATH } from "../../constants/apiConstants";
 import { useState } from "react";
 import { useAuth, useLogout } from "../../auth/AuthContext";
 import React from 'react';
@@ -18,46 +18,42 @@ import Container from '@mui/material/Container';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import { ResetPasswordRequest } from "../../models/ResetPasswordRequest";
 import { Link as RouterLink } from "react-router-dom";
-const LoginComponent: React.FC = () => {
+const UserProfileSecurityComponent: React.FC = () => {
     const { token, setToken, user,setUser } = useAuth();
-    const  logout  = useLogout();
-    const [formData, setFormData] = useState<LoginRequest>({
+    const email = '';
+    const [formData, setFormData] = useState<ResetPasswordRequest>({
         username: '',
         password: '',
-    });
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        try {
-            if (token && user) {
-                return <Navigate to="/"/>;
-            }
-            const response = await axios.post(API_LOGIN_PATH, formData);
-            if (response.status !== 200) {
-                throw new Error('Failed to login');
-            }
-            setToken(response.data.token);
-            setUser(response.data.user);
-            Cookies.set('token', response.data.token);
-            Cookies.set('user', JSON.stringify(response.data.user));
-        }
-        catch (error) {
-            console.error(error);
-        }
-    };
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const {name, value} = e.target;
-        setFormData({
-            ...formData,
-            [name]:value,
+        confirmPassword: '',
         });
-    };
-    if(token && user)
-      {
-        
-        console.log(token,user);
-        return <Navigate to="/"/>
-      }
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            const {name, value} = e.target;
+            setFormData({
+                ...formData,
+                [name]:value,
+            });
+        };
+        const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            try {
+                if (token && user) {
+                    return <Navigate to="/"/>;
+                }
+                const response = await axios.post(API_RESET_PASSWORD_PATH, formData);
+                if (response.status !== 200) {
+                    throw new Error('Failed to login');
+                }
+                setToken(response.data.token);
+                setUser(response.data.user);
+                Cookies.set('token', response.data.token);
+                Cookies.set('user', JSON.stringify(response.data.user));
+            }
+            catch (error) {
+                console.error(error);
+            }
+        };
     return (
         <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">
@@ -74,7 +70,7 @@ const LoginComponent: React.FC = () => {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign in
+                Reset password
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField
@@ -92,11 +88,22 @@ const LoginComponent: React.FC = () => {
                   margin="normal"
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
                   id="password"
+                  label="New Password"
+                  name="password"
                   autoComplete="current-password"
+                  autoFocus
+                  onChange={handleInputChange}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="confirmPassword"
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  autoComplete="current-password"
+                  autoFocus
                   onChange={handleInputChange}
                 />
                 <Button
@@ -107,22 +114,10 @@ const LoginComponent: React.FC = () => {
                 >
                   Sign In
                 </Button>
-                <Grid container>
-                  <Grid item xs>
-                    <Link component={RouterLink} to="/reset-password" variant="body2">
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                     <Link component={RouterLink} to="/register" variant="body2">
-                      Don't have an account? Sign Up
-                    </Link>
-                  </Grid>
-                </Grid>
               </Box>
             </Box>
           </Container>
         </ThemeProvider>
       );
-            };
-export default LoginComponent;
+}
+export default UserProfileSecurityComponent;

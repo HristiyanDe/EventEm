@@ -2,6 +2,7 @@ package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.request.AuthenticationRequest;
 import com.softuni.eventem.entities.request.RegisterRequest;
+import com.softuni.eventem.entities.request.ResetPasswordRequest;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.response.AuthenticationResponse;
 import com.softuni.eventem.services.AuthenticationService;
@@ -44,6 +45,10 @@ public class AuthController {
   ) {
     return ResponseEntity.ok(authenticationService.authenticate(request));
   }
+  @PostMapping("/reset-password")
+  ResponseEntity<AuthenticationResponse> resetToken(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest) {
+    return ResponseEntity.ok(authenticationService.resetPassword(resetPasswordRequest));
+  }
   @PatchMapping("/{id}")
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> updateUserRole(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserRoleRequest updateUserRoleRequest)
@@ -51,4 +56,5 @@ public class AuthController {
     userService.updateUserRole(id, updateUserRoleRequest);
     return ResponseEntity.noContent().build();
   }
+
 }

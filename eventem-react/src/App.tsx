@@ -15,6 +15,7 @@ import UserProfileSecurityComponent from './components/UserComponent/UserProfile
 import NavbarComponent from './components/navbar/navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomeComponent from './components/HomeComponent/HomeComponent';
+import UserResetPasswordComponent from './components/UserComponent/UserResetPasswordComponent';
 function App() {
   const { token, setToken, user, setUser } = useAuth();
 return (<div className="App">
@@ -30,6 +31,7 @@ return (<div className="App">
     <Route path="/profile" element= {<UserProfileComponent/>} />
     <Route path="/" element= {<HomeComponent/>}/>
     <Route path="/profile/security" element= {<UserProfileSecurityComponent/>}/>
+    <Route path="/reset-password" element= {<UserResetPasswordComponent/>}/>
   </Routes>
 </BrowserRouter>
 </LocalizationProvider>

@@ -55,9 +55,27 @@ public class JwtTokenUtil {
                .setExpiration(new Date(System.currentTimeMillis() + expiration * 60 * 8))
                .signWith(SignatureAlgorithm.HS512, secret).compact();
   }
-
   public Boolean validateToken(String token, UserDetails userDetails) {
     final String username = getUsernameFromToken(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+  }
+  //TODO: Methods below are placeholders for now
+  public String generatePasswordResetToken(String username) {
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("type", "password_reset");
+
+    long resetExpiration = 10 * 60 * 1000;
+
+    return Jwts.builder()
+               .setClaims(claims)
+               .setSubject(username)
+               .setIssuedAt(new Date(System.currentTimeMillis()))
+               .setExpiration(new Date(System.currentTimeMillis() + resetExpiration))
+               .signWith(SignatureAlgorithm.HS512, secret)
+               .compact();
+  }
+  public boolean isPasswordResetToken(String token) {
+    Claims claims = getAllClaimsFromToken(token);
+    return "password_reset".equals(claims.get("type"));
   }
 }

@@ -1,6 +1,7 @@
 export const BASE_API_PATH = 'http://localhost:8081/api';
 export const API_REGISTER_PATH = BASE_API_PATH + '/auth/register';
 export const API_LOGIN_PATH = BASE_API_PATH + '/auth/authenticate';
+export const API_RESET_PASSWORD_PATH = BASE_API_PATH + '/auth/reset-password';
 export const API_CATEGORIES_PATH = BASE_API_PATH + '/categories';
 export const API_VENUES_PATH = BASE_API_PATH + '/venues';
 export const API_ORGANIZATIONS_PATH = BASE_API_PATH + '/organizations';
