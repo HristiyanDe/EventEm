@@ -22,7 +22,7 @@ public class TicketEntity {
   @Column(name = "name")
   private String name;
   @Column(name = "event_id")
-  private Long eventId;
+  private UUID eventId;
   @Column(name = "price")
   private BigDecimal price;
 
@@ -45,11 +45,11 @@ public class TicketEntity {
     this.name = name;
   }
 
-  public Long getEventId() {
+  public UUID getEventId() {
     return eventId;
   }
 
-  public void setEventId(Long eventId) {
+  public void setEventId(UUID eventId) {
     this.eventId = eventId;
   }
 

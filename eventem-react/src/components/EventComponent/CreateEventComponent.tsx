@@ -40,11 +40,7 @@ venueId: '',
 organizationId: '',
 description: '',
 maxAttendees: 0,
-categories: [{
-    categoryName: '',
-}],
-//TODO: make the user able to add multiple categories to an event
-//TODO: Refactor handle functions to be more generic
+categories: [],
 });
 const [categories, setCategories] = useState<CategoryRequest[]>([]);
 useEffect(() => {
@@ -58,9 +54,17 @@ useEffect(() => {
   
 const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+        const payload = {
+        ...formData,
+        categories: formData.categories.map(c =>
+            typeof c === "string"
+                ? { categoryName: c }
+                : c
+        )
+    };
     try {
         console.log(token);
-        const response = await axios.post(API_EVENTS_PATH, formData, {
+        const response = await axios.post(API_EVENTS_PATH, payload, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

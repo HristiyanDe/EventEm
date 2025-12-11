@@ -4,14 +4,6 @@ import { API_ORGANIZATIONS_PATH, API_USER_ORGANIZATIONS_PATH } from "../constant
 import { OrganizationRequest } from "../models/OrganizationRequest";
 
 class OrganizationService{
-    async getUserOrganizations(userId: string, token: String | null): Promise<Organization[]>{
-        const response = await axios.get<Organization[]>(API_USER_ORGANIZATIONS_PATH(userId),{
-            headers: {
-                Authorization: `Bearer ${token}`,
-        },
-    });
-        return response.data;
-    }
 
 async createOrganizationComponent(token: string | null, formData: OrganizationRequest){
     if(!token){
@@ -23,6 +15,13 @@ async createOrganizationComponent(token: string | null, formData: OrganizationRe
         },
     });
     return response.headers['location'];
+}
+async fetchOrganizations(token: string): Promise<Organization[]> {
+    const response = await axios.get<Organization[]>(API_ORGANIZATIONS_PATH, {headers: {
+        Authorization: `Bearer ${token}`,
+    }});
+    
+    return response.data;
 }
 }
 export const organizationService = new OrganizationService();

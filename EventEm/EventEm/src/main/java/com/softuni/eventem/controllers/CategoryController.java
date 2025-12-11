@@ -27,20 +27,12 @@ public class CategoryController {
   public CategoryController(CategoryService categoryService) {
     this.categoryService = categoryService;
   }
-  @CrossOrigin(origins = "http://localhost:3000")
   @PostMapping
-  @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> createCategory(@RequestBody @Valid CategoryRequest categoryRequest)
   {
-    return ResponseEntity.created(
-                           UriComponentsBuilder
-                             .fromUriString("/{id}")
-                             .buildAndExpand(
-                               categoryService
-                                 .createCategory(categoryRequest)
-                                 .getId())
-                             .toUri())
-                         .build();
+    System.out.println("in method");
+    categoryService.createCategory(categoryRequest);
+    return ResponseEntity.ok().build();
   }
   @GetMapping
   public ResponseEntity<List<CategoryDTO>> getCategories()

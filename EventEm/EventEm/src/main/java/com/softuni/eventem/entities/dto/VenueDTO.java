@@ -1,7 +1,9 @@
 package com.softuni.eventem.entities.dto;
 
+import java.util.UUID;
+
 public class VenueDTO {
-  private Long id;
+  private UUID id;
   private String name;
   private String city;
   private String address;
@@ -33,11 +35,11 @@ public class VenueDTO {
     this.address = address;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

@@ -1,10 +1,11 @@
 package com.softuni.eventem.entities.request;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class TicketRequest {
 private String name;
-private Long eventId;
+private UUID eventId;
 private BigDecimal price;
 
   public TicketRequest() {
@@ -18,11 +19,11 @@ private BigDecimal price;
     this.name = name;
   }
 
-  public Long getEventId() {
+  public UUID getEventId() {
     return eventId;
   }
 
-  public void setEventId(Long eventId) {
+  public void setEventId(UUID eventId) {
     this.eventId = eventId;
   }
 
