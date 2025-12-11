@@ -36,10 +36,11 @@ public class TicketServiceImpl implements TicketService {
 
   @Override
   public TicketEntity createTicket(TicketRequest ticketRequest) {
+
     try {
-      TicketEntity ticket = ticketRepository.save(
-        modelMapper.map(ticketRequest, TicketEntity.class)
-      );
+      TicketEntity ticket = modelMapper.map(ticketRequest, TicketEntity.class);
+      ticket.setId(null);
+        ticketRepository.save(ticket);
       logger.info(String.format(
         TICKET_CREATED_MESSAGE, ticket));
       return ticket;

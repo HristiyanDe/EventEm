@@ -26,7 +26,6 @@ public class TicketController {
   }
 
   @PostMapping
-  @PreAuthorize("hasAuthority('ADMIN')")
   @CrossOrigin(origins = "http://localhost:3001")
   public ResponseEntity<Void> createTicket(@RequestBody @Valid TicketRequest ticketRequest)
   {

@@ -3,14 +3,18 @@ package com.softuni.eventem.services.impl;
 import com.softuni.eventem.entities.CategoryEntity;
 import com.softuni.eventem.entities.EventEntity;
 import com.softuni.eventem.entities.OrganizationEntity;
+import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.VenueEntity;
+import com.softuni.eventem.entities.enums.UserRoleEnum;
 import com.softuni.eventem.entities.request.CategoryRequest;
 import com.softuni.eventem.entities.request.EventRequest;
 import com.softuni.eventem.exceptions.EventAlreadyExistsException;
 import com.softuni.eventem.exceptions.NoMatchingCategoriesWithNamesFoundException;
+import com.softuni.eventem.exceptions.UserUnauthorizedException;
 import com.softuni.eventem.exceptions.VenueUnavailableBetweenDatesException;
 import com.softuni.eventem.repositories.CategoryRepository;
 import com.softuni.eventem.repositories.EventRepository;
+import com.softuni.eventem.repositories.projection.EventListDTO;
 import com.softuni.eventem.services.CategoryService;
 import com.softuni.eventem.services.EventService;
 import com.softuni.eventem.services.OrganizationService;
@@ -19,16 +23,19 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.EVENT_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.EVENT_CREATED_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.NO_MATCHING_CATEGORIES_FOUND_ERROR_MESSAGE;
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.USER_LACKS_AUTHORITY_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_UNAVAILABLE_BETWEEN_DATES_ERROR_MESSAGE;
 
 @Service
@@ -89,6 +96,17 @@ public class EventServiceImpl implements EventService {
       logger.error(String.format(ENTITY_ALREADY_EXISTS_ERROR, eventRequest));
       throw new EventAlreadyExistsException(EVENT_ALREADY_EXISTS_ERROR_MESSAGE);
     }
+  }
+
+  @Override
+  public List<EventListDTO> findEventsByName(String name) {
+    UserDetailsImpl user =(UserDetailsImpl) Objects.requireNonNull(
+      SecurityContextHolder.getContext().getAuthentication()).getPrincipal();
+    System.out.println(user.getRole());
+    if (!(user != null && user.getRole().equals(UserRoleEnum.ADMIN))) {
+      throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE, user.getUserId()));
+    }
+    return eventRepository.findByNameContaining(name).stream().toList();
   }
 
   private boolean hasConflictingEventByVenueAndDateRange(EventEntity eventEntity) {
