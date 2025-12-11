@@ -1,7 +1,6 @@
 package com.softuni.eventem.entities.request;
 
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class ResetPasswordRequest {

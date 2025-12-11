@@ -66,7 +66,6 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(modelMapper.map(userRequest, UserEntity.class));
   }
 
-  //TODO: Admins shouldn't be able to un-admin other admins
   @Transactional
   @Override
   public void updateUserRole(UUID id, UpdateUserRoleRequest updateUserRoleRequest) {
@@ -75,7 +74,6 @@ public class UserServiceImpl implements UserService {
       throw new UserWithIdNotFoundException(String.format(USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE, id));
     }
   }
-//TODO: Refactor into AuthService, save userDetails instead of request.
   @Transactional
   @Override
   public String updateUserSecurityDetails(UUID id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest) {

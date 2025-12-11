@@ -23,7 +23,6 @@ public final class LoggerAndExceptionConstants {
   public static String AUTHENTICATE_SUCCESS_MESSAGE = "Authentication has been successful for username: %s.";
   public static String REGISTERING_USER_MESSAGE = "Registering user with username: %s.";
   public static String REGISTERING_USER_SUCCESS_MESSAGE = "Successfully registered user with username: %s.";
-  public static String DATA_INTEGRITY_VIOLATION_ERROR_MESSAGE = "Encountered DataIntegrityViolation when attempting to save to database: %s";
   public static final String WRONG_CREDENTIALS_ERROR_MESSAGE = "Incorrect credentials";
   public static final String USER_WITH_NAME_NOT_FOUND_ERROR_MESSAGE = "User not found with entered username";
   public static final String USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE = "User with id %s not found";

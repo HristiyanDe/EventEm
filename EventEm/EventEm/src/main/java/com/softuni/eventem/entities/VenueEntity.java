@@ -2,15 +2,12 @@ package com.softuni.eventem.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
-//todo: Make unique constraint in between city and address
 @Entity
 @Table(name = "venues", schema = "eventem")
 public class VenueEntity {

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import static com.softuni.eventem.constants.OpenAPIInfo.API_DESCRIPTION;
 import static com.softuni.eventem.constants.OpenAPIInfo.API_TITLE;
 import static com.softuni.eventem.constants.OpenAPIInfo.API_URL;
-//TODO: Integrate swagger into security, proper method descriptions
+
 @Configuration
 @SecurityScheme(
   name = "Bearer Authentication",
