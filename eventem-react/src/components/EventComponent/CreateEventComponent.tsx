@@ -41,8 +41,6 @@ organizationId: '',
 description: '',
 maxAttendees: 0,
 categories: [],
-//TODO: make the user able to add multiple categories to an event
-//TODO: Refactor handle functions to be more generic
 });
 const [categories, setCategories] = useState<CategoryRequest[]>([]);
 useEffect(() => {

@@ -20,6 +20,9 @@ const AdminMenuNavigationLinks = function() {
     <MenuItem>
         <Button href="/create-venue" fullWidth>Create Venue</Button>
     </MenuItem>
+        <MenuItem>
+        <Button href="/create-ticket" fullWidth>Create Ticket</Button>
+    </MenuItem>
     </>
     );
 }
