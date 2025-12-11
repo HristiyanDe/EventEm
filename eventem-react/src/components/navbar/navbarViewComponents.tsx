@@ -42,6 +42,9 @@ import { useLogout } from "../../auth/AuthContext"
                 <MenuItem>
                     <Button onClick={logout} href="/logout" fullWidth>Logout</Button>
                 </MenuItem>
+                <MenuItem>
+                    <Button href="/admin" fullWidth>Admin menu</Button>
+                </MenuItem>
             </>
         )
     }

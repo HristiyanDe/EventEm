@@ -48,7 +48,7 @@ return isSmallScreen ? (
 (
 <AppBar sx={{marginLeft: 0, marginRight: 0, flexGrow: 1}}>
     <Container disableGutters={true} maxWidth={false} sx={{marginLeft: 0, marginRight: 0, flexGrow: 1}}>
-        <Box sx={{ zIndex: 999, display: {xs: 'none', md:'flex'}, justifyContent: 'space-between', width: "100%", paddingRight: 0}}>
+        <Box sx={{ zIndex: 999, display: {xs: 'none', sm:'flex'}, justifyContent: 'space-between', width: "100%", paddingRight: 0}}>
         <Box sx={{
     '& .MuiButton-root': {
         color: 'white',
