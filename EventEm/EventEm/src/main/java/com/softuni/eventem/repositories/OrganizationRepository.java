@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface OrganizationRepository extends JpaRepository<OrganizationEntity, Long> {
+public interface OrganizationRepository extends JpaRepository<OrganizationEntity, UUID> {
   @Query("SELECT o FROM OrganizationEntity o JOIN o.users u WHERE u.userId = :userId")
-  List<OrganizationBasicView> findAllByUserId(@Param("userId") Long userId);
+  List<OrganizationBasicView> findAllByUserId(@Param("userId") UUID userId);
 
 }

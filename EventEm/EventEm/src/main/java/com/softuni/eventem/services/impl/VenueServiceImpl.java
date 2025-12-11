@@ -14,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_ALREADY_EXISTS_ERROR_MESSAGE;
@@ -49,7 +50,7 @@ public class VenueServiceImpl implements VenueService {
   }
 
   @Override
-  public VenueEntity getVenueById(Long id) {
+  public VenueEntity getVenueById(UUID id) {
     return venueRepository.findById(id).orElseThrow(VenueEntityNotFoundException::new);
   }
 

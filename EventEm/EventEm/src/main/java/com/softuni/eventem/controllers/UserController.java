@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -44,20 +45,20 @@ public class UserController {
   }
   @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping("/{id}/security")
-  public ResponseEntity<String> updateUserSecurityDetails(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest)
+  public ResponseEntity<String> updateUserSecurityDetails(@PathVariable @NotNull UUID id, @RequestBody @Valid UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest)
   {
     return ResponseEntity.ok(userService.updateUserSecurityDetails(id,updateUserSecurityInfoRequest));
   }
   @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping("/{id}")
-  public ResponseEntity<UserEntity> updateUserProfile(@PathVariable @NotNull Long id, @RequestBody @Valid UserRequest userRequest)
+  public ResponseEntity<UserEntity> updateUserProfile(@PathVariable @NotNull UUID id, @RequestBody @Valid UserRequest userRequest)
   {
 
     return ResponseEntity.ok(userService.updateUserProfile(id,userRequest));
   }
   @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping("/{id}/organizations")
-  public ResponseEntity<List<OrganizationDTO>> getOrganizationsByUser(@PathVariable @NotNull Long id)
+  public ResponseEntity<List<OrganizationDTO>> getOrganizationsByUser(@PathVariable @NotNull UUID id)
   {
   return ResponseEntity.ok(organizationService.getOrganizationsByUserId(id));
   }

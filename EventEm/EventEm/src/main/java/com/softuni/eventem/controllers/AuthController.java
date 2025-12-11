@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -56,7 +57,7 @@ public class AuthController {
   }
   @PatchMapping("/{id}")
   @PreAuthorize("hasAuthority('ADMIN')")
-  public ResponseEntity<Void> updateUserRole(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserRoleRequest updateUserRoleRequest)
+  public ResponseEntity<Void> updateUserRole(@PathVariable @NotNull UUID id, @RequestBody @Valid UpdateUserRoleRequest updateUserRoleRequest)
   {
     userService.updateUserRole(id, updateUserRoleRequest);
     return ResponseEntity.noContent().build();

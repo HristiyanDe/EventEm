@@ -37,7 +37,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   if (token && user) {
     console.log("User Id: "+user.id);
     console.log("User: "+JSON.stringify(user));
-    const updatedUser = await userService.updateUserProfile( formData, token, user.id);
+    const updatedUser = await userService.updateUserProfile( formData, token, user.id as string);
     Cookies.set('user', JSON.stringify(updatedUser));
     handleEditClick();
   }

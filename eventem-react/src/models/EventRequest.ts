@@ -6,8 +6,8 @@ export interface EventRequest {
     eventStatus: EventStatusEnum;
     startDate: string;
     endDate: string;
-    venueId: number;
-    organizationId: number,
+    venueId: string;
+    organizationId: string,
     description: string;
     maxAttendees: number;
     categories: CategoryRequest[];

@@ -4,14 +4,15 @@ import com.softuni.eventem.entities.enums.EventStatusEnum;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class EventRequest {
   private String name;
   private EventStatusEnum eventStatus;
   private LocalDate startDate;
   private LocalDate endDate;
-  private Long venueId;
-  private Long organizationId;
+  private UUID venueId;
+  private UUID organizationId;
   private String description;
   private Integer maxAttendees;
   private List<CategoryRequest> categories;
@@ -51,19 +52,19 @@ public class EventRequest {
     this.endDate = endDate;
   }
 
-  public Long getVenueId() {
+  public UUID getVenueId() {
     return venueId;
   }
 
-  public void setVenueId(Long venueId) {
+  public void setVenueId(UUID venueId) {
     this.venueId = venueId;
   }
 
-  public Long getOrganizationId() {
+  public UUID getOrganizationId() {
     return organizationId;
   }
 
-  public void setOrganizationId(Long organizationId) {
+  public void setOrganizationId(UUID organizationId) {
     this.organizationId = organizationId;
   }
 

@@ -9,16 +9,17 @@ import com.softuni.eventem.entities.request.UsernameRequest;
 import com.softuni.eventem.repositories.projection.AdminUserListDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
   UserEntity createUser(UserRequest userRequest);
 
-  void updateUserRole(Long id, UpdateUserRoleRequest updateUserRoleRequest);
+  void updateUserRole(UUID id, UpdateUserRoleRequest updateUserRoleRequest);
 
-  String updateUserSecurityDetails(Long id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest);
+  String updateUserSecurityDetails(UUID id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest);
 
-  UserEntity updateUserProfile(Long id, UserRequest userRequest);
+  UserEntity updateUserProfile(UUID id, UserRequest userRequest);
 
   List<AdminUserListDTO> findUsersByUsername(String username);
 

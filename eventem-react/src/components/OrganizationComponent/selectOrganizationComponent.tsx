@@ -16,8 +16,7 @@ useEffect(() => {
             console.log('no user or token');
             return;
         }
-        console.log('userId: '+user.id);
-        const organizations = await organizationService.getUserOrganizations(user.id, token);
+        const organizations = await organizationService.getUserOrganizations(user.id as string, token);
         console.log('organizations: '+organizations);
         setOrganizations(organizations);
     }
@@ -27,7 +26,7 @@ useEffect(() => {
 , []);
 const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    id: number,
+    id: string,
 ) => {
     onOrganizationSelect(organizations.find(organization => organization.id === id) || null);
    
@@ -48,7 +47,7 @@ return (
                                 id="organization-select">
                                     {organizations.map((organization) => (
                                         <ListItem key={organization.id} component="div">
-                                            <ListItemButton onClick={(event)=> handleListItemClick(event, organization.id as number)}>
+                                            <ListItemButton onClick={(event)=> handleListItemClick(event, organization.id as string)}>
                                                 <ListItemText primary={organization.name}/>
                                                 </ListItemButton>
                                         </ListItem>

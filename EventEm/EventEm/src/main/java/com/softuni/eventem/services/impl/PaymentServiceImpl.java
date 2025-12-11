@@ -38,52 +38,52 @@ public class PaymentServiceImpl implements PaymentService {
   @Transactional
   @Override
   public String createCheckout(List<PurchaseTicketRequest> ticketRequests) {
-    try {
-      Stripe.apiKey = API_KEY;
-      SessionCreateParams sessionCreateParams =
-        SessionCreateParams.builder()
-                           .setMode(SessionCreateParams.Mode.PAYMENT)
-                           .addAllLineItem(createLineItems(ticketRequests))
-
-                           .setSuccessUrl(PAYMENT_SUCCESS_URL)
-                           .setCancelUrl(PAYMENT_CANCEL_URL)
-                           .build();
-      Session session = Session.create(sessionCreateParams);
-      return session.getUrl();
-    }catch (StripeException e)
-    {
-    logger.error(e.getMessage());
-    return "KMS";
-    }
-  }
-
-  private List<SessionCreateParams.LineItem> createLineItems(List<PurchaseTicketRequest> ticketRequests) {
-    List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
-    ticketRequests = ticketRequests.stream().sorted(Comparator.comparing(PurchaseTicketRequest::getId)).toList();
-
-    List<TicketEntity> ticketEntities = ticketService.getAllTicketEntitiesNamePriceAndIdByIds(
-      ticketRequests.stream().map(PurchaseTicketRequest::getId).toList());
-    for (TicketEntity t : ticketEntities) {
-      for (PurchaseTicketRequest pt : ticketRequests) {
-        if (Objects.equals(pt.getId(), t.getId())) {
-          Long price = t.getPrice().multiply(BigDecimal.valueOf(100)).longValue();
-          SessionCreateParams.LineItem lineItem =
-            SessionCreateParams.LineItem.builder()
-                                        .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
-                                                           .setCurrency("usd")
-                                                           .setUnitAmount(price)
-                                                           .setProductData(
-                                                               SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                                  .setName(
-                                                                  t.getName())
-                                                                  .build())
-                                                                                            .build())
-                                        .setQuantity(pt.getQuantity()).build();
-          lineItems.add(lineItem);
-          break;
-        }
-      }
-    }
-    return lineItems;
+//    try {
+//      Stripe.apiKey = API_KEY;
+//      SessionCreateParams sessionCreateParams =
+//        SessionCreateParams.builder()
+//                           .setMode(SessionCreateParams.Mode.PAYMENT)
+//                           .addAllLineItem(createLineItems(ticketRequests))
+//
+//                           .setSuccessUrl(PAYMENT_SUCCESS_URL)
+//                           .setCancelUrl(PAYMENT_CANCEL_URL)
+//                           .build();
+//      Session session = Session.create(sessionCreateParams);
+//      return session.getUrl();
+//    }catch (StripeException e)
+//    {
+//    logger.error(e.getMessage());
+//    return "KMS";
+//    }
+//  }
+//
+//  private List<SessionCreateParams.LineItem> createLineItems(List<PurchaseTicketRequest> ticketRequests) {
+//    List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
+//    ticketRequests = ticketRequests.stream().sorted(Comparator.comparing(PurchaseTicketRequest::getId)).toList();
+//
+//    List<TicketEntity> ticketEntities = ticketService.getAllTicketEntitiesNamePriceAndIdByIds(
+//      ticketRequests.stream().map(PurchaseTicketRequest::getId).toList());
+//    for (TicketEntity t : ticketEntities) {
+//      for (PurchaseTicketRequest pt : ticketRequests) {
+//        if (Objects.equals(pt.getId(), t.getId())) {
+//          Long price = t.getPrice().multiply(BigDecimal.valueOf(100)).longValue();
+//          SessionCreateParams.LineItem lineItem =
+//            SessionCreateParams.LineItem.builder()
+//                                        .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
+//                                                           .setCurrency("usd")
+//                                                           .setUnitAmount(price)
+//                                                           .setProductData(
+//                                                               SessionCreateParams.LineItem.PriceData.ProductData.builder()
+//                                                                  .setName(
+//                                                                  t.getName())
+//                                                                  .build())
+//                                                                                            .build())
+//                                        .setQuantity(pt.getQuantity()).build();
+//          lineItems.add(lineItem);
+//          break;
+//        }
+//      }
+//    }
+    return "lineItems";
   }
 }

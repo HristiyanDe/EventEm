@@ -1,16 +1,11 @@
-import { LoginRequest } from "../../models/LoginRequest";
 import axios from "axios";
-import { API_LOGIN_PATH, API_RESET_PASSWORD_PATH } from "../../constants/apiConstants";
 import { useState } from "react";
-import { useAuth, useLogout } from "../../auth/AuthContext";
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -19,7 +14,8 @@ import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { ResetPasswordRequest } from "../../models/ResetPasswordRequest";
-import { Link as RouterLink } from "react-router-dom";
+import { useAuth } from "../../auth/AuthContext";
+import { API_RESET_PASSWORD_PATH } from "../../constants/apiConstants";
 const UserProfileSecurityComponent: React.FC = () => {
     const { token, setToken, user,setUser } = useAuth();
     const email = '';

@@ -3,7 +3,6 @@ package com.softuni.eventem.repositories;
 import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.enums.UserRoleEnum;
-import com.softuni.eventem.entities.request.UpdateUserRoleByUsername;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.repositories.projection.AdminUserListDTO;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface UserDetailsRepository extends JpaRepository<UserDetailsImpl, UserEntity> {
@@ -23,19 +23,19 @@ public interface UserDetailsRepository extends JpaRepository<UserDetailsImpl, Us
   Optional<UserDetailsImpl> findByUsername(String username);
 
   @Query("SELECT u FROM UserDetailsImpl u WHERE u.user.id = :userId")
-  Optional<UserDetailsImpl> findByUserId(Long userId);
+  Optional<UserDetailsImpl> findByUserId(UUID userId);
 
   @Query("UPDATE UserDetailsImpl u SET u.role = :#{#updateUserRoleRequest.role} " +
          "WHERE u.user.id = :userId")
   @Modifying
   int updateUserRole(
-    @Param("userId") Long id, @Param("updateUserRoleRequest") UpdateUserRoleRequest updateUserRoleRequest);
+    @Param("userId") UUID id, @Param("updateUserRoleRequest") UpdateUserRoleRequest updateUserRoleRequest);
 
   @Query("UPDATE UserDetailsImpl u SET u.username = :#{#updateUserSecurityInfoRequest.username}, u.password = :#{#updateUserSecurityInfoRequest.newPassword} " +
          "WHERE u.user.id = :userId")
   @Modifying
   int updateUserDetails(
-    @Param("userId") Long id, @Param("updateUserSecurityInfoRequest")
+    @Param("userId") UUID id, @Param("updateUserSecurityInfoRequest")
   UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest);
 
   Collection<AdminUserListDTO> findByUsernameContaining(String username);
@@ -48,7 +48,7 @@ public interface UserDetailsRepository extends JpaRepository<UserDetailsImpl, Us
   @Transactional
   @Query("UPDATE UserDetailsImpl u SET u.role = :role WHERE u.username = :username")
   int updateUserRole(
-    @Param("username") String username, // Pass username explicitly
-    @Param("role") UserRoleEnum role   // Pass role explicitly
+    @Param("username") String username,
+    @Param("role") UserRoleEnum role
   );
 }

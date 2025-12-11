@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.UPDATING_USER_PROFILE_MESSAGE;
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
   //TODO: Admins shouldn't be able to un-admin other admins
   @Transactional
   @Override
-  public void updateUserRole(Long id, UpdateUserRoleRequest updateUserRoleRequest) {
+  public void updateUserRole(UUID id, UpdateUserRoleRequest updateUserRoleRequest) {
     logger.info(String.format(UPDATING_USER_ROLES_MESSAGE, id, updateUserRoleRequest.getRole().name()));
     if (userDetailsRepository.updateUserRole(id, updateUserRoleRequest) != 1) {
       throw new UserWithIdNotFoundException(String.format(USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE, id));
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
 //TODO: Refactor into AuthService, save userDetails instead of request.
   @Transactional
   @Override
-  public String updateUserSecurityDetails(Long id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest) {
+  public String updateUserSecurityDetails(UUID id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest) {
   UserDetailsImpl user =(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   logger.info(String.format(UPDATING_USER_USERNAME_MESSAGE,id,updateUserSecurityInfoRequest.getUsername()));
   if (user.getRole() != UserRoleEnum.ADMIN && !Objects.equals(user.getUser().getId(), id)){
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService {
   }
   @Transactional
   @Override
-  public UserEntity updateUserProfile(Long id, UserRequest userRequest) {
+  public UserEntity updateUserProfile(UUID id, UserRequest userRequest) {
     UserDetailsImpl user =(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     logger.info(String.format(UPDATING_USER_PROFILE_MESSAGE,id));
     if (!Objects.equals(user.getUser().getId(), id))
