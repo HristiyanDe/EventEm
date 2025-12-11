@@ -37,14 +37,14 @@ public class AuthController {
     this.authenticationService = authenticationService;
     this.userService = userService;
   }
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
   @PostMapping("/register")
   ResponseEntity<AuthenticationResponse> register(
     @Validated @RequestBody RegisterRequest request
   ) {
     return ResponseEntity.ok(authenticationService.register(request));
   }
-  @CrossOrigin(origins = "http://localhost:3000")
+  @CrossOrigin(origins = "http://localhost:3001")
   @PostMapping("/authenticate")
   ResponseEntity<AuthenticationResponse> authenticate(
     @RequestBody AuthenticationRequest request

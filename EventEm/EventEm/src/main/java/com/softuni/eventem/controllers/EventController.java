@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +27,7 @@ public class EventController {
   }
 
   @PostMapping
-  @PreAuthorize("hasAuthority('ADMIN')")
-  public ResponseEntity<Void> createOrganization(@RequestBody @Valid EventRequest eventRequest)
+  public ResponseEntity<Void> createEvent(@RequestBody @Valid EventRequest eventRequest)
   {
     return ResponseEntity.created(
                            UriComponentsBuilder

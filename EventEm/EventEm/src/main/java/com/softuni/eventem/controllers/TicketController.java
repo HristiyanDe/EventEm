@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class TicketController {
 
   @PostMapping
   @PreAuthorize("hasAuthority('ADMIN')")
+  @CrossOrigin(origins = "http://localhost:3001")
   public ResponseEntity<Void> createTicket(@RequestBody @Valid TicketRequest ticketRequest)
   {
     return ResponseEntity.created(

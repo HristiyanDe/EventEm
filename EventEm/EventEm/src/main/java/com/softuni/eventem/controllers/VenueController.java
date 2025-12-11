@@ -31,7 +31,6 @@ public class VenueController {
   }
 
   @PostMapping
-  @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> createVenue(@RequestBody @Valid VenueRequest venueRequest) {
     return ResponseEntity.created(
                            UriComponentsBuilder
@@ -43,10 +42,14 @@ public class VenueController {
                              .toUri())
                          .build();
   }
+//  @GetMapping
+//  public ResponseEntity<List<VenueDTO>> getVenues(@RequestParam(value = "venueName", required = false) String venueName,
+//                                                  @RequestParam(value = "venueAddress", required = false) String venueAddress,
+//                                                  @RequestParam(value = "venueCity", required = false) String venueCity){
+//  return ResponseEntity.ok(venueService.getFilteredVenues(venueName,venueAddress,venueCity));
+//  }
   @GetMapping
-  public ResponseEntity<List<VenueDTO>> getVenues(@RequestParam(value = "venueName", required = false) String venueName,
-                                                  @RequestParam(value = "venueAddress", required = false) String venueAddress,
-                                                  @RequestParam(value = "venueCity", required = false) String venueCity){
-  return ResponseEntity.ok(venueService.getFilteredVenues(venueName,venueAddress,venueCity));
+  public ResponseEntity<List<VenueDTO>> getAllVenues() {
+    return ResponseEntity.ok(venueService.getAllVenues());
   }
 }

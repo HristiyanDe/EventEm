@@ -18,6 +18,7 @@ import HomeComponent from './components/HomeComponent/HomeComponent';
 import UserResetPasswordComponent from './components/UserComponent/UserResetPasswordComponent';
 import UserManagementComponent from './components/AdminComponent/UserManagementComponent';
 import AnalyticsComponent from './components/AdminComponent/AnalyticsComponent';
+import CategoryComponent from './components/CategoryComponent/CategoryComponent';
 function App() {
   const { token, setToken, user, setUser } = useAuth();
 return (<div className="App">
@@ -30,6 +31,7 @@ return (<div className="App">
     <Route path="/create-event" element={<CreateEventComponent />} />
     <Route path="/create-venue" element={<CreateVenueComponent />} />
     <Route path="/create-organization" element={<CreateOrganizationComponent />} />
+    <Route path="/create-category" element={<CategoryComponent/>} />
     <Route path="/profile" element= {<UserProfileComponent/>} />
     <Route path="/" element= {<HomeComponent/>}/>
     <Route path="/profile/security" element= {<UserProfileSecurityComponent/>}/>

@@ -1,5 +1,7 @@
 package com.softuni.eventem.microservices.dtos.responses;
 
+import com.softuni.eventem.microservices.dtos.enums.PaymentStatusEnum;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

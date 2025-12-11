@@ -1,7 +1,9 @@
 package com.softuni.eventem.entities.dto;
 
+import java.util.UUID;
+
 public class OrganizationDTO {
-  private Long id;
+  private UUID id;
   private String name;
   private String city;
   private String address;
@@ -11,7 +13,7 @@ public class OrganizationDTO {
   public OrganizationDTO() {
   }
 
-  public OrganizationDTO(Long id, String name, String city, String address, String phone, String email) {
+  public OrganizationDTO(UUID id, String name, String city, String address, String phone, String email) {
     this.id = id;
     this.name = name;
     this.city = city;
@@ -20,11 +22,11 @@ public class OrganizationDTO {
     this.email = email;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
