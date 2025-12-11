@@ -1,11 +1,11 @@
 package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.UserEntity;
-import com.softuni.eventem.entities.dto.AdminUserListDTO;
 import com.softuni.eventem.entities.dto.OrganizationDTO;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import com.softuni.eventem.entities.request.UserRequest;
+import com.softuni.eventem.repositories.projection.AdminUserListDTO;
 import com.softuni.eventem.services.OrganizationService;
 import com.softuni.eventem.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

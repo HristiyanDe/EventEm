@@ -46,6 +46,7 @@ async searchUsers(username: string, token: string | null): Promise<AdminUserList
             'Content-Type': 'application/json',
         },
     });
+    console.log("Search Users Response: ", response.data);
     return response.data;
 }
 }

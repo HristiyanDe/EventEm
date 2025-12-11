@@ -1,11 +1,11 @@
 package com.softuni.eventem.services;
 
 import com.softuni.eventem.entities.UserEntity;
-import com.softuni.eventem.entities.dto.AdminUserListDTO;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import com.softuni.eventem.entities.request.UserRequest;
+import com.softuni.eventem.repositories.projection.AdminUserListDTO;
 
 import java.util.List;
 

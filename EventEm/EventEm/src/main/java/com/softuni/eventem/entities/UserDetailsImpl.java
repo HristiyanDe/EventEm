@@ -46,12 +46,13 @@ private UserRoleEnum role;
   @Column(name = "enabled")
   private boolean enabled;
 
-  public UserDetailsImpl( String username, String password, UserRoleEnum role, UserEntity user) {
+  public UserDetailsImpl( String username, String password, UserRoleEnum role, UserEntity user, boolean enabled) {
     this.username = username;
     this.password = password;
     this.role = role;
     this.user = user;
   }
+
 
   public Long getUserId() {
     return userId;
@@ -130,6 +131,10 @@ private UserRoleEnum role;
   @Override
   public boolean isEnabled() {
     return this.enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
 }

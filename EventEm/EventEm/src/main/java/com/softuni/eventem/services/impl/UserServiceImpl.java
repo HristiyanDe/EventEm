@@ -2,7 +2,6 @@ package com.softuni.eventem.services.impl;
 
 import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.UserEntity;
-import com.softuni.eventem.entities.dto.AdminUserListDTO;
 import com.softuni.eventem.entities.enums.UserRoleEnum;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
@@ -13,6 +12,7 @@ import com.softuni.eventem.exceptions.WrongCredentialsException;
 import com.softuni.eventem.jwt.JwtTokenUtil;
 import com.softuni.eventem.repositories.UserDetailsRepository;
 import com.softuni.eventem.repositories.UserRepository;
+import com.softuni.eventem.repositories.projection.AdminUserListDTO;
 import com.softuni.eventem.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -116,10 +116,6 @@ public class UserServiceImpl implements UserService {
     if (!user.getRole().equals(UserRoleEnum.ADMIN)) {
       throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE,user.getUserId()));
     }
-    Collection<com.softuni.eventem.repositories.projection.AdminUserListDTO> result= userDetailsRepository.findByUsernameContaining(username);
-    System.out.println(result);
-    System.out.println(userDetailsRepository.findByUsernameContaining(username));
-    return result.stream().map(u->modelMapper.map(u,AdminUserListDTO.class)).collect(
-      Collectors.toList());
+    return userDetailsRepository.findByUsernameContaining(username).stream().toList();
   }
 }

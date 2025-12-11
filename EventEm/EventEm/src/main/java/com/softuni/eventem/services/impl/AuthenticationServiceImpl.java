@@ -80,7 +80,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     userDetails = new UserDetailsImpl(
       request.getUsername(),
       passwordEncoder.encode(request.getPassword()), UserRoleEnum.USER,
-      modelMapper.map(user, UserEntity.class));
+      modelMapper.map(user, UserEntity.class),true);
     userDetails.setUser(user);
     userDetailsRepository.save(userDetails);
     log.info(String.format(REGISTERING_USER_SUCCESS_MESSAGE, userDetails.getUsername()));
