@@ -22,3 +22,6 @@ jwt:
 jasypt:
   encryptor:
     password: password
+feign:
+  payment:
+    url: http://localhost:8082
