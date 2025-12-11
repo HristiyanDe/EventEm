@@ -49,5 +49,14 @@ async searchUsers(username: string, token: string | null): Promise<AdminUserList
     console.log("Search Users Response: ", response.data);
     return response.data;
 }
+async banUser(username: string, token: string | null): Promise<AdminUserListDTO> {
+    const response = await axios.post(`${API_USERS_PATH}/ban`, { username }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    return response.data;
+}
 }
 export const userService = new UserService();

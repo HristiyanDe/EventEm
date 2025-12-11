@@ -5,6 +5,7 @@ import com.softuni.eventem.entities.dto.OrganizationDTO;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import com.softuni.eventem.entities.request.UserRequest;
+import com.softuni.eventem.entities.request.UsernameRequest;
 import com.softuni.eventem.repositories.projection.AdminUserListDTO;
 import com.softuni.eventem.services.OrganizationService;
 import com.softuni.eventem.services.UserService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +65,11 @@ public class UserController {
   @GetMapping("/search")
   public ResponseEntity<List<AdminUserListDTO>> findUsersByUsername(@RequestParam(value = "username") String username){
     return ResponseEntity.ok(userService.findUsersByUsername(username));
+  }
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @PostMapping("/ban")
+  public ResponseEntity<Boolean> banUserByUsername(@RequestBody UsernameRequest username){
+    return ResponseEntity.ok(userService.banUserByUsername(username));
   }
 
 }
