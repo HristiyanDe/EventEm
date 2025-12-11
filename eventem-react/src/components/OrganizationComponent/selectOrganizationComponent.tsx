@@ -16,8 +16,8 @@ useEffect(() => {
             console.log('no user or token');
             return;
         }
-        console.log('userId: '+user.userId);
-        const organizations = await organizationService.getUserOrganizations(user.userId, token);
+        console.log('userId: '+user.id);
+        const organizations = await organizationService.getUserOrganizations(user.id, token);
         console.log('organizations: '+organizations);
         setOrganizations(organizations);
     }

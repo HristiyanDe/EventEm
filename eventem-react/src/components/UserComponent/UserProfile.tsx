@@ -5,9 +5,14 @@ import  { ThemeProvider } from "@mui/material/styles";
 import { Container } from "@mui/system";
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { AccountCircle } from "@mui/icons-material";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useState } from "react";
 import { UpdateUserRequest } from "../../models/UpdateUserRequest";
+import {userService} from "../../api/userService";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const UserProfileComponent: React.FC = () => {
     const { token, user} = useAuth();
     const [isEditing, setIsEditing] = useState(false);
@@ -15,13 +20,30 @@ const UserProfileComponent: React.FC = () => {
       setIsEditing(!isEditing);
   };
   const [formData, setFormData] = useState<UpdateUserRequest>({
-    firstName: null,
-    lastName: null,
-    city: null,
-    address: null,
-    phone: null,
-    email: null,
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    city: user?.city || "",
+    address: user?.address || "",
+    phone: user?.phone || "",
+    email: user?.email || "",
 });
+const navigate = useNavigate();
+
+const navigateToProfileSecurity = () => {
+  navigate("/profile/security");
+};
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  if (token && user) {
+    console.log("User Id: "+user.id);
+    console.log("User: "+JSON.stringify(user));
+    const updatedUser = await userService.updateUserProfile( formData, token, user.id);
+    Cookies.set('user', JSON.stringify(updatedUser));
+    handleEditClick();
+  }
+
+  console.log(formData);
+};
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = e.target;
@@ -30,6 +52,18 @@ const UserProfileComponent: React.FC = () => {
         [name]:value,
     });
 };
+useEffect(() => {
+  if (user) {
+    setFormData({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      city: user.city,
+      address: user.address,
+      phone: user.phone,
+      email: user.email,
+    });
+  }
+}, [user]);
   return (
     <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">
@@ -46,14 +80,16 @@ const UserProfileComponent: React.FC = () => {
                     Profile
                 </Typography>
                 <Box sx={{marginTop: 3, marginBottom: 3, padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <Button onClick={handleEditClick} id="edit-profile-button" variant="outlined" endIcon={<ModeEditIcon/>}> Button</Button>
+                <Button onClick={handleEditClick} id="edit-profile-button" variant="outlined" endIcon={<ModeEditIcon/>}> Edit Profile</Button>
                 </Box>
-                <Box component="form">
+                <Box component="form" onSubmit={handleSubmit}>
                     {/*<TextField sx={{paddingBottom: 2}} fullWidth id="firstName" label="First Name" variant="outlined" value={user?.username} />*/}
-                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="firstName" label="First Name" variant="outlined" value={user?.firstName} />
-                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="lastName" label="Last Name" variant="outlined" value={user?.lastName} />
-                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="email" label="Email" variant="outlined" value={user?.email} />
-                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="address" label="Address" variant="outlined" value={user?.address} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="firstName" name="firstName" label="First Name" variant="outlined" value={formData.firstName} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="lastName" name="lastName" label="Last Name" variant="outlined" value={formData.lastName} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="city" name="city" label="City" variant="outlined" value={formData.city} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="address" name="address" label="Address" variant="outlined" value={formData.address} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="phone" name="phone" label="phone" variant="outlined" value={formData.phone} />
+                    <TextField onChange={handleInputChange} disabled={!isEditing} sx={{paddingBottom: 2}} fullWidth id="email" name="email" label="Email" variant="outlined" value={formData.email} />
                     <Button
                     id="submit-profile-button"
                   type="submit"
@@ -65,7 +101,7 @@ const UserProfileComponent: React.FC = () => {
                 </Button>
                 </Box>
                 <Box sx={{marginTop: 3, marginBottom: 3, padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <Button id="security-details">Security</Button>
+                  <Button id="security-details" onClick={navigateToProfileSecurity} endIcon={<LockOutlinedIcon/>}>Security</Button>
                   </Box>
                 </Box>
                 

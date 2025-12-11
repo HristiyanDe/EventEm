@@ -1,9 +1,14 @@
 package com.softuni.eventem.services;
 
 import com.softuni.eventem.entities.UserEntity;
+import com.softuni.eventem.entities.request.UpdateUserRoleByUsername;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
-import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
+import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UserRequest;
+import com.softuni.eventem.entities.request.UsernameRequest;
+import com.softuni.eventem.repositories.projection.AdminUserListDTO;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -11,7 +16,15 @@ public interface UserService {
 
   void updateUserRole(Long id, UpdateUserRoleRequest updateUserRoleRequest);
 
-  void updateUserUsername(Long id, UpdateUserUsernameRequest updateUserUsernameRequest);
+  String updateUserSecurityDetails(Long id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest);
 
-  void updateUserProfile(Long id, UserRequest userRequest);
+  UserEntity updateUserProfile(Long id, UserRequest userRequest);
+
+  List<AdminUserListDTO> findUsersByUsername(String username);
+
+  boolean banUserByUsername(UsernameRequest username);
+
+  boolean updateUserRoles(UpdateUserRoleByUsername updateUserRoleByUsername);
+
+  List<String> getUserRoles();
 }

@@ -2,7 +2,10 @@ package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.request.AuthenticationRequest;
 import com.softuni.eventem.entities.request.RegisterRequest;
+import com.softuni.eventem.entities.request.ResetPasswordRequest;
+import com.softuni.eventem.entities.request.UpdateUserRoleByUsername;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
+import com.softuni.eventem.entities.request.UsernameRequest;
 import com.softuni.eventem.entities.response.AuthenticationResponse;
 import com.softuni.eventem.services.AuthenticationService;
 import com.softuni.eventem.services.UserService;
@@ -13,12 +16,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -44,6 +50,10 @@ public class AuthController {
   ) {
     return ResponseEntity.ok(authenticationService.authenticate(request));
   }
+  @PostMapping("/reset-password")
+  ResponseEntity<AuthenticationResponse> resetToken(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest) {
+    return ResponseEntity.ok(authenticationService.resetPassword(resetPasswordRequest));
+  }
   @PatchMapping("/{id}")
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Void> updateUserRole(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserRoleRequest updateUserRoleRequest)
@@ -51,4 +61,15 @@ public class AuthController {
     userService.updateUserRole(id, updateUserRoleRequest);
     return ResponseEntity.noContent().build();
   }
+  @PatchMapping("/roles")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public ResponseEntity<Void> updateUserRoles(@RequestBody UpdateUserRoleByUsername updateUserRoleByUsername){
+    userService.updateUserRoles(updateUserRoleByUsername);
+    return ResponseEntity.ok().build();
+  }
+  @GetMapping("/roles")
+  public ResponseEntity<List<String>> getRoles() {
+    return ResponseEntity.ok(userService.getUserRoles());
+  }
+
 }

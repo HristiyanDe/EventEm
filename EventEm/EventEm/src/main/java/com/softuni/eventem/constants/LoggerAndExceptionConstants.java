@@ -18,6 +18,7 @@ public final class LoggerAndExceptionConstants {
   public static final String TICKET_ALREADY_EXISTS_ERROR_MESSAGE = "Failed to create ticket as it is a duplicate";
   public static final String INVALID_JWT_TOKEN_ERROR = "Invalid token!";
   public static String AUTHENTICATE_USER_MESSAGE = "Authenticating user with username: %s.";
+  public static String RESET_USER_PASSWORD_MESSAGE = "Reset password for user: %s.";
 
   public static String AUTHENTICATE_SUCCESS_MESSAGE = "Authentication has been successful for username: %s.";
   public static String REGISTERING_USER_MESSAGE = "Registering user with username: %s.";

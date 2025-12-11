@@ -5,6 +5,7 @@ import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.enums.UserRoleEnum;
 import com.softuni.eventem.entities.request.AuthenticationRequest;
 import com.softuni.eventem.entities.request.RegisterRequest;
+import com.softuni.eventem.entities.request.ResetPasswordRequest;
 import com.softuni.eventem.entities.response.AuthenticationResponse;
 import com.softuni.eventem.exceptions.WrongCredentialsException;
 import com.softuni.eventem.jwt.JwtTokenUtil;
@@ -25,6 +26,7 @@ import static com.softuni.eventem.constants.LoggerAndExceptionConstants.AUTHENTI
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.AUTHENTICATE_USER_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.REGISTERING_USER_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.REGISTERING_USER_SUCCESS_MESSAGE;
+import static com.softuni.eventem.constants.LoggerAndExceptionConstants.RESET_USER_PASSWORD_MESSAGE;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -78,10 +80,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     userDetails = new UserDetailsImpl(
       request.getUsername(),
       passwordEncoder.encode(request.getPassword()), UserRoleEnum.USER,
-      modelMapper.map(user, UserEntity.class));
+      modelMapper.map(user, UserEntity.class),true);
     userDetails.setUser(user);
     userDetailsRepository.save(userDetails);
     log.info(String.format(REGISTERING_USER_SUCCESS_MESSAGE, userDetails.getUsername()));
+    return new AuthenticationResponse(jwtTokenUtil.generateToken(userDetails), userDetails.getUser());
+  }
+  @Transactional
+  @Override
+  public AuthenticationResponse resetPassword(ResetPasswordRequest request) {
+    log.info(String.format(RESET_USER_PASSWORD_MESSAGE, request.getUsername()));
+    UserDetailsImpl userDetails =
+      userDetailsRepository.findByUsername(request.getUsername()).orElseThrow(WrongCredentialsException::new);
+    try {
+      userDetails.setPassword(passwordEncoder.encode(request.getPassword()));
+      userDetailsRepository.save(userDetails);
+    } catch (AuthenticationException e) {
+      throw new WrongCredentialsException();
+    }
+    log.info(String.format(AUTHENTICATE_SUCCESS_MESSAGE, request.getUsername()));
     return new AuthenticationResponse(jwtTokenUtil.generateToken(userDetails), userDetails.getUser());
   }
 }

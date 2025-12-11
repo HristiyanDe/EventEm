@@ -1,8 +1,12 @@
 package com.softuni.eventem.controllers;
 
+import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.dto.OrganizationDTO;
+import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import com.softuni.eventem.entities.request.UserRequest;
+import com.softuni.eventem.entities.request.UsernameRequest;
+import com.softuni.eventem.repositories.projection.AdminUserListDTO;
 import com.softuni.eventem.services.OrganizationService;
 import com.softuni.eventem.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -16,9 +20,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -36,23 +42,34 @@ public class UserController {
     this.userService = userService;
     this.organizationService = organizationService;
   }
-  @PatchMapping("/{id}")
-  public ResponseEntity<Void> updateUserUsername(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserUsernameRequest updateUserUsernameRequest)
+  @CrossOrigin(origins = "http://localhost:3000")
+  @PutMapping("/{id}/security")
+  public ResponseEntity<String> updateUserSecurityDetails(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest)
   {
-    userService.updateUserUsername(id,updateUserUsernameRequest);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(userService.updateUserSecurityDetails(id,updateUserSecurityInfoRequest));
   }
+  @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping("/{id}")
-  public ResponseEntity<Void> updateUserProfile(@PathVariable @NotNull Long id, @RequestBody @Valid UserRequest userRequest)
+  public ResponseEntity<UserEntity> updateUserProfile(@PathVariable @NotNull Long id, @RequestBody @Valid UserRequest userRequest)
   {
-    userService.updateUserProfile(id, userRequest);
-    return ResponseEntity.noContent().build();
+
+    return ResponseEntity.ok(userService.updateUserProfile(id,userRequest));
   }
   @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping("/{id}/organizations")
   public ResponseEntity<List<OrganizationDTO>> getOrganizationsByUser(@PathVariable @NotNull Long id)
   {
   return ResponseEntity.ok(organizationService.getOrganizationsByUserId(id));
+  }
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @GetMapping("/search")
+  public ResponseEntity<List<AdminUserListDTO>> findUsersByUsername(@RequestParam(value = "username") String username){
+    return ResponseEntity.ok(userService.findUsersByUsername(username));
+  }
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @PostMapping("/ban")
+  public ResponseEntity<Boolean> banUserByUsername(@RequestBody UsernameRequest username){
+    return ResponseEntity.ok(userService.banUserByUsername(username));
   }
 
 }
