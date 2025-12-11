@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-//TODO: Transaction, Payment Entities to store sales information(incl Stripe session's status),
-// along ith a webhook to update event attendees, transaction status. Stripe error handling.
 @RestController
 @RequestMapping("/api/checkout")
 @SecurityRequirement(name = "Bearer Authentication")

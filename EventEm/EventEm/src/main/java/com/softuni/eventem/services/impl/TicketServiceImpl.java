@@ -1,9 +1,7 @@
 package com.softuni.eventem.services.impl;
 
-import com.softuni.eventem.entities.CategoryEntity;
 import com.softuni.eventem.entities.TicketEntity;
 import com.softuni.eventem.entities.request.TicketRequest;
-import com.softuni.eventem.exceptions.CategoryAlreadyExistsException;
 import com.softuni.eventem.exceptions.TicketAlreadyExistsException;
 import com.softuni.eventem.repositories.TicketRepository;
 import com.softuni.eventem.services.TicketService;
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY_ALREADY_EXISTS_ERROR_MESSAGE;
-import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY_CREATED_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.TICKET_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.TICKET_CREATED_MESSAGE;

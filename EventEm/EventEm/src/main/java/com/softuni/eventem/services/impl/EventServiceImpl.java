@@ -9,10 +9,8 @@ import com.softuni.eventem.entities.enums.UserRoleEnum;
 import com.softuni.eventem.entities.request.CategoryRequest;
 import com.softuni.eventem.entities.request.EventRequest;
 import com.softuni.eventem.exceptions.EventAlreadyExistsException;
-import com.softuni.eventem.exceptions.NoMatchingCategoriesWithNamesFoundException;
 import com.softuni.eventem.exceptions.UserUnauthorizedException;
 import com.softuni.eventem.exceptions.VenueUnavailableBetweenDatesException;
-import com.softuni.eventem.repositories.CategoryRepository;
 import com.softuni.eventem.repositories.EventRepository;
 import com.softuni.eventem.repositories.projection.EventListDTO;
 import com.softuni.eventem.services.CategoryService;
@@ -34,7 +32,6 @@ import java.util.stream.Collectors;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.EVENT_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.EVENT_CREATED_MESSAGE;
-import static com.softuni.eventem.constants.LoggerAndExceptionConstants.NO_MATCHING_CATEGORIES_FOUND_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.USER_LACKS_AUTHORITY_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.VENUE_UNAVAILABLE_BETWEEN_DATES_ERROR_MESSAGE;
 
