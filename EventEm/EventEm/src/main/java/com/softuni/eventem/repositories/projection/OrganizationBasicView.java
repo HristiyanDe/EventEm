@@ -1,7 +1,9 @@
 package com.softuni.eventem.repositories.projection;
 
+import java.util.UUID;
+
 public interface OrganizationBasicView {
-  Long getId();
+  UUID getId();
   String getName();
   String getCity();
   String getAddress();

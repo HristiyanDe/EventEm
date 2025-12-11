@@ -7,17 +7,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "categories", schema = "eventem")
 public class CategoryEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @UuidGenerator(style= UuidGenerator.Style.RANDOM)
   @Column(name = "id")
-  private Long id;
+  private UUID id;
   @Column(name = "category_name")
   private String categoryName;
   @ManyToMany(mappedBy = "categories")
@@ -30,11 +32,11 @@ public class CategoryEntity {
     this.categoryName = categoryName;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

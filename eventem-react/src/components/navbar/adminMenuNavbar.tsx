@@ -1,0 +1,14 @@
+import { Button, MenuItem, IconButton } from "@mui/material";
+const AdminMenuNavigationLinks = function() {
+    return (
+        <>
+    <MenuItem>
+        <Button href="/user-management" fullWidth>User management</Button>
+    </MenuItem>
+        <MenuItem>
+        <Button href="/analytics" fullWidth>Analytics</Button>
+    </MenuItem>
+    </>
+    );
+}
+export { AdminMenuNavigationLinks };

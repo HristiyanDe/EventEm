@@ -8,16 +8,15 @@ import { useAuth } from '../../auth/AuthContext';
 
 const SelectOrganizationComponent: React.FC<{onOrganizationSelect: (organization: Organization | null)=> void}> = ({onOrganizationSelect}) => {
 const [organizations, setOrganizations] = useState<Organization[]>([]);
-const { token, setToken, userId, setUser } = useAuth();
+const { token, setToken, user, setUser } = useAuth();
 useEffect(() => {
 
     async function fetchOrganizations() {
-                if (!userId || !token) {
-            console.log('no userId or token');
+                if (!user || !token) {
+            console.log('no user or token');
             return;
         }
-        console.log('userId: '+userId);
-        const organizations = await organizationService.getUserOrganizations(userId, token);
+        const organizations = await organizationService.getUserOrganizations(user.id as string, token);
         console.log('organizations: '+organizations);
         setOrganizations(organizations);
     }
@@ -27,7 +26,7 @@ useEffect(() => {
 , []);
 const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    id: number,
+    id: string,
 ) => {
     onOrganizationSelect(organizations.find(organization => organization.id === id) || null);
    
@@ -48,7 +47,7 @@ return (
                                 id="organization-select">
                                     {organizations.map((organization) => (
                                         <ListItem key={organization.id} component="div">
-                                            <ListItemButton onClick={(event)=> handleListItemClick(event, organization.id as number)}>
+                                            <ListItemButton onClick={(event)=> handleListItemClick(event, organization.id as string)}>
                                                 <ListItemText primary={organization.name}/>
                                                 </ListItemButton>
                                         </ListItem>

@@ -2,7 +2,7 @@ import { LoginRequest } from "../../models/LoginRequest";
 import axios from "axios";
 import { API_LOGIN_PATH } from "../../constants/apiConstants";
 import { useState } from "react";
-import { useAuth } from "../../auth/AuthContext";
+import { useAuth, useLogout } from "../../auth/AuthContext";
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
@@ -18,8 +18,10 @@ import Container from '@mui/material/Container';
 import { defaultTheme } from '../RegisterComponent/RegisterComponent';
 import { Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import { Link as RouterLink } from "react-router-dom";
 const LoginComponent: React.FC = () => {
-    const { token, setToken, userId,setUser } = useAuth();
+    const { token, setToken, user,setUser } = useAuth();
+    const  logout  = useLogout();
     const [formData, setFormData] = useState<LoginRequest>({
         username: '',
         password: '',
@@ -27,17 +29,17 @@ const LoginComponent: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            if (token) {
-                return;
+            if (token && user) {
+                return <Navigate to="/"/>;
             }
             const response = await axios.post(API_LOGIN_PATH, formData);
             if (response.status !== 200) {
                 throw new Error('Failed to login');
             }
             setToken(response.data.token);
-            setUser(response.data.id);
+            setUser(response.data.user);
             Cookies.set('token', response.data.token);
-            Cookies.set('userId', response.data.id);
+            Cookies.set('user', JSON.stringify(response.data.user));
         }
         catch (error) {
             console.error(error);
@@ -50,8 +52,10 @@ const LoginComponent: React.FC = () => {
             [name]:value,
         });
     };
-    if(token || userId)
+    if(token && user)
       {
+        
+        console.log(token,user);
         return <Navigate to="/"/>
       }
     return (
@@ -105,13 +109,13 @@ const LoginComponent: React.FC = () => {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link component={RouterLink} to="/reset-password" variant="body2">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
-                      {"Don't have an account? Sign Up"}
+                     <Link component={RouterLink} to="/register" variant="body2">
+                      Don't have an account? Sign Up
                     </Link>
                   </Grid>
                 </Grid>
@@ -122,4 +126,3 @@ const LoginComponent: React.FC = () => {
       );
             };
 export default LoginComponent;
-    //{onChange={handleInputChange}}

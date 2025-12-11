@@ -15,7 +15,7 @@ const SelectVenueComponent: React.FC<{onVenueSelect: (venue: Venue | null)=> voi
     });
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        id: number,
+        id: string,
       ) => {
         if(id !== null){
             setSelectedVenue(venues.find(venue => venue.id === id) || null);
@@ -120,7 +120,7 @@ const SelectVenueComponent: React.FC<{onVenueSelect: (venue: Venue | null)=> voi
                         id="venue-select">
                         {venues.map((venue) => (
                             <ListItem key={venue.id} component="div">
-                                <ListItemButton onClick={(event) =>handleListItemClick(event,venue.id as number)}>
+                                <ListItemButton onClick={(event) =>handleListItemClick(event,venue.id as string)}>
                                     <ListItemText primary={venue.name} secondary={venue.address}/>
                                     </ListItemButton>
                             </ListItem>

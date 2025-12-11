@@ -5,8 +5,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -46,7 +44,7 @@ const RegisterComponent: React.FC = () => {
         email: '',
     },
   });
-      const {token, setToken,userId,setUser} = useAuth();
+      const {token, setToken,user,setUser} = useAuth();
       const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -75,7 +73,7 @@ const RegisterComponent: React.FC = () => {
           },
       });
   };
-  if (token || userId) {
+  if (token || user) {
     return <Navigate to= "/"/>
   }
 

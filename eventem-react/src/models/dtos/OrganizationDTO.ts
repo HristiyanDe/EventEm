@@ -1,4 +1,4 @@
 export interface Organization{
-    id: number | null,
+    id: string | null,
     name: string;
 }

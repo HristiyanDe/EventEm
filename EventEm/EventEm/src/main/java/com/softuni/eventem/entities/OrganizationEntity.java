@@ -7,16 +7,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "organizations")
 public class OrganizationEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @UuidGenerator(style= UuidGenerator.Style.RANDOM)
   @Column(name = "id")
-  private Long id;
+  private UUID id;
   @Column(name = "name")
   private String name;
   @Column(name = "city")
@@ -33,11 +35,11 @@ public class OrganizationEntity {
   public OrganizationEntity() {
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

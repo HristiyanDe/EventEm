@@ -9,9 +9,10 @@ import com.softuni.eventem.entities.request.CategoryRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public final class EventConstants {
-  public static final Long EVENT_ID = 10L;
+  public static final UUID EVENT_ID = UUID.randomUUID();
   public static final String EVENT_NAME = "Test Event Name";
   public static final LocalDate EVENT_START_DATE = LocalDate.of(2000,12,10);
   public static final LocalDate EVENT_END_DATE = LocalDate.of(2000,12,20);

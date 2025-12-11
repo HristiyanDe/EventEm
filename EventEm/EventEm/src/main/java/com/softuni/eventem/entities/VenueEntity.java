@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
 
 //todo: Make unique constraint in between city and address
 @Entity
@@ -13,9 +16,9 @@ import jakarta.persistence.Table;
 public class VenueEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @UuidGenerator(style= UuidGenerator.Style.RANDOM)
   @Column(name = "id")
-  private Long id;
+  private UUID id;
   @Column(name = "name")
   private String name;
   @Column(name = "city")
@@ -26,11 +29,11 @@ public class VenueEntity {
   public VenueEntity() {
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

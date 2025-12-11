@@ -1,5 +1,5 @@
 export interface TicketRequest {
 name: string,
-eventId: number,
+eventId: string,
 price: number;
 }

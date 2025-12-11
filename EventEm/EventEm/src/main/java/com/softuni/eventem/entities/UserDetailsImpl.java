@@ -21,12 +21,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user_details")
 public class UserDetailsImpl implements UserDetails {
   @Id
-  private Long userId;
+  private UUID userId;
   @MapsId
   @OneToOne
   @JoinColumn(name = "user_id")
@@ -43,19 +44,22 @@ private UserRoleEnum role;
     inverseJoinColumns = @JoinColumn(name = "organization_id")
   )
   List<OrganizationEntity> organizations;
+  @Column(name = "enabled")
+  private boolean enabled;
 
-  public UserDetailsImpl( String username, String password, UserRoleEnum role, UserEntity user) {
+  public UserDetailsImpl( String username, String password, UserRoleEnum role, UserEntity user, boolean enabled) {
     this.username = username;
     this.password = password;
     this.role = role;
     this.user = user;
+    this.enabled=enabled;
   }
 
-  public Long getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 
-  public void setUserId(Long userId) {
+  public void setUserId(UUID userId) {
     this.userId = userId;
   }
 
@@ -127,6 +131,11 @@ private UserRoleEnum role;
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return this.enabled;
   }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
+  }
+
 }

@@ -1,7 +1,5 @@
 
 import React, { useState } from 'react';
-import {API_VENUES_PATH} from '../../constants/apiConstants';
-import axios from 'axios';
 import { useAuth } from '../../auth/AuthContext';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -26,7 +24,7 @@ const CreateOrganizationComponent: React.FC = () => {
     phone: '',
     email: '',
     });
-    const { token, userId } = useAuth();
+    const { token, user } = useAuth();
 const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -44,7 +42,7 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         [name]:value,
     });
 };
-if (!token || !userId) {
+if (!token || !user) {
   return <Navigate to= "/login"/>
 }
 return (

@@ -29,15 +29,15 @@ import { Organization } from '../../models/dtos/OrganizationDTO';
 import SelectOrganizationComponent from '../OrganizationComponent/selectOrganizationComponent';
 import { Navigate } from 'react-router-dom';
 const CreateEventComponent: React.FC = () => {
-    const { token, setToken, userId, setUser } = useAuth();
+    const { token, setToken, user, setUser } = useAuth();
     const [selectedOrganization, setSelectedOrganization] = useState<Organization | null>(null);
 const [formData, setFormData] = useState<EventRequest>({
 name: '',
 eventStatus: EventStatusEnum.NONE,
 startDate: '',
 endDate: '',
-venueId: 0,
-organizationId: 0,
+venueId: '',
+organizationId: '',
 description: '',
 maxAttendees: 0,
 categories: [{
@@ -78,13 +78,13 @@ const handleMultipleSelect = (event: SelectChangeEvent<CategoryRequest[]>) => {
 };
 const handleVenueSelect = (venue: Venue | null) => {
   if(venue && venue.id) {
-    setFormData({ ...formData, venueId: venue.id });
+    setFormData({ ...formData, venueId: venue.id as string });
     console.log(formData);
   }
 }
 const handleOrganizationSelect = (organization: Organization | null) => {
   if(organization && organization.id) {
-    setFormData({ ...formData, organizationId: organization.id as number });
+    setFormData({ ...formData, organizationId: organization.id as string });
     setSelectedOrganization(organization);
     console.log(formData);
   }
@@ -115,7 +115,7 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaE
         });
     }
 };
-if (!token || !userId) {
+if (!token || !user) {
   return <Navigate to= "/login"/>
 }
 

@@ -18,6 +18,7 @@ public final class LoggerAndExceptionConstants {
   public static final String TICKET_ALREADY_EXISTS_ERROR_MESSAGE = "Failed to create ticket as it is a duplicate";
   public static final String INVALID_JWT_TOKEN_ERROR = "Invalid token!";
   public static String AUTHENTICATE_USER_MESSAGE = "Authenticating user with username: %s.";
+  public static String RESET_USER_PASSWORD_MESSAGE = "Reset password for user: %s.";
 
   public static String AUTHENTICATE_SUCCESS_MESSAGE = "Authentication has been successful for username: %s.";
   public static String REGISTERING_USER_MESSAGE = "Registering user with username: %s.";
@@ -25,10 +26,10 @@ public final class LoggerAndExceptionConstants {
   public static String DATA_INTEGRITY_VIOLATION_ERROR_MESSAGE = "Encountered DataIntegrityViolation when attempting to save to database: %s";
   public static final String WRONG_CREDENTIALS_ERROR_MESSAGE = "Incorrect credentials";
   public static final String USER_WITH_NAME_NOT_FOUND_ERROR_MESSAGE = "User not found with entered username";
-  public static final String USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE = "User with id %d not found";
-  public static final String UPDATING_USER_ROLES_MESSAGE = "Updating user %d's role to %s";
-  public static final String UPDATING_USER_USERNAME_MESSAGE = "Updating user %d's username to %s";
-  public static final String USER_LACKS_AUTHORITY_ERROR_MESSAGE = "Current user %d lacks authority for this action";
-  public static final String UPDATING_USER_PROFILE_MESSAGE = "Updating user %d's profile";
+  public static final String USER_WITH_ID_NOT_FOUND_ERROR_MESSAGE = "User with id %s not found";
+  public static final String UPDATING_USER_ROLES_MESSAGE = "Updating user %s's role to %s";
+  public static final String UPDATING_USER_USERNAME_MESSAGE = "Updating user %s's username to %s";
+  public static final String USER_LACKS_AUTHORITY_ERROR_MESSAGE = "Current user %s lacks authority for this action";
+  public static final String UPDATING_USER_PROFILE_MESSAGE = "Updating user %s's profile";
   public static final String RETRIEVING_CATEGORIES_MESSAGE = "Retrieving unfiltered categories";
 }

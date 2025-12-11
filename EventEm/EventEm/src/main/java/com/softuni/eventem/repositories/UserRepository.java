@@ -6,8 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
   @Query("UPDATE UserEntity u SET u.firstName = :#{#userRequest.firstName}, " +
          "u.lastName = :#{#userRequest.lastName}," +
@@ -18,5 +21,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
          "WHERE u.id = :userId"
          )
   @Modifying
-  void updateUserProfile(@Param("userId") Long id, @Param("userRequest") UserRequest userRequest);
+  @Transactional
+  int updateUserProfile(@Param("userId") UUID id, @Param("userRequest") UserRequest userRequest);
 }
