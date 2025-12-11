@@ -4,7 +4,7 @@ import { API_ORGANIZATIONS_PATH, API_USER_ORGANIZATIONS_PATH } from "../constant
 import { OrganizationRequest } from "../models/OrganizationRequest";
 
 class OrganizationService{
-    async getUserOrganizations(userId: number, token: String | null): Promise<Organization[]>{
+    async getUserOrganizations(userId: string, token: String | null): Promise<Organization[]>{
         const response = await axios.get<Organization[]>(API_USER_ORGANIZATIONS_PATH(userId),{
             headers: {
                 Authorization: `Bearer ${token}`,

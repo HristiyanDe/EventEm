@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
+public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> {
   Optional<List<CategoryEntity>> findByCategoryNameIn(List<String> categoryNames);
   @Query("SELECT new CategoryEntity(c.categoryName) FROM CategoryEntity c")
   List<CategoryEntity> findCategoryNames();

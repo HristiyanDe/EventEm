@@ -6,17 +6,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tickets", schema = "eventem")
 public class TicketEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @UuidGenerator(style= UuidGenerator.Style.RANDOM)
   @Column(name = "id")
-  private Long id;
+  private UUID id;
   @Column(name = "name")
   private String name;
   @Column(name = "event_id")
@@ -27,11 +29,11 @@ public class TicketEntity {
   public TicketEntity() {
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

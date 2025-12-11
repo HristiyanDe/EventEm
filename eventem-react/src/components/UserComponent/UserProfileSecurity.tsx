@@ -28,7 +28,7 @@ const UserProfileSecurityComponent: React.FC = () => {
           console.log("Component log: ID: "+user.id)
           console.log("User Id: "+user.id);
           console.log("User: "+JSON.stringify(user));
-          const newToken = await userService.updateUserSecurity( formData, token, user.id);
+          const newToken = await userService.updateUserSecurity( formData, token, user.id as string);
           Cookies.set('token', JSON.stringify(newToken));
           setToken(newToken);
         }

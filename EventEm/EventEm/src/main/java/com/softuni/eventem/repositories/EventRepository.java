@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Repository
-public interface EventRepository extends JpaRepository<EventEntity, Long> {
+public interface EventRepository extends JpaRepository<EventEntity, UUID> {
   @Query("SELECT CASE WHEN COUNT(e) > 0 THEN TRUE ELSE FALSE END " +
          "FROM EventEntity e " +
          "WHERE e.venue.id = :venueId " +
@@ -21,7 +22,7 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
          "   OR (:newEventEndDate BETWEEN e.startDate AND e.endDate)" +
          ")")
   boolean hasConflictingEventsByVenueAndDateRange(
-    @Param("venueId") Long venueId,
+    @Param("venueId") UUID venueId,
     @Param("newEventStartDate") LocalDate newEventStartDate,
     @Param("newEventEndDate") LocalDate newEventEndDate
   );

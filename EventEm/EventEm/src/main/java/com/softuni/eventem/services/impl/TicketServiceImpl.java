@@ -14,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY_ALREADY_EXISTS_ERROR_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.CATEGORY_CREATED_MESSAGE;
@@ -49,7 +50,7 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
-  public List<TicketEntity> getAllTicketEntitiesNamePriceAndIdByIds(List<Long> tickedIds) {
+  public List<TicketEntity> getAllTicketEntitiesNamePriceAndIdByIds(List<UUID> tickedIds) {
     List<TicketEntity> ticketEntities = ticketRepository.findAllById(tickedIds);
     return ticketEntities;
   }

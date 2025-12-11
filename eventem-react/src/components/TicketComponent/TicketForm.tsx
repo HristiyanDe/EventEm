@@ -6,7 +6,7 @@ import { TicketRequest } from '../../models/TicketRequest';
 const TicketForm: React.FC = () => {
 const [formData, setFormData] = useState<TicketRequest>({
     name: '',
-    eventId: 0,
+    eventId: '',
     price: 0,
     });
 const { token } = useAuth();

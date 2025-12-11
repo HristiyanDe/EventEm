@@ -9,14 +9,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "event_status",schema = "eventem")
 public class EventStatusEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @UuidGenerator(style= UuidGenerator.Style.RANDOM)
   @Column(name = "id")
-  private Long id;
+  private UUID id;
 
   @Column(name = "status_name")
   @Enumerated(EnumType.STRING)
@@ -33,11 +36,11 @@ public class EventStatusEntity {
     this.statusName = statusName;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

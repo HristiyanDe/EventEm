@@ -1,7 +1,5 @@
 
 import React, { useState } from 'react';
-import {API_VENUES_PATH} from '../../constants/apiConstants';
-import axios from 'axios';
 import { useAuth } from '../../auth/AuthContext';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';

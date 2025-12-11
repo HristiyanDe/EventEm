@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface VenueRepository extends JpaRepository<VenueEntity,Long> {
+public interface VenueRepository extends JpaRepository<VenueEntity, UUID> {
 
   @Query(
     "SELECT v FROM VenueEntity v WHERE (:venueName IS NULL OR v.name LIKE %:venueName%)" +

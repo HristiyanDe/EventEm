@@ -21,12 +21,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user_details")
 public class UserDetailsImpl implements UserDetails {
   @Id
-  private Long userId;
+  private UUID userId;
   @MapsId
   @OneToOne
   @JoinColumn(name = "user_id")
@@ -51,14 +52,14 @@ private UserRoleEnum role;
     this.password = password;
     this.role = role;
     this.user = user;
+    this.enabled=enabled;
   }
 
-
-  public Long getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 
-  public void setUserId(Long userId) {
+  public void setUserId(UUID userId) {
     this.userId = userId;
   }
 

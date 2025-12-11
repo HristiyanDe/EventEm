@@ -7,7 +7,7 @@ import { ResetPasswordRequest } from "../models/ResetPasswordRequest";
 import { AdminUserListDTO } from "../models/dtos/AdminUserListDTO";
 
 class UserService{
-async updateUserProfile(userData: UpdateUserRequest, token: string | null, id: number): Promise<UserEntity>
+async updateUserProfile(userData: UpdateUserRequest, token: string | null, id: string): Promise<UserEntity>
 {
     console.log("User Id: "+id);
     const response = await axios.put(API_USER_PATH_VAR(id), userData,{
@@ -18,7 +18,7 @@ async updateUserProfile(userData: UpdateUserRequest, token: string | null, id: n
     });
     return response.data;
 }
-async updateUserSecurity(userData: UpdateUserSecurityRequest, token: string | null, id: number): Promise<string>
+async updateUserSecurity(userData: UpdateUserSecurityRequest, token: string | null, id: string): Promise<string>
 {
     console.log(id);
     const response = await axios.put(API_USER_PATH_VAR(id)+"/security", userData,{
@@ -31,7 +31,7 @@ async updateUserSecurity(userData: UpdateUserSecurityRequest, token: string | nu
 }
 async resetUserPassword(userData: ResetPasswordRequest): Promise<string>
 {
-    const response = await axios.post(`${API_USER_PATH_VAR(0)}/reset-password`, userData,{
+    const response = await axios.post(`${API_USER_PATH_VAR("0")}/reset-password`, userData,{
         headers: {
             'Content-Type': 'application/json',
         },

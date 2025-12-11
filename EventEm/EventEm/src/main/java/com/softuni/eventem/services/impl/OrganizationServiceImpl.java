@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ORGANIZATION_ALREADY_EXISTS_ERROR_MESSAGE;
@@ -54,13 +55,13 @@ public class OrganizationServiceImpl implements OrganizationService {
   }
 
   @Override
-  public OrganizationEntity getOrganizationById(Long organizationId) {
+  public OrganizationEntity getOrganizationById(UUID organizationId) {
 
     return organizationRepository.findById(organizationId).orElseThrow(() ->new OrganizationEntityNotFoundException(String.format(ORGANIZATION_NOT_FOUND_ERROR_MESSAGE, organizationId)));
   }
 
   @Override
-  public List<OrganizationDTO> getOrganizationsByUserId(Long id) {
+  public List<OrganizationDTO> getOrganizationsByUserId(UUID id) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
     if (!userDetails.getUser().getId().equals(id) || !userDetails.getRole().equals(UserRoleEnum.ADMIN))
