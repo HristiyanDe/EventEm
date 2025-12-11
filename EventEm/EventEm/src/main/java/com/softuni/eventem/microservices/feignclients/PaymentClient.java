@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @FeignClient(
   name = "payment-service",
-  url = "${feign.payment.url.url}"
+  url = "${feign.payment.url}"
   )
 public interface PaymentClient {
   @PostMapping("/payments")

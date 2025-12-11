@@ -12,11 +12,7 @@ const { token, setToken, user, setUser } = useAuth();
 useEffect(() => {
 
     async function fetchOrganizations() {
-                if (!user || !token) {
-            console.log('no user or token');
-            return;
-        }
-        const organizations = await organizationService.getUserOrganizations(user.id as string, token);
+        const organizations = await organizationService.fetchOrganizations(token as string);
         console.log('organizations: '+organizations);
         setOrganizations(organizations);
     }

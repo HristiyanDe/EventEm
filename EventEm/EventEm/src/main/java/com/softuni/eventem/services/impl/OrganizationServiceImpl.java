@@ -10,6 +10,7 @@ import com.softuni.eventem.exceptions.OrganizationEntityNotFoundException;
 import com.softuni.eventem.exceptions.UserUnauthorizedException;
 import com.softuni.eventem.repositories.OrganizationRepository;
 import com.softuni.eventem.services.OrganizationService;
+import org.jspecify.annotations.Nullable;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ENTITY_ALREADY_EXISTS_ERROR;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.ORGANIZATION_ALREADY_EXISTS_ERROR_MESSAGE;
@@ -69,5 +71,10 @@ public class OrganizationServiceImpl implements OrganizationService {
       throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE, userDetails.getUser().getId()));
     }
     return organizationRepository.findAllByUserId(id).stream().map(o -> modelMapper.map(o,OrganizationDTO.class)).toList();
+  }
+
+  @Override
+  public List<OrganizationDTO> getOrganizations() {
+    return organizationRepository.findAll().stream().map(organizationEntity -> modelMapper.map(organizationEntity,OrganizationDTO.class)).toList();
   }
 }

@@ -34,7 +34,7 @@ if (!token || !user) {
   return <Navigate to= "/login"/>
 }
 return (<form onSubmit={handleSubmit}>
-    <input type="text" placeholder="Category Name" name="categoryName" value={formData.categoryName} onChange={handleInputChange}/>
+    <input type="text" placeholder="Category Name" name="categoryName" value={formData.categoryName} onChange={handleInputChange} style={{marginTop: '100px'}}/>
     <button type="submit">Add Category</button>
     </form>)
 };

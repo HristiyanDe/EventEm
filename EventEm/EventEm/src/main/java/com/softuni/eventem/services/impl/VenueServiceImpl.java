@@ -58,4 +58,9 @@ public class VenueServiceImpl implements VenueService {
   public List<VenueDTO> getFilteredVenues(String venueName, String venueAddress, String venueCity) {
     return venueRepository.findAllVenuesFiltered(venueName,venueAddress,venueCity).stream().map(v -> modelMapper.map(v, VenueDTO.class)).toList();
   }
+
+  @Override
+  public List<VenueDTO> getAllVenues() {
+    return venueRepository.findAll().stream().map(v -> modelMapper.map(v, VenueDTO.class)).toList();
+  }
 }
