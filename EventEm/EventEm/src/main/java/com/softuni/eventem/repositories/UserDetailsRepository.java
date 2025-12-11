@@ -2,6 +2,8 @@ package com.softuni.eventem.repositories;
 
 import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.UserEntity;
+import com.softuni.eventem.entities.enums.UserRoleEnum;
+import com.softuni.eventem.entities.request.UpdateUserRoleByUsername;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.repositories.projection.AdminUserListDTO;
@@ -41,4 +43,12 @@ public interface UserDetailsRepository extends JpaRepository<UserDetailsImpl, Us
   @Transactional
   @Query("UPDATE UserDetailsImpl u SET u.enabled = NOT u.enabled WHERE u.username = :username")
   int updateUserEnabled(@Param(("username")) String username);
+
+  @Modifying
+  @Transactional
+  @Query("UPDATE UserDetailsImpl u SET u.role = :role WHERE u.username = :username")
+  int updateUserRole(
+    @Param("username") String username, // Pass username explicitly
+    @Param("role") UserRoleEnum role   // Pass role explicitly
+  );
 }

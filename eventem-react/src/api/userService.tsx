@@ -1,7 +1,7 @@
 import axios from "axios";
 import { UserEntity } from "../models/entities/UserEntity";
 import { UpdateUserRequest } from "../models/UpdateUserRequest";
-import { API_USER_PATH_VAR, API_USERS_PATH } from "../constants/apiConstants";
+import { API_USER_PATH_VAR, API_USERS_PATH, BASE_API_PATH } from "../constants/apiConstants";
 import { UpdateUserSecurityRequest } from "../models/UpdateUserSecurityRequest";
 import { ResetPasswordRequest } from "../models/ResetPasswordRequest";
 import { AdminUserListDTO } from "../models/dtos/AdminUserListDTO";
@@ -51,6 +51,24 @@ async searchUsers(username: string, token: string | null): Promise<AdminUserList
 }
 async banUser(username: string, token: string | null): Promise<AdminUserListDTO> {
     const response = await axios.post(`${API_USERS_PATH}/ban`, { username }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    return response.data;
+}
+async getAllUserRoles(token: string | null): Promise<string[]> {
+    const response = await axios.get(`${BASE_API_PATH}/auth/roles`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    return response.data;
+}
+async updateUserRole(username: string, role: string, token: string | null): Promise<AdminUserListDTO> {
+    const response = await axios.patch(`${BASE_API_PATH}/auth/roles`, { username, role }, {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

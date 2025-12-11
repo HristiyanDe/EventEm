@@ -18,21 +18,34 @@ import {
     TableRow,
     Paper, 
     Button, 
+    Menu,
+    MenuItem
 } from '@mui/material';
 import { userService } from '../../api/userService';
 import { useAuth } from '../../auth/AuthContext';
 
 const UserManagementComponent: React.FC = () => {
+    const [anchorElRoles, setAnchorElRoles] = React.useState<null | HTMLElement>(null);
+    const [roles, setRoles] = React.useState<string[]>([]);
+    const rolesMenuIsOpen = Boolean(anchorElRoles);
     const { token, setToken, user, setUser } = useAuth();
     const [input, setInput] = React.useState<string>('');
     const [userList, setUserList] = React.useState<any[]>([]);
+        const handleOpenRolesMenu = async (event: React.MouseEvent<HTMLElement>) => {
+            setAnchorElRoles(event.currentTarget);
+            await fetchUserRoles();
+        }
 
     const handleInputChange = (value: string) => {
         setInput(value);
         fetchUsers(value);
         console.log(userList);
     };
-
+    const fetchUserRoles = async () => {
+        const roles = await userService.getAllUserRoles(token);
+        setRoles(roles);
+        console.log(roles);
+    };
     const fetchUsers = (value: string) => {
         userService.searchUsers(value, token).then(users => {
             setUserList(users);
@@ -45,8 +58,9 @@ const UserManagementComponent: React.FC = () => {
         await userService.banUser(username, token);
         fetchUsers(input);
     };
-    const handleUpdateUserRoleButtonClick = (username: string) => {
-        // Implement role update logic here
+    const handleUpdateUserRoleButtonClick = async (username: string, role: string) => {
+        await userService.updateUserRole(username, role, token);
+        fetchUsers(input);
     };
 
     return (
@@ -114,13 +128,20 @@ const UserManagementComponent: React.FC = () => {
                                                 >
                                                     {userItem.enabled ? "Ban" : "Unban"}
                                                 </Button>
-                                                 <Button
+                                                <Button
                                                     variant="contained"
                                                     size="small"
-                                                    onClick={() => handleUpdateUserRoleButtonClick(userItem.username)}
-                                                >
-                                                    Role placeholder
+                                                    style={{ marginLeft: '10px' }}
+                                                    onClick={handleOpenRolesMenu}>
+                                                    Update Role
                                                 </Button>
+                                                 <Menu open = {rolesMenuIsOpen} anchorEl={anchorElRoles} onClose={() => setAnchorElRoles(null)} sx={{float: "right"}}>
+                                                    {roles.map((roleItem) => (
+                                                        <MenuItem key={roleItem} onClick={() => handleUpdateUserRoleButtonClick(userItem.username, roleItem)}>
+                                                            {roleItem}
+                                                        </MenuItem>
+                                                    ))}
+                                                 </Menu>
                                             </TableCell>
                                         </TableRow>
                                     ))}

@@ -1,6 +1,7 @@
 package com.softuni.eventem.services;
 
 import com.softuni.eventem.entities.UserEntity;
+import com.softuni.eventem.entities.request.UpdateUserRoleByUsername;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UserRequest;
@@ -22,4 +23,8 @@ public interface UserService {
   List<AdminUserListDTO> findUsersByUsername(String username);
 
   boolean banUserByUsername(UsernameRequest username);
+
+  boolean updateUserRoles(UpdateUserRoleByUsername updateUserRoleByUsername);
+
+  List<String> getUserRoles();
 }

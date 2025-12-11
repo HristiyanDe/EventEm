@@ -3,6 +3,7 @@ package com.softuni.eventem.services.impl;
 import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.enums.UserRoleEnum;
+import com.softuni.eventem.entities.request.UpdateUserRoleByUsername;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UserRequest;
@@ -24,8 +25,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.UPDATING_USER_PROFILE_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.UPDATING_USER_ROLES_MESSAGE;
@@ -126,5 +129,23 @@ public class UserServiceImpl implements UserService {
       throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE,user.getUserId()));
     }
     return userDetailsRepository.updateUserEnabled(usernameRequest.getUsername()) > 0;
+  }
+
+  @Override
+  @Transactional
+  public boolean updateUserRoles(UpdateUserRoleByUsername updateUserRoleByUsername) {
+    UserDetailsImpl user =(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (!user.getRole().equals(UserRoleEnum.ADMIN)) {
+      throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE,user.getUserId()));
+    }
+    return userDetailsRepository.updateUserRole(
+      updateUserRoleByUsername.getUsername(),
+      updateUserRoleByUsername.getRole()
+    ) > 0;
+  }
+
+  @Override
+  public List<String> getUserRoles() {
+    return Arrays.stream(UserRoleEnum.values()).map(UserRoleEnum::name).collect(Collectors.toList());
   }
 }
