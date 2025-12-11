@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
   }
   @Transactional
   @Override
-  public void updateUserProfile(Long id, UserRequest userRequest) {
+  public UserEntity updateUserProfile(Long id, UserRequest userRequest) {
     UserDetailsImpl user =(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     logger.info(String.format(UPDATING_USER_PROFILE_MESSAGE,id));
     if (!Objects.equals(user.getUser().getId(), id))
@@ -100,5 +100,6 @@ public class UserServiceImpl implements UserService {
     {
       throw new RuntimeException("Failed to update user");
     }
+    return userRepository.findById(id).orElseThrow();
   }
 }

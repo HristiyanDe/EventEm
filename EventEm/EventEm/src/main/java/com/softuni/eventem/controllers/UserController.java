@@ -40,17 +40,16 @@ public class UserController {
   }
   @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping("/{id}/security")
-  public ResponseEntity<Void> updateUserSecurityDetails(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest)
+  public ResponseEntity<String> updateUserSecurityDetails(@PathVariable @NotNull Long id, @RequestBody @Valid UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest)
   {
-    userService.updateUserSecurityDetails(id,updateUserSecurityInfoRequest);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(userService.updateUserSecurityDetails(id,updateUserSecurityInfoRequest));
   }
   @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping("/{id}")
   public ResponseEntity<UserEntity> updateUserProfile(@PathVariable @NotNull Long id, @RequestBody @Valid UserRequest userRequest)
   {
-    userService.updateUserProfile(id,userRequest);
-    return ResponseEntity.noContent().build();
+
+    return ResponseEntity.ok(userService.updateUserProfile(id,userRequest));
   }
   @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping("/{id}/organizations")

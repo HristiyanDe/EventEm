@@ -14,5 +14,5 @@ public interface UserService {
 
   String updateUserSecurityDetails(Long id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest);
 
-  void updateUserProfile(Long id, UserRequest userRequest);
+  UserEntity updateUserProfile(Long id, UserRequest userRequest);
 }

@@ -32,12 +32,12 @@ const navigate = useNavigate();
 const navigateToProfileSecurity = () => {
   navigate("/profile/security");
 };
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   if (token && user) {
     console.log("User Id: "+user.id);
     console.log("User: "+JSON.stringify(user));
-    const updatedUser = userService.updateUserProfile( formData, token, user.id);
+    const updatedUser = await userService.updateUserProfile( formData, token, user.id);
     Cookies.set('user', JSON.stringify(updatedUser));
     handleEditClick();
   }
@@ -80,7 +80,7 @@ useEffect(() => {
                     Profile
                 </Typography>
                 <Box sx={{marginTop: 3, marginBottom: 3, padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <Button onClick={handleEditClick} id="edit-profile-button" variant="outlined" endIcon={<ModeEditIcon/>}> Button</Button>
+                <Button onClick={handleEditClick} id="edit-profile-button" variant="outlined" endIcon={<ModeEditIcon/>}> Edit Profile</Button>
                 </Box>
                 <Box component="form" onSubmit={handleSubmit}>
                     {/*<TextField sx={{paddingBottom: 2}} fullWidth id="firstName" label="First Name" variant="outlined" value={user?.username} />*/}
