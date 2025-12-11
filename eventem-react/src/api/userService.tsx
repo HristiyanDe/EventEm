@@ -1,9 +1,10 @@
 import axios from "axios";
 import { UserEntity } from "../models/entities/UserEntity";
 import { UpdateUserRequest } from "../models/UpdateUserRequest";
-import { API_USER_PATH_VAR } from "../constants/apiConstants";
+import { API_USER_PATH_VAR, API_USERS_PATH } from "../constants/apiConstants";
 import { UpdateUserSecurityRequest } from "../models/UpdateUserSecurityRequest";
 import { ResetPasswordRequest } from "../models/ResetPasswordRequest";
+import { AdminUserListDTO } from "../models/dtos/AdminUserListDTO";
 
 class UserService{
 async updateUserProfile(userData: UpdateUserRequest, token: string | null, id: number): Promise<UserEntity>
@@ -32,6 +33,16 @@ async resetUserPassword(userData: ResetPasswordRequest): Promise<string>
 {
     const response = await axios.post(`${API_USER_PATH_VAR(0)}/reset-password`, userData,{
         headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return response.data;
+}
+async searchUsers(username: string, token: string | null): Promise<AdminUserListDTO[]> {
+    const response = await axios.get(`${API_USERS_PATH}/search`, {
+        params: { username },
+        headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
     });

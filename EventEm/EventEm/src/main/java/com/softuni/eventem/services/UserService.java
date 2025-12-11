@@ -1,10 +1,13 @@
 package com.softuni.eventem.services;
 
 import com.softuni.eventem.entities.UserEntity;
+import com.softuni.eventem.entities.dto.AdminUserListDTO;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
 import com.softuni.eventem.entities.request.UserRequest;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -15,4 +18,6 @@ public interface UserService {
   String updateUserSecurityDetails(Long id, UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest);
 
   UserEntity updateUserProfile(Long id, UserRequest userRequest);
+
+  List<AdminUserListDTO> findUsersByUsername(String username);
 }

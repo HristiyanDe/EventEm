@@ -1,5 +1,7 @@
-import { Button, MenuItem } from "@mui/material";
+import { Button, MenuItem, IconButton } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import { useLogout } from "../../auth/AuthContext"
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
     const NavigationLinks = function(){
         return (
                 <>
@@ -22,7 +24,7 @@ import { useLogout } from "../../auth/AuthContext"
         return (
             <>
                 <MenuItem>
-                    <Button href="/login" fullWidth>Login</Button>
+                    <Button href="/login" fullWidth>Sign in</Button>
                 </MenuItem>
                 <MenuItem>
                     <Button href="/register" fullWidth>Register</Button>
@@ -41,9 +43,6 @@ import { useLogout } from "../../auth/AuthContext"
                 </MenuItem>
                 <MenuItem>
                     <Button onClick={logout} href="/logout" fullWidth>Logout</Button>
-                </MenuItem>
-                <MenuItem>
-                    <Button href="/admin" fullWidth>Admin menu</Button>
                 </MenuItem>
             </>
         )

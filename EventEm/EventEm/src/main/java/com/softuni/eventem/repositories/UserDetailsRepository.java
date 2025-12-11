@@ -4,12 +4,15 @@ import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.UserEntity;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
+import com.softuni.eventem.repositories.projection.AdminUserListDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,4 +35,6 @@ public interface UserDetailsRepository extends JpaRepository<UserDetailsImpl, Us
   int updateUserDetails(
     @Param("userId") Long id, @Param("updateUserSecurityInfoRequest")
   UpdateUserSecurityInfoRequest updateUserSecurityInfoRequest);
+
+  Collection<AdminUserListDTO> findByUsernameContaining(String username);
 }

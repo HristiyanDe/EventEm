@@ -5,12 +5,19 @@ import { useAuth } from "../../auth/AuthContext";
 import React from "react";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import  {NavigationLinks, LoggedOutLinks, LoggedInLinks} from "./navbarViewComponents";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { AdminMenuNavigationLinks } from "./adminMenuNavbar";
 const NavbarComponent: React.FC = () => {
     const {token,setToken, user, setUser} = useAuth();
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElAdmin, setAnchorElAdmin] = React.useState<null | HTMLElement>(null);
     const [anchorElNavbar, setAnchorElNavbar] = React.useState<null | HTMLElement>(null);
     const userMenuIsOpen = Boolean(anchorElUser);
     const navbarMenuIsOpen = Boolean(anchorElNavbar);
+    const adminMenuIsOpen = Boolean(anchorElAdmin);
+    const handleOpenAdminMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElAdmin(event.currentTarget);
+    }
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     }
@@ -28,7 +35,14 @@ return isSmallScreen ? (
                     <NavigationLinks/>
                 </Menu>
                 </Box>
+                
             <Box sx={{ marginLeft: 1}}>
+                <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorElAdmin(event.currentTarget)} sx={{position: "absolute", right:40}}>
+                <AdminPanelSettingsIcon />
+                    </IconButton>
+                <Menu open = {adminMenuIsOpen} anchorEl={anchorElAdmin} onClose={() => setAnchorElAdmin(null)}> 
+                <AdminMenuNavigationLinks/>
+                </Menu> 
                 <IconButton onClick={handleOpenUserMenu} sx={{position: "absolute", right:0}}>
                     <AccountCircle>
 
@@ -69,7 +83,13 @@ return isSmallScreen ? (
     marginLeft: '0px',
     justifyContent: 'flex-end',
 }}>
-              {!token || !user ? <LoggedOutLinks/> :  <LoggedInLinks/>}
+                <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorElAdmin(event.currentTarget)}>
+                <AdminPanelSettingsIcon />
+                    </IconButton>
+                <Menu open = {adminMenuIsOpen} anchorEl={anchorElAdmin} onClose={() => setAnchorElAdmin(null)}> 
+                <AdminMenuNavigationLinks/>
+                </Menu> 
+              {!token || !user ? <LoggedOutLinks/> :  <LoggedInLinks/> }
             </Box>
         </Box>
     </Container>

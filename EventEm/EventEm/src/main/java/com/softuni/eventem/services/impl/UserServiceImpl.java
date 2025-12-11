@@ -2,6 +2,7 @@ package com.softuni.eventem.services.impl;
 
 import com.softuni.eventem.entities.UserDetailsImpl;
 import com.softuni.eventem.entities.UserEntity;
+import com.softuni.eventem.entities.dto.AdminUserListDTO;
 import com.softuni.eventem.entities.enums.UserRoleEnum;
 import com.softuni.eventem.entities.request.UpdateUserRoleRequest;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
@@ -17,11 +18,15 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.UPDATING_USER_PROFILE_MESSAGE;
 import static com.softuni.eventem.constants.LoggerAndExceptionConstants.UPDATING_USER_ROLES_MESSAGE;
@@ -38,15 +43,17 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final UserDetailsRepository userDetailsRepository;
   private final PasswordEncoder passwordEncoder;
+  private final UserDetailsService userDetailsService;
 
   public UserServiceImpl(
     ModelMapper modelMapper, JwtTokenUtil jwtTokenUtil, UserRepository userRepository,
-    UserDetailsRepository userDetailsRepository, PasswordEncoder passwordEncoder) {
+    UserDetailsRepository userDetailsRepository, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
     this.modelMapper = modelMapper;
     this.jwtTokenUtil = jwtTokenUtil;
     this.userRepository = userRepository;
     this.userDetailsRepository = userDetailsRepository;
     this.passwordEncoder = passwordEncoder;
+    this.userDetailsService = userDetailsService;
   }
 
   @Transactional
@@ -101,5 +108,18 @@ public class UserServiceImpl implements UserService {
       throw new RuntimeException("Failed to update user");
     }
     return userRepository.findById(id).orElseThrow();
+  }
+
+  @Override
+  public List<AdminUserListDTO> findUsersByUsername(String username) {
+    UserDetailsImpl user =(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (!user.getRole().equals(UserRoleEnum.ADMIN)) {
+      throw new UserUnauthorizedException(String.format(USER_LACKS_AUTHORITY_ERROR_MESSAGE,user.getUserId()));
+    }
+    Collection<com.softuni.eventem.repositories.projection.AdminUserListDTO> result= userDetailsRepository.findByUsernameContaining(username);
+    System.out.println(result);
+    System.out.println(userDetailsRepository.findByUsernameContaining(username));
+    return result.stream().map(u->modelMapper.map(u,AdminUserListDTO.class)).collect(
+      Collectors.toList());
   }
 }

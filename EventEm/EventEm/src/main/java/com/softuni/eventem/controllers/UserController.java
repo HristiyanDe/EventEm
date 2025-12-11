@@ -1,6 +1,7 @@
 package com.softuni.eventem.controllers;
 
 import com.softuni.eventem.entities.UserEntity;
+import com.softuni.eventem.entities.dto.AdminUserListDTO;
 import com.softuni.eventem.entities.dto.OrganizationDTO;
 import com.softuni.eventem.entities.request.UpdateUserSecurityInfoRequest;
 import com.softuni.eventem.entities.request.UpdateUserUsernameRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -56,6 +58,11 @@ public class UserController {
   public ResponseEntity<List<OrganizationDTO>> getOrganizationsByUser(@PathVariable @NotNull Long id)
   {
   return ResponseEntity.ok(organizationService.getOrganizationsByUserId(id));
+  }
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @GetMapping("/search")
+  public ResponseEntity<List<AdminUserListDTO>> findUsersByUsername(@RequestParam(value = "username") String username){
+    return ResponseEntity.ok(userService.findUsersByUsername(username));
   }
 
 }

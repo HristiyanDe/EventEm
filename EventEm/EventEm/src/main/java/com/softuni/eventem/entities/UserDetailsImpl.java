@@ -43,6 +43,8 @@ private UserRoleEnum role;
     inverseJoinColumns = @JoinColumn(name = "organization_id")
   )
   List<OrganizationEntity> organizations;
+  @Column(name = "enabled")
+  private boolean enabled;
 
   public UserDetailsImpl( String username, String password, UserRoleEnum role, UserEntity user) {
     this.username = username;
@@ -127,6 +129,7 @@ private UserRoleEnum role;
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return this.enabled;
   }
+
 }
